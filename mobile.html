@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dream Store · תצוגת מובייל</title>
+<style>
+/* the v2 site inside a phone, as large as the window allows — for reviewing mobile on a desktop without the inspector */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{display:grid;place-items:center;
+  background:radial-gradient(50% 40% at 85% 0%,#FBEAF8,transparent 70%),radial-gradient(45% 40% at 10% 100%,#E8F0FF,transparent 70%),#F4F5FA}
+.phone{position:fixed;left:50%;top:50%;width:414px;height:868px;padding:12px;border-radius:56px;background:#0B0C14;transform-origin:center;transform:translate(-50%,-50%);
+  box-shadow:0 30px 70px rgba(24,22,64,.28),inset 0 0 0 2px #2A2C38}
+.phone iframe{display:block;width:390px;height:844px;border:0;border-radius:44px;background:#fff}
+</style>
+</head>
+<body>
+<div class="phone"><iframe title="Dream Store במובייל" src="pov-reels-v2.html"></iframe></div>
+<script>
+  /* a real 390×844 screen inside; the whole phone scales to fill the window's height */
+  const phone = document.querySelector('.phone');
+  /* centred on the window, and scaled so all of it — frame included — fits with a margin */
+  const fit = () => { phone.style.transform = 'translate(-50%,-50%) scale(' + Math.min((innerHeight - 40) / 868, (innerWidth - 40) / 414) + ')'; };
+  addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>

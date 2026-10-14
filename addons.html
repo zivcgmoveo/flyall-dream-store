@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlyAll — כל התוספות</title>
+<style>
+
+/* ---- brand face ---- */
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-ultralight-aaa.otf') format('opentype');font-weight:200;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-light-aaa.otf') format('opentype');font-weight:300;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-regular-aaa.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-medium-aaa.otf') format('opentype');font-weight:500;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-demibold-aaa.otf') format('opentype');font-weight:600;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-bold-aaa.otf') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-ultrabold-aaa.otf') format('opentype');font-weight:800;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-black-aaa.otf') format('opentype');font-weight:900;font-display:swap}
+
+/* ============================================================
+   FLYALL DESIGN SYSTEM — tokens (Figma: FlyAll – New Design / Design System)
+   ============================================================ */
+@font-face{font-family:'Almoni';src:url('assets/fonts/almoni-dl-aaa-400.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Almoni';src:url('assets/fonts/almoni-dl-aaa-700.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  /* colours */
+  --ds-blue:#1B5ECE;  --ds-blue-hover:#3D76D5;  --ds-blue-press:#1855B9;
+  --ds-purple:#824AEA; --ds-pink:#F63DE4;
+  --ds-gradient:linear-gradient(90deg,#1B5ECE 0%,#824AEA 50.481%,#F63DE4 100%);
+  --ds-black:#040F21; --ds-white:#FFFFFF; --ds-gray:#818790;
+  --ds-light-blue-1:#F0F8FF; --ds-light-blue-2:#E3F2FF;
+  --ds-bg:#FDFDFD; --ds-cal-blue:#1E5CB3; --ds-step-off:#E6E7E9;
+
+  /* fonts — text styles are Almoni, buttons are Ploni */
+  --ds-font:'Almoni','Ploni',system-ui,sans-serif;
+  --ds-font-btn:'Ploni',system-ui,sans-serif;
+
+  /* type scale (Mobile) — use as  font: var(--ds-body3);  */
+  --ds-body1:      400 12px/normal var(--ds-font);
+  --ds-body1-demi: 600 12px/normal var(--ds-font);
+  --ds-body1-bold: 700 12px/normal var(--ds-font);
+  --ds-body2:      400 14px/16px   var(--ds-font);
+  --ds-body2-demi: 600 14px/normal var(--ds-font);
+  --ds-body2-bold: 700 14px/normal var(--ds-font);
+  --ds-body3:      400 16px/20px   var(--ds-font);
+  --ds-body3-demi: 600 16px/16px   var(--ds-font);
+  --ds-body3-bold: 700 16px/normal var(--ds-font);
+  --ds-body4:      400 18px/20px   var(--ds-font);
+  --ds-body4-demi: 600 18px/18px   var(--ds-font);
+  --ds-body4-bold: 700 18px/normal var(--ds-font);
+  --ds-body5:      400 20px/24px   var(--ds-font);
+  --ds-h1:         700 26px/normal var(--ds-font);
+  --ds-h2:         600 24px/normal var(--ds-font);
+  --ds-h3:         700 20px/22px   var(--ds-font);
+  --ds-20-demi:    600 20px/22px   var(--ds-font);
+  --ds-btn:        700 18px/20px   var(--ds-font-btn);
+}
+
+/* ---- buttons ---- */
+.ds-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:44px; padding:6px 16px; border-radius:22px; border:0;
+  font:var(--ds-btn); color:#fff; white-space:nowrap; text-decoration:none;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+.ds-btn--block{ display:flex; width:100%; }
+/* Primary 1 — gradient */
+.ds-btn--primary{ background-image:var(--ds-gradient); }
+.ds-btn--primary:hover{ background-image:linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)),var(--ds-gradient); }
+.ds-btn--primary:active{ background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--ds-gradient); }
+/* Primary 2 — solid blue */
+.ds-btn--blue{ background:var(--ds-blue); }
+.ds-btn--blue:hover{ background-image:linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)); }
+.ds-btn--blue:active{ background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)); }
+/* Secondary — white, 1.5px blue outline */
+.ds-btn--secondary{ background:#fff; border:1.5px solid var(--ds-blue); color:var(--ds-blue); }
+.ds-btn--secondary:hover{ border-color:var(--ds-blue-hover); color:var(--ds-blue-hover); }
+.ds-btn--secondary:active{ border-color:var(--ds-blue-press); color:var(--ds-blue-press); }
+/* Secondary · gradient stroke (Figma 4691:357424) — white fill, 1.5px brand-gradient border, blue label */
+.ds-btn--secondary-grad{ border:1.5px solid transparent; color:var(--ds-blue);
+  background:linear-gradient(#fff,#fff) padding-box, var(--ds-gradient) border-box; }
+.ds-btn--secondary-grad:hover{ color:var(--ds-blue-hover); }
+.ds-btn--secondary-grad:active{ color:var(--ds-blue-press); }
+.ds-btn:disabled,.ds-btn[aria-disabled="true"]{ opacity:.5; pointer-events:none; }
+.ds-btn svg{ width:16px; height:16px; flex:none; }
+
+/* Outline / text link — "הצג הכל" + 16px chevron, 4px gap */
+.ds-link{
+  display:inline-flex; align-items:center; gap:4px;
+  font:var(--ds-body3-bold); color:var(--ds-blue); text-decoration:none;
+  background:none; border:0; padding:0; cursor:pointer;
+}
+.ds-link:hover{ color:var(--ds-blue-hover); text-decoration:underline; }
+.ds-link:active{ color:var(--ds-blue-press); text-decoration:underline; }
+.ds-link svg{ width:16px; height:16px; flex:none; }
+
+/* Chip — Filter & Sort */
+.ds-chip{
+  display:inline-flex; align-items:center; gap:4px;
+  height:32px; padding:8px 12px; border-radius:60px;
+  border:1px solid var(--ds-blue); background:#fff;
+  font:var(--ds-body3); color:var(--ds-black); white-space:nowrap;
+}
+.ds-chip.is-on{ background:var(--ds-light-blue-1); }
+.ds-chip--ai{
+  border:1.5px solid var(--ds-black); gap:2px;
+  background-image:linear-gradient(90deg,rgba(27,94,206,.15),rgba(130,74,234,.15) 50.481%,rgba(246,61,228,.15)),linear-gradient(#fff,#fff);
+}
+
+/* Step indicator — 24px circle, Ploni Bold 12 digit, Body1 label */
+.ds-step{ width:24px; height:24px; border-radius:75px; display:inline-flex; align-items:center; justify-content:center;
+  background:var(--ds-step-off); color:var(--ds-gray); font:700 12px/normal var(--ds-font-btn); }
+.ds-step.is-on,.ds-step.is-done{ background:var(--ds-blue); color:#fff; }
+
+/* ============================================================
+   FLYALL — TOP NAVIGATION BAR
+   Reference: Hader.svg, authored at 390 x 123 (iPhone 13/14 logical width).
+   Every number below is traced from that file.
+   ============================================================ */
+
+:root {
+  --fa-font: 'Ploni', system-ui, sans-serif;
+  --fa-ink: #1B5ECE;                 /* single UI colour: logo, avatar, points, menu */
+  --fa-grad-a: #1B5ECE;
+  --fa-grad-b: #824AEA;              /* stop at 50.48% */
+  --fa-grad-c: #F63DE4;
+
+  --fa-bar-h: 64px;                  /* fixed: bar height does NOT scale */
+  --fa-bar-radius: 16px;
+  --fa-pad: 20px;                    /* physical side padding */
+
+  --fa-notch-w: 33.846%;             /* 132 / 390 — scales with viewport width */
+  --fa-notch-ratio: 132 / 42.9006;   /* 63.7988 -> 106.6994 */
+  --fa-notch-top: 63.8px;            /* meets the bar's bottom edge */
+
+  --fa-orb-size: 25.7576%;           /* 34 / 132 of the notch — scales with it.
+                                        To pin the orb at a fixed 34px instead,
+                                        set: --fa-orb-size: 34px */
+  --fa-orb-left: 36.29%;             /* 47.903 / 132 */
+  --fa-orb-top: 3.651%;              /* 1.5664 / 42.9006 */
+
+  /* type trims, measured against Hader.svg with Ploni */
+  --fa-points-nudge: -0.767px;
+  --fa-points-baseline: 13px;        /* box top -> baseline, at 16.3px/1 */
+  --fa-avatar-nudge: 0.13px;
+  --fa-z: 100;
+}
+
+/* ---- shell ------------------------------------------------ */
+.fa-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--fa-z);
+  height: var(--fa-bar-h);
+  direction: ltr;                    /* the bar is NOT mirrored in RTL */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---- layer 0 : ambient glow + stars (behind the white bar) -- */
+.fa-header__decor {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.fa-header__decor svg { display: block; width: 100%; height: auto; }
+
+/* ---- layer 1 : the white silhouette (bar + notch share one shadow) ---- */
+.fa-header__shape {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .25));
+  pointer-events: none;
+}
+.fa-header__bar {
+  height: var(--fa-bar-h);
+  background: #fff;
+  border-radius: 0 0 var(--fa-bar-radius) var(--fa-bar-radius);
+}
+.fa-header__notch {
+  position: absolute;
+  top: var(--fa-notch-top);
+  left: 50.128%;                     /* the traced shape sits 0.5px right of centre */
+  transform: translateX(-50%);
+  width: var(--fa-notch-w);
+  aspect-ratio: var(--fa-notch-ratio);
+}
+.fa-header__notch svg { display: block; width: 100%; height: 100%; }
+
+/* the orb needs its own stacking layer: translateX(-50%) on .fa-header__notch
+   makes it a stacking context, so a z-index on the child alone stays trapped inside */
+.fa-header__notch--orb { z-index: 3; pointer-events: none; }
+
+/* ---- layer 2 : controls ------------------------------------ */
+.fa-header__content {
+  position: relative;
+  z-index: 2;
+  height: var(--fa-bar-h);
+}
+
+.fa-header__left {
+  position: absolute;
+  left: 20.4px;
+  top: 0;
+  height: var(--fa-bar-h);
+  display: flex;
+  align-items: center;
+}
+
+/* avatar — 24px circle + 1.2px ring (outer 25.2) */
+.fa-avatar {
+  width: 25.2px;                     /* 24 + 1.2 ring, matching the SVG stroke */
+  height: 25.2px;
+  box-sizing: border-box;
+  border: 1.2px solid var(--fa-ink);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--fa-ink);
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+/* traced ink: 14.590 x 7.482, centred on the circle, baseline y 35.732 */
+.fa-avatar__txt {
+  font: 700 11.79px/1 var(--fa-font);
+  transform: translateY(var(--fa-avatar-nudge));
+}
+
+/* points — the underline means it is a link */
+.fa-points {
+  margin-left: 10.07px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--fa-ink);
+  cursor: pointer;
+}
+.fa-points__value {
+  /* traced: ink 20.808 x 8.620 at (56.484, 27.465) · baseline y 36.085
+              underline 22.320 x 0.641 at (55.674, 38.031)
+     min-width pins the underline (and the coin icon after it) to the traced
+     box; longer balances simply grow past it. */
+  font: 700 16.3px/1 var(--fa-font);
+  display: inline-block;
+  position: relative;
+  min-width: 22.32px;
+  text-align: center;
+  transform: translateY(var(--fa-points-nudge));
+}
+/* the underline is hung off the baseline, not off the box, so a font swap
+   moves it correctly instead of silently drifting */
+.fa-points__value::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(var(--fa-points-baseline) + 1.946px);
+  height: .641px;
+  background: currentColor;
+}
+
+.fa-points__coins {
+  margin-left: 4.63px;
+  width: 18.75px;
+  height: 13.75px;
+  display: block;
+  fill: var(--fa-ink);
+}
+
+/* logo — centred on the page, not between its neighbours */
+.fa-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18.998px;
+  width: 88.889px;
+  height: 26.009px;
+  display: block;
+}
+
+/* menu — 24 x 17.5 visual box, 20px from the right edge */
+.fa-menu {
+  position: absolute;
+  right: var(--fa-pad);
+  top: 22.498px;
+  width: 24px;
+  height: 17.5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.fa-menu svg { display: block; width: 100%; height: 100%; }
+
+/* generous touch targets without changing the visuals */
+.fa-avatar::after, .fa-menu::after, .fa-points::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 44px; height: 44px;
+  transform: translate(-50%, -50%);
+}
+.fa-avatar, .fa-points { position: relative; }   /* .fa-menu is already absolute */
+
+/* ---- layer 3 : the orb (SOL) ------------------------------- */
+.fa-orb {
+  position: absolute;
+  pointer-events: auto;
+  left: var(--fa-orb-left);
+  top: var(--fa-orb-top);
+  width: var(--fa-orb-size);
+  aspect-ratio: 1;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: #fff url("assets/orb.png") center / cover no-repeat;
+  box-shadow: 0 1px 7.6px rgba(136, 73, 234, .5),
+              inset 0 -1px 38.2px rgba(27, 94, 206, .11);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fa-orb { transition: transform .25s cubic-bezier(.2, .8, .2, 1); }
+  .fa-orb:active { transform: scale(.92); }
+}
+
+.fa-sr {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+
+
+/* ============================================================
+   P.O.V. — direction D (Arc). Type: Ploni AAA (200–900).
+   ============================================================ */
+:root{
+  --fa-display: var(--fa-font);
+  --stage-h: calc(100svh - var(--fa-bar-h));
+  --notch-clear: 48px;            /* the header tongue hangs 43px below the bar */
+  --ease: cubic-bezier(.22,.9,.24,1);
+  --ink: var(--ds-black);
+
+  /* the dream palette — the three brand hues, and the pale tint ramp the
+     page background is built from. The blooms stay barely-there tints: the
+     light, happy backdrop is the point, not the colour. */
+  --c-blue:    var(--ds-blue);
+  --c-purple:  var(--ds-purple);
+  --c-magenta: var(--ds-pink);
+  --t-sky-1:   #EFEDFF;
+  --t-sky-2:   #F7F0FB;
+  --t-sky-3:   #FBF1FA;
+  --t-sky-4:   #FFF6ED;
+}
+*{box-sizing:border-box}
+html,body{margin:0;overscroll-behavior:none;background:var(--ds-bg)}
+body{position:relative}   /* the backdrop stretches over the whole document */
+body{font-family:var(--fa-display);color:#fff}
+img,video{display:block}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.bg{position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--ds-bg)}
+#stage{position:relative;z-index:1}
+.scrim{position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(to top, rgba(6,7,16,.92) 0%, rgba(6,7,16,.56) 34%, rgba(6,7,16,0) 68%),
+            linear-gradient(to bottom, rgba(6,7,16,.42) 0%, transparent 26%)}
+.kicker{font:var(--ds-body1-bold);opacity:.7}
+.meta{font:var(--ds-body1);opacity:.66}
+.title{font-weight:700;letter-spacing:0;line-height:1;margin:2px 0}
+.cta{transition:transform .18s var(--ease)}
+.cta:active{transform:scale(.97)}
+.ask__panel{margin-inline:-14px;padding:80px 10px 72px;border-radius:28px;
+ background:
+  radial-gradient(42% 9%  at 82%  3%, #FFDCF3 0%, rgba(255,220,243,0) 70%),
+  radial-gradient(38% 8%  at 10%  9%, #D6ECFF 0%, rgba(214,236,255,0) 72%),
+  radial-gradient(46% 8%  at 58% 17%, #EDE4FF 0%, rgba(237,228,255,0) 70%),
+  radial-gradient(40% 9%  at  6% 26%, #FFE7CE 0%, rgba(255,231,206,0) 72%),
+  radial-gradient(44% 8%  at 90% 33%, #FFD9F0 0%, rgba(255,217,240,0) 70%),
+  radial-gradient(40% 9%  at 28% 41%, #D9EAFF 0%, rgba(217,234,255,0) 72%),
+  radial-gradient(46% 8%  at 72% 50%, #F1E4FF 0%, rgba(241,228,255,0) 70%),
+  radial-gradient(38% 9%  at 12% 59%, #FFE9D6 0%, rgba(255,233,214,0) 72%),
+  radial-gradient(44% 8%  at 86% 67%, #E4E8FF 0%, rgba(228,232,255,0) 70%),
+  radial-gradient(42% 9%  at 34% 76%, #FFDFF0 0%, rgba(255,223,240,0) 72%),
+  radial-gradient(46% 9%  at 68% 85%, #E9F1FF 0%, rgba(233,241,255,0) 70%),
+  radial-gradient(44% 10% at 18% 95%, #FFEEDC 0%, rgba(255,238,220,0) 72%),
+  linear-gradient(180deg,var(--t-sky-1) 0%, var(--t-sky-2) 34%, var(--t-sky-3) 62%, var(--t-sky-4) 100%)}
+/* the windows keep the 36px inset they had before the band wrapped them */
+
+/* ============================================================
+   ALL ADD-ONS · everything the points buy that isn't an experience.
+   Static images only. Two kinds of add-on: things for the way (lounge,
+   transfer, fast track, eSIM) and things FlyAll ships home (kits, gear).
+   Layout: the way as wide still strips (the all-experiences row), then the
+   kits on the sky band as a grid.
+   ============================================================ */
+:root{--plate:linear-gradient(145deg,#1B5ECE 0%,#824AEA 50.481%,#F63DE4 100%)}
+body{color:var(--ink)}
+.page{--pf:'Ploni',system-ui,sans-serif;position:relative;z-index:1;font-family:var(--pf);color:var(--ink);overflow-x:clip}
+.page h2,.page h3,.page h4,.page h5,.page p{margin:0}
+
+/* ---- the lead: the same title block as "כל החוויות" ---- */
+.lead{padding:88px 20px 0;text-align:center;display:flex;flex-direction:column;align-items:center}
+.lead h2{font:700 min(72px,18.4vw)/1 var(--pf);letter-spacing:0}
+.lead__sub{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;
+ font:400 17px/1.4 var(--pf);color:var(--ds-gray)}
+.lead__sub b{font-weight:700;color:var(--ink)}
+.lead__sub i,.dot{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.6;flex:none}
+.lead__home{margin-bottom:20px;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 13px 0 12px;
+ border-radius:999px;font:600 14px/1 var(--pf);color:var(--ds-blue);text-decoration:none;white-space:nowrap;
+ background:rgba(255,255,255,.75);border:1px solid #E6E1F2;box-shadow:0 4px 12px rgba(58,26,124,.08)}
+
+/* ---- the sky band the list sits on (same as the lobby / all-experiences) ---- */
+.band.ask__panel{margin:44px 0 0;padding:36px 0 56px}
+.bhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 20px}
+.bhead h3{font:700 28px/1.1 var(--pf)}
+.bhead h3 span{font-weight:300;color:var(--ds-gray);margin-inline-start:6px;unicode-bidi:isolate}
+.bhead__sub{padding:0 20px;margin-top:8px;font:400 15px/1.4 var(--pf);color:#5B6170}
+.bhead__link{display:inline-flex;align-items:center;gap:5px;font:600 15px/1 var(--pf);color:var(--ds-blue);white-space:nowrap}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin:0 0 10px;font:600 14px/1 var(--pf);color:var(--ds-blue)}
+.eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ds-blue)}
+
+/* ---- shared bits ---- */
+.pill{flex:none;height:32px;padding:0 13px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;
+ font:400 14px/1 var(--pf);color:var(--ink);white-space:nowrap;
+ border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--ds-gradient) border-box}
+.pill b,.gtx{font-weight:700;padding:.1em 0;background-image:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill b{font-size:16px}
+.pill--sm{height:28px;padding:0 11px;font-size:13px}
+.pill--sm b{font-size:15px}
+.tag{position:absolute;top:10px;right:10px;z-index:2;height:24px;padding:0 9px;border-radius:999px;
+ display:flex;align-items:center;font:600 12px/1 var(--pf);white-space:nowrap;
+ color:#fff;background:rgba(6,7,16,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tag--light{color:var(--ds-purple);background:rgba(255,255,255,.88)}
+.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art{position:absolute;inset:10%}
+.art svg{display:block;width:100%;height:100%;overflow:visible}
+.tint{background:
+  radial-gradient(62% 56% at 50% 48%,#fff 0%,rgba(255,255,255,0) 72%),
+  linear-gradient(160deg,#E6F0FF 0%,#EFE7FF 52%,#FFE9F7 100%)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:0 20px;margin-top:22px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:36px;padding:0 16px;border-radius:999px;font:600 15px/1 var(--pf);color:var(--ink);
+ background:#fff;border:1px solid rgba(4,15,33,.07);box-shadow:0 4px 12px rgba(58,26,124,.08)}
+.chip.on{color:#fff;border-color:transparent;background-image:var(--ds-gradient);box-shadow:0 8px 18px rgba(130,74,234,.32)}
+.add{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--ds-purple);
+ border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--ds-gradient) border-box}
+.is-hidden{display:none!important}
+/* the sticker treatment from the lobby: a white die-cut edge and a soft lift */
+.stk svg{filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
+ drop-shadow(0 12px 16px rgba(58,26,124,.22))}
+
+
+/* ============ the way — strips; the kits — a grid on the band ============ */
+.o2 .road{margin-top:48px}
+.o2 .band{margin-top:56px}
+.o2 .kits{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px;margin-top:24px}
+.o2 .k{position:relative;background:#fff;border-radius:22px;padding:12px 12px 14px;box-shadow:0 10px 24px rgba(58,26,124,.08)}
+.o2 .k .img{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden}
+.o2 .k h4{margin:12px 2px 0;font:700 16px/1.15 var(--pf)}
+.o2 .k p{margin:3px 2px 0;font:400 13px/1.3 var(--pf);color:var(--ds-gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.o2 .k .pill{margin-top:0}
+.buyrow{display:flex;align-items:center;gap:8px;flex:none}
+.o2 .k .buyrow{margin-top:auto;padding-top:10px;justify-content:space-between}
+/* points and arrow always sit on the card's bottom edge, whatever the copy length */
+.o2 .k:not(.k--hero){display:flex;flex-direction:column}
+.o2 .k > div:last-child{flex:1;display:flex;flex-direction:column}
+.buy{flex:none;width:30px;height:30px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+ background:var(--ds-light-blue-2);color:var(--ds-blue);font:600 15px/1 var(--pf);white-space:nowrap;
+ transition:background .2s var(--ease),transform .18s var(--ease)}
+.buy:hover{background:#D3E9FF}
+.buy:active{transform:scale(.94)}
+.buy svg{width:16px;height:16px}
+.buy svg{flex:none}
+/* wide card: the copy column runs the image's full height — title and text at the top, price and arrow on the bottom edge */
+.o2 .k--hero{grid-column:span 2;display:flex;align-items:stretch;gap:14px}
+.o2 .k--hero > div:last-child{padding:4px 0 2px}
+.o2 .k--hero .img{flex:none;width:46%;align-self:flex-start}
+.o2 .k--hero h4{font-size:20px;margin-top:0}
+.o2 .k--hero p{white-space:normal}
+/* phones: the columns may shrink below their content, so a long price never pushes a card past the gutter */
+.o2 .kits{grid-template-columns:repeat(2,minmax(0,1fr))}
+.o2 .k,.o2 .k > div{min-width:0}
+.o2 .k .buyrow{align-items:flex-end;gap:6px}
+.o2 .k .buyrow .pill{min-width:0;flex:0 1 auto}
+/* the guest price ("₪… · או … נק׳") is too long for a half-width card: it breaks onto a second line */
+.o2 .k:not(.k--hero) .pill{flex-direction:column;align-items:flex-start;height:auto;min-height:28px;
+ padding:6px 12px;gap:2px;border-radius:14px;line-height:1.2}
+.o2 .k:not(.k--hero) .pill .g-dot{display:none}
+.g-m,.g-p{white-space:nowrap}
+
+
+.o2 .rows{padding:24px 20px 0}
+.o2 .v{position:relative;aspect-ratio:21/9;border-radius:18px;overflow:hidden;isolation:isolate;
+ background:#11121C;border:1.5px solid rgba(6,7,15,.72);box-shadow:0 14px 26px rgba(58,26,124,.22)}
+.o2 .v::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:linear-gradient(to top,rgba(6,7,16,.74) 0%,rgba(6,7,16,.12) 58%,rgba(6,7,16,.3) 100%)}
+.o2 .v--plate{background:var(--plate);border-color:rgba(255,255,255,.8)}
+.o2 .v--plate::after{background:linear-gradient(to top,rgba(20,10,60,.35) 0%,rgba(20,10,60,0) 60%)}
+.o2 .v--plate .art{inset:6% auto 6% 5%;aspect-ratio:1;z-index:1}
+.o2 .v .tag{top:12px;right:12px;height:26px;padding:0 10px}
+.o2 .v h4{position:absolute;z-index:1;right:14px;left:40%;bottom:11px;font:700 24px/1.05 var(--pf);color:#fff;text-shadow:0 2px 14px rgba(6,7,16,.4)}
+.o2 .v:not(.v--plate) h4{left:14px}
+.o2 .info{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 4px 0}
+.o2 .info p{min-width:0;font:400 14px/1.3 var(--pf);color:var(--ds-gray)}
+/* phone · the category page's strip, as is (minus its play button): a wide, low band of
+   footage with the title on it, the details on the right under it and the points on the left */
+.row{position:relative;cursor:pointer}
+.row + .row{margin-top:32px}      /* matches the visible gap from the "כל החוויות" letters to the search pill */
+.row__v{position:relative;aspect-ratio:21/9;border-radius:18px;overflow:hidden;isolation:isolate;
+ background:#11121C;border:1.5px solid rgba(6,7,15,.72);
+ box-shadow:0 14px 26px rgba(58,26,124,.22);
+ opacity:0;transform:translateY(34px) scale(.95);
+ transition:opacity .8s var(--ease) var(--d,0s), transform 1s var(--ease) var(--d,0s),
+   box-shadow .45s var(--ease)}
+.row.in .row__v{opacity:1;transform:none}
+.row.on .row__v{box-shadow:0 18px 34px rgba(130,74,234,.34)}
+/* the footage settles in from a slight push, like a camera coming to rest */
+.row__v video{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;
+ transform:scale(1.18);transition:transform 1.8s var(--ease) var(--d,0s)}
+.row.in .row__v video{transform:scale(1)}
+.row__v::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(to top, rgba(6,7,16,.74) 0%, rgba(6,7,16,.12) 58%, rgba(6,7,16,.3) 100%)}
+.row__kicker{position:absolute;top:12px;right:12px;height:26px;padding:0 10px;border-radius:999px;
+ display:flex;align-items:center;font:600 12px/1 var(--pf);color:#fff;
+ background:rgba(6,7,16,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.row h4{position:absolute;right:14px;left:14px;bottom:11px;margin:0;
+ font:700 24px/1.05 var(--pf);color:#fff;text-shadow:0 2px 14px rgba(6,7,16,.5)}
+/* the copy on the band and the line under it arrive a beat after the band */
+.row__kicker,.row h4,.row__info{opacity:0;transform:translateY(12px);
+ transition:opacity .6s var(--ease) calc(var(--d,0s) + var(--k)), transform .8s var(--ease) calc(var(--d,0s) + var(--k))}
+.row__kicker{--k:.3s} .row h4{--k:.4s} .row__info{--k:.55s}
+.row.in .row__kicker,.row.in h4,.row.in .row__info{opacity:1;transform:none}
+
+.row__info{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 4px 0}
+.row__meta{margin:0;min-width:0;font:400 14px/1.3 var(--pf);color:var(--ds-gray);
+ display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.row__meta i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.6;flex:none}
+.row__pill{flex:none;height:32px;padding:0 13px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;
+ font:400 14px/1 var(--pf);color:var(--ink);white-space:nowrap;
+ border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--ds-gradient) border-box;
+ transition:transform .2s var(--ease)}
+.row__pill b{font-weight:700;font-size:16px;padding:.1em 0;
+ background-image:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.row:active .row__pill{transform:scale(.96)}
+@media (hover: hover){
+  .row.in.open .row__v{transform:translateY(-3px);box-shadow:0 22px 40px rgba(130,74,234,.36)}
+  .row.in.open .row__v video{transform:scale(1.05)}
+}
+@media (prefers-reduced-motion: reduce){
+  .row__v,.row__v video,.row__kicker,.row h4,.row__info{transition:none!important;opacity:1!important;transform:none!important}
+}
+
+
+
+/* ============================================================
+   RESPONSIVE — header only for now, same lines as the lobby (pov-reels-v2.html):
+   below 1024px the mobile header, 1024px and up the design system's desktop bar
+   ============================================================ */
+.fa-dh{display:none}
+@media (min-width:600px) and (max-width:1023px){
+  :root{ --fa-notch-w:132px; }                 /* the tongue stops growing with the screen */
+  .fa-header__decor{left:50%;width:390px;transform:translateX(-50%)}
+}
+@media (min-width:1024px){
+  /* header — the design system's desktop bar replaces the traced mobile one.
+     Figma: Header / Desktop / "Header - Login + Points" (1440 wide, bar 78 tall).
+     Every number is from that node; the side padding and the two gaps close in
+     from 140 / 88 at 1440 to 40 / 32 at 1024 so the points line still fits. */
+  :root{ --fa-bar-h:78px; }
+  .fa-header__decor,.fa-header__shape,.fa-header__content,.fa-header__notch--orb{display:none}
+  .fa-dh{display:block;position:relative;height:78px}
+  .fa-dh__bar{position:relative;z-index:2;height:78px;box-sizing:border-box;
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(32px, calc((100vw - 1024px) * .134 + 32px), 88px);
+    padding:18px clamp(40px, calc((100vw - 1024px) * .24 + 40px), 140px);
+    background:#fff;border-radius:0 0 16px 16px;filter:drop-shadow(0 4px 10px rgba(38,48,61,.15))}
+  .fa-dh__start{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:24px}
+  .fa-dh__end{flex:1 1 0;min-width:0;height:40px;display:flex;align-items:center;justify-content:flex-end}
+  .fa-dh__logo{flex:none;width:147px;display:flex}
+  .fa-dh__logo img,.fa-dh__points img{display:block}
+  /* avatar: a 31.5 ring (1.969 stroke) centred in its 42 box */
+  .fa-dh__avatar{flex:none;position:relative;width:31.5px;height:31.5px;margin:5.25px;padding:0;box-sizing:border-box;
+    border:1.969px solid var(--ds-blue);border-radius:32.484px;background:#fff;cursor:pointer}
+  .fa-dh__avatar img{position:absolute;left:3.31px;top:7.87px}
+  /* the 42px divider is drawn horizontal in the file and stood on its end */
+  .fa-dh__rule{align-self:stretch;width:0;position:relative;flex:none}
+  .fa-dh__rule img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg)}
+  .fa-dh__points{display:flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;
+    color:var(--ds-blue);font:400 16px/20px var(--ds-font)}
+  .fa-dh__points b{font-weight:600;line-height:16px;text-decoration:underline;text-underline-position:from-font}
+  .fa-dh__menu{width:42px;height:42px;display:grid;place-items:center;padding:0;border:0;background:none;cursor:pointer}
+  .fa-dh__menu span{position:relative;display:block;width:31.5px;height:21px}
+  .fa-dh__menu img{position:absolute;left:0;bottom:0}
+  /* the tongue and the orb hang under the bar, 2.5px left of centre as drawn */
+  .fa-dh__notch{position:absolute;z-index:3;top:78px;left:calc(50% - 2.5px);transform:translateX(-50%);
+    width:240.997px;height:78.788px;pointer-events:none}
+  .fa-dh__union{position:absolute;left:.58px;top:0;width:297.33px;height:78.892px;
+    display:flex;align-items:center;justify-content:center}
+  .fa-dh__union img{flex:none;transform:rotate(90deg)}
+  .fa-dh__orb{position:absolute;left:91.04px;top:13px;width:55px;height:55px;padding:0;border:0;
+    border-radius:37.206px;pointer-events:auto;cursor:pointer;
+    background:#fff url("assets/orb.png") center / cover no-repeat;
+    box-shadow:0 1.618px 12.294px rgba(136,73,234,.5), inset 0 -1.618px 61.794px rgba(27,94,206,.11);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+  .fa-dh__orb:active{transform:scale(.94)}
+  /* the soft bloom behind the tongue: a 314 × 170.57 box whose art bleeds 37.37% / 20.3% out */
+  .fa-dh__glow{position:absolute;z-index:1;top:-66.74px;left:calc(50% - 215.24px);
+    width:441.492px;height:298.06px;max-width:none;pointer-events:none}
+
+}
+/* ============================================================
+   DESKTOP (1024px and up) · the way on one stage, the kits on a rail.
+   One add-on for the way plays large with its copy and CTA; the other two
+   wait beside it as stills and swap onto the stage when clicked. The kits
+   run as a single scrolling shelf with arrows. Below 1024px none of this applies.
+   ============================================================ */
+@media (min-width:1024px){
+  :root{ --gutter:clamp(40px,7.6vw,110px); }
+  .page .dsk{width:min(1280px, calc(100% - 2 * var(--gutter)));margin-inline:auto}
+  .page .lead{padding:110px 0 0}
+  .page .lead h2{font-size:80px}
+  .page .lead__sub{margin-top:16px;font-size:19px}
+  .page .bhead,.page .bhead__sub{padding:0}
+  .page .bhead{align-items:center}
+  .page .bhead h3{font-size:36px}
+  .page .bhead__sub{margin-top:10px;font-size:17px}
+  .page .band.ask__panel{margin:88px 0 0;padding:72px 0 140px;border-radius:48px 48px 0 0}
+
+  /* the kits, a notch roomier than on the phone */
+  .o2 .k{padding:14px 14px 20px;border-radius:26px;box-shadow:0 14px 34px rgba(58,26,124,.10);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease);cursor:pointer}
+  .o2 .k:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(58,26,124,.16)}
+  .o2 .k .img{border-radius:18px}
+  .o2 .k h4{margin-top:16px;font-size:20px}
+  .o2 .k p{margin-top:5px;font-size:15px}
+  .o2 .k .buyrow{padding-top:14px}
+  .buy{width:34px;height:34px}
+
+  /* the stage */
+  .o2 .v{border-radius:24px}
+  .o2 .v .tag{top:16px;right:16px}
+  .s3{margin-top:80px}
+  .s3__stage{margin-top:32px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;height:600px}
+  .page .s3__main{height:100%;aspect-ratio:auto}
+  .s3__main::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(to left,rgba(6,7,16,.5) 0%,rgba(6,7,16,0) 55%)}
+  .o2 .cap{position:absolute;z-index:1;right:44px;bottom:40px;max-width:540px;color:#fff}
+  .o2 .cap h4{position:static;font:700 60px/1.05 var(--pf);text-shadow:0 2px 14px rgba(6,7,16,.4)}
+  .o2 .cap p{margin-top:8px;font:400 17px/1.4 var(--pf);color:rgba(255,255,255,.84)}
+  .cap__foot{margin-top:18px;display:flex;align-items:center;gap:12px}
+  .add-cta{height:46px;padding:0 22px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;
+    background:var(--ds-gradient);color:#fff;font:700 16px/1 var(--pf);box-shadow:0 12px 26px rgba(130,74,234,.4);
+    transition:transform .18s var(--ease)}
+  .add-cta:active{transform:scale(.97)}
+  .s3__side{display:flex;flex-direction:column;gap:24px}
+  .s3__thumb{position:relative;flex:1;border-radius:24px;overflow:hidden;isolation:isolate;text-align:right;color:#fff;
+    box-shadow:0 14px 26px rgba(58,26,124,.2)}
+  .s3__thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+  .s3__thumb:hover img{transform:scale(1.05)}
+  .s3__thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,7,16,.8),rgba(6,7,16,0) 62%)}
+  .s3__tt{position:absolute;z-index:1;right:20px;left:20px;bottom:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  .s3__tt b{font:700 24px/1.1 var(--pf)}
+  .s3__tt .pill b{font:700 15px/1 var(--pf)}   /* the title's size must not reach the price inside the pill */
+
+  /* the rail */
+  .page .kits--rail{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 6px 30px;margin:30px -6px 0}
+  .kits--rail::-webkit-scrollbar{display:none}
+  .kits--rail .k{flex:0 0 calc((100% - 4 * 22px) / 4.4);scroll-snap-align:start}
+  .rail-nav{display:flex;gap:10px}
+  .rail-btn{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--ds-blue);
+    box-shadow:0 6px 16px rgba(58,26,124,.12);transition:transform .18s var(--ease)}
+  .rail-btn:active{transform:scale(.94)}
+}
+@media (min-width:1024px) and (prefers-reduced-motion: reduce){
+  .o2 .k,.s3__thumb img{transition:none}
+}
+
+/* ---------- footer (from pov-reels) ---------- */
+.foot{position:relative;z-index:1}
+.foot{--pf:'Ploni',system-ui,sans-serif;background:#F4F7FD;padding:40px 16px;
+ display:flex;flex-direction:column;gap:40px;color:var(--ink);font-family:var(--pf)}
+.foot a{text-decoration:none;color:inherit}
+.foot__groups{display:flex;flex-direction:column;gap:32px}
+.foot__group{display:flex;flex-direction:column;text-align:right}
+.foot__group h4,.foot__group > a,.foot__note,.foot__legal{text-box:trim-both cap alphabetic}
+.foot__group h4{margin:0;padding:16px 20px;font:600 18px/normal var(--pf)}
+.foot__group > a{display:block;padding:12px 20px;font:400 18px/normal var(--pf)}
+.foot__note{margin:0;padding:2px 20px;font:400 14px/18px var(--pf);color:#363636}
+.foot__note span{display:block;width:227px}
+.foot__social{display:flex;gap:16px;padding:12px 20px}
+.foot__social a{flex:none;transition:transform .2s var(--ease)}
+.foot__social a:active{transform:scale(.92)}
+.foot__social img{display:block;width:40px;height:40px}
+.foot__rule{display:block;width:100%;height:1px}
+.foot__legal{margin:0 auto;width:338px;max-width:100%;text-align:center;
+ font:400 16px/16px var(--pf)}
+@media (min-width:1024px){
+  .foot{padding:64px var(--gutter) 40px}
+  .foot__groups{flex-direction:row;gap:clamp(48px,8vw,120px)}
+  .foot__legal{width:auto;max-width:900px}
+}
+/* ---- demo: guest / signed-in switch ---- */
+/* guest: money price up front, points as the card holder's teaser */
+.g-price,.m-price{display:contents}
+/* money or points with the spark for everyone, signed in or not */
+.m-price{display:none!important}
+.spark{display:inline-block;width:.95em;height:.95em;vertical-align:-.12em;background:var(--ds-gradient);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 5Q11.53 12.47 19 14Q11.53 15.53 10 23Q8.47 15.53 1 14Q8.47 12.47 10 5ZM19 .5Q19.77 4.23 23.5 5Q19.77 5.77 19 9.5Q18.23 5.77 14.5 5Q18.23 4.23 19 .5Z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 5Q11.53 12.47 19 14Q11.53 15.53 10 23Q8.47 15.53 1 14Q8.47 12.47 10 5ZM19 .5Q19.77 4.23 23.5 5Q19.77 5.77 19 9.5Q18.23 5.77 14.5 5Q18.23 4.23 19 .5Z'/%3E%3C/svg%3E") center/contain no-repeat}
+/* guest: every personal touch becomes an invitation to the FlyAll credit card */
+.fa-join,.fa-dh__join,.ask__join,.perks__join{display:none}
+body.is-guest .fa-avatar,body.is-guest .fa-points,
+body.is-guest .fa-dh__avatar,body.is-guest .fa-dh__rule,body.is-guest .fa-dh__points{display:none}
+body.is-guest .fa-join{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:15px;
+  background:var(--ds-gradient);color:#fff;font:700 12px/1 var(--ds-font);text-decoration:none;white-space:nowrap;direction:rtl}
+body.is-guest .fa-dh__join{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:22px;
+  background:var(--ds-gradient);color:#fff;font:700 16px/1 var(--ds-font);text-decoration:none;white-space:nowrap;direction:rtl}
+.who{position:fixed;left:12px;bottom:12px;z-index:900;display:flex;padding:3px;border-radius:20px;
+  background:rgba(255,255,255,.92);box-shadow:0 2px 12px rgba(4,15,33,.18);backdrop-filter:blur(8px);
+  font:600 12px/1 var(--ds-font);direction:rtl}
+.who button{border:0;background:none;padding:7px 12px;border-radius:17px;color:var(--ds-gray);font:inherit;cursor:pointer}
+.who button[aria-pressed="true"]{background:var(--ds-blue);color:#fff}
+/* ---- signed in: the flight path under the title ---- */
+.trip{display:flex;flex-direction:column;align-items:center;width:100%;max-width:340px;margin-top:22px;text-align:center}
+body.is-guest .trip{display:none}
+.trip__arc{display:block;width:100%;height:auto;overflow:visible}
+.trip__arc--d{display:none}
+.trip__end{font:400 13px/1 var(--pf);fill:var(--ds-gray)}
+.trip__tag text{font:700 13px/1 var(--pf);fill:var(--ds-purple)}
+.trip strong{margin-top:6px;font:700 18px/1.3 var(--pf);color:var(--ink)}
+.trip span{margin-top:4px;font:400 15px/1.4 var(--pf);color:var(--ds-gray)}
+@media (min-width:1024px){
+  /* desktop: the arc runs across the page, the copy sits under its middle */
+  .trip{width:min(1280px, calc(100% - 2 * var(--gutter)));max-width:none;margin-top:44px}   /* a little clear of the title */
+  .trip strong{position:relative;margin-top:-84px}                                             /* the copy tucked up inside the arc */
+  .trip__arc--m{display:none}
+  .trip__arc--d{display:block}
+  .trip strong{font-size:22px}
+  .trip span{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+
+
+<header class="fa-header">
+
+  <!-- ambient glow + stars, behind the white silhouette -->
+  <div class="fa-header__decor" aria-hidden="true">
+    <svg viewBox="4 0 390 123" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="faGrad" x1="103" y1="0" x2="301" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1B5ECE"/>
+          <stop offset="0.504808" stop-color="#824AEA"/>
+          <stop offset="1" stop-color="#F63DE4"/>
+        </linearGradient>
+        <filter id="faBlur0" x="174.461" y="-25.793" width="166.538" height="154.018" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="20"/></filter>
+        <filter id="faBlur1" x="126.687" y="-9.23051" width="164.195" height="151.674" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="19.4141"/></filter>
+        <filter id="faBlur2" x="119.687" y="-39.1094" width="185.072" height="169.68" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="19.4141"/></filter>
+        <filter id="faBlur3" x="64.1718" y="-16.8282" width="164.195" height="151.674" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="19.4141"/></filter>
+      </defs>
+      <g filter="url(#faBlur0)"><path d="M283.697 49.3951C283.697 70.8393 305.141 88.2237 283.697 88.2237C262.252 88.2237 214.535 85.3577 214.535 63.9134C214.535 42.4692 212.202 14.207 233.647 14.207C346.189 18.1079 283.697 27.9509 283.697 49.3951Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+<g filter="url(#faBlur1)"><path d="M234.751 64.7857C234.751 86.2299 256.195 103.614 234.751 103.614C213.307 103.614 165.59 100.748 165.59 79.3041C165.59 57.8599 163.257 29.5977 184.701 29.5977C297.243 33.4985 234.751 43.3415 234.751 64.7857Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+<g filter="url(#faBlur2)"><path d="M244.454 43.467C244.454 70.1279 271.072 91.7413 244.454 91.7413C217.837 91.7413 158.608 88.1781 158.608 61.5172C158.608 34.8563 155.712 -0.28125 182.33 -0.28125C322.022 4.56852 244.454 16.8061 244.454 43.467Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+<g filter="url(#faBlur3)"><path d="M172.236 57.1881C172.236 78.6323 193.68 96.0167 172.236 96.0167C150.791 96.0167 103.075 93.1506 103.075 71.7064C103.075 50.2622 100.741 22 122.186 22C234.728 25.9008 172.236 35.7439 172.236 57.1881Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+      <circle opacity="0.4" cx="278.542" cy="21.8783" r="1.01115" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="293.206" cy="53.226" r="1.01115" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="208.774" cy="15.8092" r="1.01115" transform="rotate(180 208.774 15.8092)" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="146.081" cy="58.7857" r="1.01115" transform="rotate(180 146.081 58.7857)" fill="white" fill-opacity="0.8"/>
+<circle opacity="0.4" cx="192.086" cy="12.7779" r="1.01115" transform="rotate(180 192.086 12.7779)" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="131.419" cy="27.4381" r="1.01115" transform="rotate(180 131.419 27.4381)" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="148.753" cy="113.997" r="1.01115" transform="rotate(-180 148.753 113.997)" fill="white" fill-opacity="0.8"/>
+<circle opacity="0.4" cx="150.823" cy="84.0514" r="1.01115" transform="rotate(-180 150.823 84.0514)" fill="white" fill-opacity="0.7"/>
+<circle opacity="0.4" cx="281.216" cy="77.0893" r="1.01115" fill="white" fill-opacity="0.8"/>
+<circle opacity="0.4" cx="235.211" cy="123.097" r="1.01115" fill="white" fill-opacity="0.7"/>
+<circle opacity="0.4" cx="295.882" cy="108.437" r="1.01115" fill="white" fill-opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- white silhouette: bar + notch under one shadow -->
+  <div class="fa-header__shape" aria-hidden="true">
+    <div class="fa-header__bar"></div>
+    <div class="fa-header__notch">
+      <svg viewBox="129.499 63.7988 132 42.9006" xmlns="http://www.w3.org/2000/svg">
+        <path d="M129.499 63.7988C146.51 63.7988 158.112 79.122 167.491 93.3126C174.724 104.254 185.911 106.827 193.849 106.699C201.926 106.569 210.817 104.672 217.247 97.1036C229.833 82.2878 242.059 63.7988 261.499 63.7988Z" fill="#fff"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- controls -->
+  <div class="fa-header__content">
+
+    <div class="fa-header__left">
+      <button class="fa-avatar" type="button" aria-label="החשבון שלי"><span class="fa-avatar__txt">AG</span></button>
+
+      <a class="fa-join" href="#join">הצטרף ל-FlyAll</a>
+      <a class="fa-points" href="#points">
+        <span class="fa-sr">יתרת הנקודות שלי:</span>
+        <span class="fa-points__value">500</span>
+        <svg class="fa-points__coins" viewBox="86.625 25.125 18.75 13.75" aria-hidden="true"
+             xmlns="http://www.w3.org/2000/svg"><path d="M100.375 28.9977V28.5625C100.375 26.6031 97.4195 25.125 93.5 25.125C89.5805 25.125 86.625 26.6031 86.625 28.5625V31.6875C86.625 33.3195 88.6758 34.6164 91.625 35.0047V35.4375C91.625 37.3969 94.5805 38.875 98.5 38.875C102.42 38.875 105.375 37.3969 105.375 35.4375V32.3125C105.375 30.6953 103.389 29.3969 100.375 28.9977ZM104.125 32.3125C104.125 33.3453 101.72 34.5 98.5 34.5C98.2086 34.5 97.9195 34.4898 97.6344 34.4711C99.3195 33.857 100.375 32.8594 100.375 31.6875V30.2609C102.709 30.6086 104.125 31.5523 104.125 32.3125ZM91.625 33.7383V31.8797C92.2467 31.9607 92.873 32.0009 93.5 32C94.127 32.0009 94.7533 31.9607 95.375 31.8797V33.7383C94.7542 33.83 94.1275 33.8757 93.5 33.875C92.8725 33.8757 92.2458 33.83 91.625 33.7383ZM99.125 30.5883V31.6875C99.125 32.343 98.1555 33.0469 96.625 33.4742V31.6484C97.6336 31.4039 98.4875 31.0398 99.125 30.5883ZM93.5 26.375C96.7195 26.375 99.125 27.5297 99.125 28.5625C99.125 29.5953 96.7195 30.75 93.5 30.75C90.2805 30.75 87.875 29.5953 87.875 28.5625C87.875 27.5297 90.2805 26.375 93.5 26.375ZM87.875 31.6875V30.5883C88.5125 31.0398 89.3664 31.4039 90.375 31.6484V33.4742C88.8445 33.0469 87.875 32.343 87.875 31.6875ZM92.875 35.4375V35.1117C93.0805 35.1195 93.2883 35.125 93.5 35.125C93.8031 35.125 94.0992 35.1148 94.3898 35.0977C94.7127 35.2132 95.0416 35.3113 95.375 35.3914V37.2242C93.8445 36.7969 92.875 36.093 92.875 35.4375ZM96.625 37.4883V35.625C97.2465 35.7085 97.8729 35.7503 98.5 35.75C99.127 35.7509 99.7533 35.7107 100.375 35.6297V37.4883C99.1316 37.6706 97.8684 37.6706 96.625 37.4883ZM101.625 37.2242V35.3984C102.634 35.1539 103.488 34.7898 104.125 34.3383V35.4375C104.125 36.093 103.155 36.7969 101.625 37.2242Z"/></svg>
+      </a>
+    </div>
+
+    <a class="fa-logo" href="#home" aria-label="FlyAll">
+      <svg viewBox="154.555 18.998 88.889 26.009" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="faLogoGrad" x1="160.842" y1="42.732" x2="176.749" y2="20.8419"
+                          gradientUnits="userSpaceOnUse">
+            <stop stop-color="#1B5ECE"/><stop offset="0.11" stop-color="#2F5AD3"/>
+            <stop offset="0.34" stop-color="#644FE0"/><stop offset="0.47" stop-color="#8749EA"/>
+            <stop offset="0.78" stop-color="#CA41E6"/><stop offset="1" stop-color="#FF3CE3"/>
+          </linearGradient>
+        </defs>
+        <path d="M166.969 32.2799H163.768L166.836 37.9317H166.201C165.851 37.9317 165.519 37.7754 165.296 37.5066L161.263 32.6417C161.073 32.413 160.791 32.2812 160.494 32.2812H159.332C158.876 32.2812 158.505 31.9117 158.505 31.4543C158.505 30.9968 158.875 30.6273 159.332 30.6273H160.494C160.791 30.6273 161.073 30.4955 161.263 30.2668L165.296 25.4019C165.519 25.1318 165.851 24.9768 166.201 24.9768H166.836L163.768 30.6286H166.969C172.951 30.6286 177.802 25.7779 177.802 19.7953C177.802 19.3547 177.446 18.998 177.005 18.998H167.013C160.132 18.998 154.555 24.5749 154.555 31.4555C154.555 38.3362 160.132 43.913 167.013 43.913H177.005C177.446 43.913 177.802 43.5564 177.802 43.1158C177.802 37.1332 172.951 32.2825 166.969 32.2825" fill="url(#faLogoGrad)"/>
+<path d="M191.09 23.4069H186.243C184.813 23.3591 183.339 23.9741 182.205 25.097C180.94 26.3478 180.264 28.0198 180.303 29.8004V38.4422C180.303 38.9991 180.757 39.4527 181.313 39.4527H183.241C183.798 39.4527 184.252 38.9991 184.252 38.4422V34.3952C184.252 34.2983 184.331 34.2182 184.429 34.2182H190.449C191.006 34.2182 191.459 33.7647 191.459 33.2078V31.5551C191.459 30.9982 191.006 30.5447 190.449 30.5447L184.252 30.5472V30.1208L184.248 30.0769C184.208 29.812 184.125 28.8856 184.736 28.087C185.638 26.9086 187.215 27.0985 187.23 27.1011L191.09 27.1037C191.585 27.1037 191.986 26.7018 191.986 26.207V24.3049C191.986 23.81 191.585 23.4082 191.09 23.4082V23.4069Z" fill="var(--fa-ink)"/>
+<path d="M197.445 23.4043H195.609C195.051 23.4043 194.598 23.8567 194.598 24.4147V38.428C194.598 38.986 195.051 39.4384 195.609 39.4384H197.445C198.003 39.4384 198.455 38.986 198.455 38.428V24.4147C198.455 23.8567 198.003 23.4043 197.445 23.4043Z" fill="var(--fa-ink)"/>
+<path d="M212.872 27.4915H210.36C209.976 27.4915 209.665 27.8042 209.665 28.1867V33.3669C209.665 34.8192 208.688 35.9137 207.393 35.9137C206.013 35.9137 205.19 34.9872 205.19 33.4354V28.1854C205.19 27.8016 204.877 27.4902 204.495 27.4902H202.075C201.691 27.4902 201.38 27.8029 201.38 28.1854V33.5504C201.38 37.3867 203.421 39.5872 206.981 39.5872C208.09 39.5872 209.011 39.2758 209.691 38.6801C209.533 40.4077 208.528 41.4234 206.936 41.4234C206.137 41.4234 205.43 41.1753 204.893 40.7075C204.656 40.5021 204.314 40.4685 204.039 40.6261L202.051 41.7619C201.858 41.873 201.725 42.063 201.686 42.2826C201.648 42.4997 201.708 42.7194 201.85 42.8874C203.033 44.2738 204.808 45.0065 206.981 45.0065C210.922 45.0065 213.568 42.2477 213.568 38.1426V28.188C213.568 27.8042 213.256 27.4928 212.873 27.4928L212.872 27.4915Z" fill="var(--fa-ink)"/>
+<path d="M226.972 25.7794C226.45 24.1216 225.048 23.0918 223.313 23.0918C221.578 23.0918 220.199 24.1216 219.677 25.7794L215.749 38.5341C215.683 38.7473 215.722 38.9722 215.854 39.1518C215.987 39.3314 216.19 39.4348 216.413 39.4348H218.996C219.305 39.4348 219.58 39.2267 219.665 38.9295L220.417 36.2897L226.232 36.2677L226.984 38.9282C227.068 39.2267 227.343 39.4348 227.653 39.4348H230.235C230.459 39.4348 230.663 39.3314 230.795 39.1518C230.928 38.9722 230.965 38.7473 230.899 38.5341L226.971 25.7794H226.972ZM225.189 32.6859H221.46L223.118 26.9385C223.188 26.6956 223.263 26.6956 223.335 26.6956C223.431 26.6956 223.484 26.6956 223.552 26.9372L225.188 32.6846L225.189 32.6859Z" fill="var(--fa-ink)"/>
+<path d="M233.876 23.4043H235.712C236.271 23.4043 236.723 23.8565 236.723 24.4147V38.428C236.723 38.9862 236.271 39.4384 235.712 39.4384H233.876C233.319 39.4384 232.866 38.9862 232.866 38.428V24.4147C232.866 23.8578 233.318 23.4043 233.876 23.4043Z" fill="var(--fa-ink)"/>
+<path d="M240.597 23.4043H242.433C242.991 23.4043 243.444 23.8565 243.444 24.4147V38.428C243.444 38.9862 242.991 39.4384 242.433 39.4384H240.597C240.04 39.4384 239.587 38.9862 239.587 38.428V24.4147C239.587 23.8578 240.039 23.4043 240.597 23.4043Z" fill="var(--fa-ink)"/>
+      </svg>
+    </a>
+
+    <button class="fa-menu" type="button" aria-label="תפריט" aria-expanded="false">
+      <svg viewBox="0 0 24 17.5" xmlns="http://www.w3.org/2000/svg"
+           stroke="var(--fa-ink)" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0.75" y1="0.75" x2="23.25" y2="0.75"/>
+        <line x1="0.75" y1="8.75" x2="23.25" y2="8.75"/>
+        <line x1="0.75" y1="16.75" x2="23.25" y2="16.75"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- SOL -->
+  <div class="fa-header__notch fa-header__notch--orb">
+    <button class="fa-orb" type="button" aria-label="SOL"></button>
+  </div>
+
+  <!-- desktop bar (1024px and up) — Figma: FlyAll – New Design / Header / Desktop,
+       Property 1=Header - Login + Points. Assets exported from that node. -->
+  <div class="fa-dh">
+    <img class="fa-dh__glow" src="assets/header-desktop/glow.svg" width="441.492" height="298.06" alt="" aria-hidden="true">
+    <div class="fa-dh__bar">
+      <div class="fa-dh__start">
+        <button class="fa-dh__avatar" type="button" aria-label="החשבון שלי">
+          <img src="assets/header-desktop/ag.svg" width="19.149" height="9.81995" alt="">
+        </button>
+        <span class="fa-dh__rule" aria-hidden="true"><img src="assets/header-desktop/divider.svg" width="42" height="1" alt=""></span>
+        <a class="fa-dh__join" href="#join">הצטרפות לכרטיס FlyAll</a>
+        <a class="fa-dh__points" href="#points">
+          <span dir="rtl">ענת, ברשותך <b><span class="fa-points__say">500</span> נקודות</b> לרכישה באתר</span>
+          <img src="assets/header-desktop/coins.svg" width="32" height="32" alt="">
+        </a>
+      </div>
+      <a class="fa-dh__logo" href="#home" aria-label="FlyAll">
+        <img src="assets/header-desktop/logo.svg" width="136.754" height="40.0105" alt="">
+      </a>
+      <div class="fa-dh__end">
+        <button class="fa-dh__menu" type="button" aria-label="תפריט" aria-expanded="false">
+          <span><img src="assets/header-desktop/menu.svg" width="31.5" height="22.9688" alt=""></span>
+        </button>
+      </div>
+    </div>
+    <div class="fa-dh__notch">
+      <div class="fa-dh__union"><img src="assets/header-desktop/notch.svg" width="78.8916" height="297.33" alt=""></div>
+      <button class="fa-dh__orb" type="button" aria-label="SOL"></button>
+    </div>
+  </div>
+
+</header>
+
+<main id="stage"></main>
+
+<!-- footer — the same one as the P.O.V. home page -->
+<footer class="foot">
+  <div class="foot__groups">
+    <nav class="foot__group"><h4>המוצרים שלנו</h4><a href="#">מלונות בחו״ל</a><a href="#">טיסות לחו״ל</a><a href="#">חבילות חו״ל*</a><p class="foot__note"><span>*מחירי החבילות המוצגות באתר הינן לאדם בהרכב של זוג בחדר</span></p></nav>
+    <nav class="foot__group"><h4>שירות ומידע</h4><a href="#">שירות לקוחות</a><a href="#">פניית שירות</a><a href="#">תנאי שימוש וביטול</a><a href="#">נגישות</a><a href="#">אזהרות מסע</a></nav>
+    <div class="foot__group"><h4>עקבו אחרינו</h4><div class="foot__social"><a href="#" aria-label="Instagram"><img src="assets/social/instagram.svg" width="40" height="40" alt=""></a><a href="#" aria-label="Facebook"><img src="assets/social/facebook.svg" width="40" height="40" alt=""></a><a href="#" aria-label="WhatsApp"><img src="assets/social/whatsapp.svg" width="40" height="40" alt=""></a></div></div>
+  </div>
+  <img class="foot__rule" src="assets/social/line.svg" alt="">
+  <p class="foot__legal">שימו לב, התוכן ו/או המידע בעמוד זה הינו דינאמי ומשתנה מעת לעת, כך שייתכן שהמידע כבר אינו רלוונטי נכון לרגעים אלו. יש לציין כי המידע המצוי בטקסטים אינו בגדר ייעוץ מקצועי ו/או עובדתי, אלא מבוסס על הידע המצוי בידי חברת FlyAll בעת כתיבתו. אין להתייחס למידע כמוחלט ו/או מחייב. המידע המדויק והעדכני ביותר לגבי הזמנתכם יופיע בעמוד הזמנת המוצר בלבד.</p>
+</footer>
+
+<script>
+/* the brand gradients, defined once so a filtered-out card never takes them with it */
+document.body.insertAdjacentHTML('afterbegin',
+ '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' +
+ '<linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B5ECE"/><stop offset=".5" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient>' +
+ '<linearGradient id="gB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B5ECE"/><stop offset="1" stop-color="#824AEA"/></linearGradient>' +
+ '<linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient>' +
+ '<linearGradient id="gD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3F9E"/><stop offset="1" stop-color="#4A2A9C"/></linearGradient>' +
+ '</defs></svg>');
+
+/* placeholder product art — flat FlyAll-coloured cut-outs, standing in for product photos */
+const WORD = (x,y,s,c) => '<text x="'+x+'" y="'+y+'" text-anchor="middle" font-family="Ploni,sans-serif" font-weight="700" font-size="'+s+'" fill="'+(c||'#fff')+'" direction="ltr">FlyAll</text>';
+const ART = {
+ kit:'<svg viewBox="0 0 200 200">' +
+   '<ellipse cx="100" cy="172" rx="72" ry="7" fill="#3A1A7C" opacity=".12"/>' +
+   '<g transform="rotate(-12 150 64)"><path d="M112 58c14-10 50-10 62 0 7 7 5 20-4 24-11 5-20-1-27-3-7 2-16 8-27 3-9-4-12-17-4-24z" fill="#FAD3F3"/>' +
+   '<path d="M112 58c-8-2-14 0-18 4M174 58c6-3 10-2 14 1" stroke="#F3A9E8" stroke-width="3" fill="none" stroke-linecap="round"/></g>' +
+   '<rect x="30" y="74" width="140" height="94" rx="28" fill="url(#gA)"/>' +
+   '<path d="M46 90h108" stroke="#fff" stroke-opacity=".55" stroke-width="3" stroke-dasharray="4 5" stroke-linecap="round"/>' +
+   '<rect x="140" y="82" width="11" height="22" rx="5.5" fill="#fff"/>' + WORD(100,140,24) +
+   '<path d="M50 154c24 6 76 6 100 0" stroke="#fff" stroke-opacity=".2" stroke-width="6" fill="none" stroke-linecap="round"/></svg>',
+ pillow:'<svg viewBox="0 0 200 200">' +
+   '<ellipse cx="100" cy="176" rx="64" ry="7" fill="#3A1A7C" opacity=".12"/>' +
+   '<path d="M58 64 C54 162 146 162 142 64" stroke="url(#gC)" stroke-width="46" fill="none" stroke-linecap="round"/>' +
+   '<path d="M58 64 C54 162 146 162 142 64" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-dasharray="5 6" fill="none"/>' +
+   '<path d="M48 70 C46 120 70 146 96 150" stroke="#fff" stroke-opacity=".22" stroke-width="8" fill="none" stroke-linecap="round"/>' +
+   '<rect x="86" y="140" width="28" height="16" rx="6" fill="#fff" opacity=".9"/>' + WORD(100,152,9,'#824AEA') + '</svg>',
+ tag:'<svg viewBox="0 0 200 200"><g transform="rotate(-10 100 110)">' +
+   '<path d="M100 52 C86 20 58 18 60 44 C62 64 84 58 92 50" stroke="#1B5ECE" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+   '<rect x="56" y="44" width="88" height="130" rx="20" fill="url(#gA)"/>' +
+   '<circle cx="100" cy="62" r="7" fill="#fff"/>' +
+   '<rect x="68" y="84" width="64" height="58" rx="9" fill="#fff" opacity=".94"/>' +
+   '<rect x="78" y="96" width="34" height="6" rx="3" fill="#824AEA" opacity=".7"/>' +
+   '<rect x="78" y="109" width="44" height="6" rx="3" fill="#1B5ECE" opacity=".3"/>' +
+   '<rect x="78" y="122" width="26" height="6" rx="3" fill="#1B5ECE" opacity=".3"/>' + WORD(100,162,15) + '</g></svg>',
+ passport:'<svg viewBox="0 0 200 200">' +
+   '<ellipse cx="100" cy="178" rx="58" ry="6" fill="#3A1A7C" opacity=".12"/>' +
+   '<rect x="92" y="26" width="64" height="110" rx="8" fill="#fff" transform="rotate(10 124 80)" stroke="#E6E1F2" stroke-width="2"/>' +
+   '<rect x="104" y="44" width="36" height="5" rx="2.5" fill="#F63DE4" opacity=".6" transform="rotate(10 124 80)"/>' +
+   '<rect x="48" y="40" width="104" height="134" rx="14" fill="url(#gD)"/>' +
+   '<rect x="48" y="40" width="12" height="134" rx="6" fill="#000" opacity=".15"/>' +
+   '<circle cx="106" cy="98" r="24" fill="none" stroke="url(#gA)" stroke-width="4"/>' +
+   '<path d="M94 104l26-14-4 8 8 4-4 2-10-2-6 8-3-1 2-9-7-1z" fill="#fff"/>' + WORD(106,150,15) + '</svg>',
+ suitcase:'<svg viewBox="0 0 200 200">' +
+   '<ellipse cx="100" cy="184" rx="60" ry="6" fill="#3A1A7C" opacity=".12"/>' +
+   '<path d="M88 50V22h24v28" stroke="#9AA3B5" stroke-width="6" fill="none" stroke-linejoin="round"/>' +
+   '<rect x="80" y="14" width="40" height="12" rx="6" fill="#040F21"/>' +
+   '<rect x="46" y="46" width="108" height="128" rx="22" fill="url(#gA)"/>' +
+   '<path d="M73 60v100M100 60v100M127 60v100" stroke="#fff" stroke-opacity=".2" stroke-width="5" stroke-linecap="round"/>' +
+   '<rect x="72" y="98" width="56" height="22" rx="11" fill="#fff"/>' + WORD(100,114,13,'#824AEA') +
+   '<circle cx="66" cy="178" r="7" fill="#2A2F45"/><circle cx="134" cy="178" r="7" fill="#2A2F45"/></svg>',
+ bottle:'<svg viewBox="0 0 200 200">' +
+   '<ellipse cx="100" cy="182" rx="40" ry="6" fill="#3A1A7C" opacity=".12"/>' +
+   '<path d="M88 22a12 12 0 0 1 24 0" stroke="#040F21" stroke-width="5" fill="none"/>' +
+   '<rect x="82" y="22" width="36" height="24" rx="7" fill="#040F21"/>' +
+   '<rect x="68" y="42" width="64" height="136" rx="28" fill="url(#gC)"/>' +
+   '<rect x="80" y="58" width="9" height="96" rx="4.5" fill="#fff" opacity=".28"/>' + WORD(104,118,16) + '</svg>',
+ fast:'<svg viewBox="0 0 200 200">' +
+   '<rect x="30" y="40" width="140" height="120" rx="30" fill="#fff" opacity=".7"/>' +
+   '<path d="M62 62l38 38-38 38M104 62l38 38-38 38" stroke="url(#gA)" stroke-width="22" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ esim:'<svg viewBox="0 0 200 200">' +
+   '<ellipse cx="100" cy="180" rx="50" ry="6" fill="#3A1A7C" opacity=".12"/>' +
+   '<path d="M64 26h54l32 32v106a12 12 0 0 1-12 12H64a12 12 0 0 1-12-12V38a12 12 0 0 1 12-12z" fill="url(#gB)"/>' +
+   '<rect x="72" y="80" width="56" height="60" rx="10" fill="#FFE27A"/>' +
+   '<path d="M72 100h20M72 120h20M108 100h20M108 120h20M92 80v60M108 80v60" stroke="#D9A92E" stroke-width="3"/>' +
+   '<path d="M84 50a22 22 0 0 1 32 0M91 57a12 12 0 0 1 18 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>',
+};
+
+const ITEMS = [
+ { k:'transfer', g:'road', when:'way',     t:'העברה VIP',             s:'מהבית לנמל התעופה ובחזרה', kick:'העברה · נתב״ג', meta:['הלוך ושוב','רכב פרטי'], pts:390,  img:'assets/perks/vip-transfer.jpg', v:'assets/perks/vip-transfer.mp4', pos:'68% 50%' },
+ { k:'lounge',   g:'road', when:'airport', t:'טרקלין Premium',        s:'נתב״ג · עד 3 שעות לפני הטיסה', kick:'טרקלין · נתב״ג', meta:['עד 3 שעות','אוכל ושתייה'], pts:180,  img:'assets/perks/premium-lounge.jpg', v:'assets/perks/premium-lounge.mp4', pos:'60% 50%' },
+ { k:'fast',     g:'road', when:'airport', t:'Fast Track',            s:'מסלול מהיר בבידוק הביטחוני', kick:'בידוק ביטחוני · נתב״ג', meta:['מסלול מהיר','בלי תור'], pts:120,  img:'assets/perks/fast-track.jpg', v:'assets/perks/fast-track.mp4', pos:'62% 50%' },
+ { k:'esim',     g:'kit',  when:'dest',    t:'eSIM לגלישה',            s:'10GB · ב-30 מדינות',        pts:90,   art:'esim' },
+ { k:'kit',      g:'kit',  when:'before',  t:'ערכת הנסיעה של FlyAll',  s:'תיק, מסכת עיניים ואביזרי טיסה', pts:320, art:'kit', isNew:1 },
+ { k:'pillow',   g:'kit',  when:'flight',  t:'כרית צוואר',             s:'ספוג זיכרון, עם נרתיק',     pts:140,  art:'pillow' },
+ { k:'suitcase', g:'kit',  when:'before',  t:'טרולי FlyAll',           s:'לעלייה למטוס · 55 ס״מ',     pts:1200, art:'suitcase' },
+ { k:'tag',      g:'kit',  when:'before',  t:'תג מזוודה',              s:'עם השם שלך עליו',          pts:60,   art:'tag' },
+ { k:'passport', g:'kit',  when:'before',  t:'כיסוי לדרכון',            s:'עם כיס לכרטיס העלייה',      pts:90,   art:'passport' },
+ { k:'bottle',   g:'kit',  when:'flight',  t:'בקבוק FlyAll',           s:'שומר על קור 24 שעות',       pts:110,  art:'bottle' },
+];
+const BAL = 500;
+const TAG   = { road:'לדרך', kit:'נשלח עד הבית' };
+const fmt = n => n.toLocaleString('en-US');
+const by = k => ITEMS.find(d => d.k === k);
+/* anything for the way that has footage runs as a strip up top; the rest goes on the shelf below */
+const road = ITEMS.filter(d => d.v);
+const SHELF = ['kit','esim','pillow','suitcase','tag','passport','bottle'];
+const kits = SHELF.map(by);
+/* guest: the money price first, the points as the card holder's teaser */
+const gprice = d => '<span class="g-price"><span class="g-m">₪'+fmt(d.pts)+'</span><span class="g-dot">·</span>' +
+  '<span class="g-p">או <b>'+fmt(d.pts)+'</b> נק׳ <span class="spark" aria-hidden="true"></span></span></span>';
+const pill = (d, sm) => '<span class="pill'+(sm?' pill--sm':'')+'"><span class="m-price"><b>'+fmt(d.pts)+'</b> נק׳</span>'+gprice(d)+'</span>';
+/* a photo when the add-on has one, otherwise the product art on the soft tint */
+const vis = (d, wrap) => d.img
+  ? '<img class="ph" src="'+d.img+'" alt="" style="object-position:'+(d.pos||'50% 50%')+'">'
+  : (wrap === false ? '' : '<div class="tint ph"></div>') + '<div class="art">'+ART[d.art]+'</div>';
+
+const ARROW = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const ARR_L = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>';
+const PLUS  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+const SORT  = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>';
+
+/* signed in: a plane riding a dashed flight path toward the holiday (no balance on show). The tag is moved
+   by animateMotion along the very same path, so it can never leave the line; it stops halfway.
+   Mobile keeps the compact arc; desktop draws one across the whole page, from home (right) to the holiday (left). */
+const BAG = (() => {
+  const arc = (id, vb, d, a, b, ends) =>
+    '<svg class="trip__arc trip__arc--' + id + '" viewBox="' + vb + '" aria-hidden="true">' +
+      '<defs><linearGradient id="tripG-' + id + '" gradientUnits="userSpaceOnUse" x1="' + a[0] + '" y1="0" x2="' + b[0] + '" y2="0">' +
+        '<stop offset="0" stop-color="#1B5ECE"/><stop offset=".5" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient></defs>' +
+      '<path id="tripPath-' + id + '" d="' + d + '" fill="none" stroke="url(#tripG-' + id + ')" stroke-width="2.5" stroke-dasharray="6 8" stroke-linecap="round"/>' +
+      '<circle cx="' + a[0] + '" cy="' + a[1] + '" r="6" fill="#1B5ECE"/><circle cx="' + b[0] + '" cy="' + b[1] + '" r="6" fill="#F63DE4"/>' +
+      (ends ? '<text class="trip__end" x="' + a[0] + '" y="' + (a[1] + 26) + '" text-anchor="middle">' + ends[0] + '</text>' +
+              '<text class="trip__end" x="' + b[0] + '" y="' + (b[1] + 26) + '" text-anchor="middle">' + ends[1] + '</text>' : '') +
+      '<g class="trip__tag" data-turn="0" transform="translate(' + a[0] + ' ' + a[1] + ')">' +   /* the plane always flies nose-first */
+        '<circle r="16" fill="#fff" stroke="#E6E0F5"/>' +
+        '<path transform="rotate(90) translate(-10 -10) scale(.84)" fill="#824AEA" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/>' +
+      '</g></svg>';
+  return '<div class="trip">' +
+    arc('m', '0 0 320 80', 'M24 66 Q160 -14 296 60', [24, 66], [296, 60]) +
+    arc('d', '0 0 1000 124', 'M970 84 Q500 -40 30 84', [970, 84], [30, 84], ['הבית', 'החופשה']) +
+    '<strong>ענת, הנקודות שלך כבר בדרך לחופשה</strong>' +
+    '<span>בחרי איפה לשדרג אותה</span></div>';
+})();
+const LEAD = '<section class="lead">' +
+  '<a class="lead__home" href="pov-reels-v2.html">'+ARROW+'<span>חזרה לעמוד הראשי</span></a>' +
+  '<h2>כל התוספות</h2>' +
+  '<p class="lead__sub">'+ITEMS.length+' תוספות<i></i>החל מ־<b>₪'+fmt(Math.min(...ITEMS.map(d=>d.pts)))+'</b> או <b>'+fmt(Math.min(...ITEMS.map(d=>d.pts)))+'</b> נק׳</p>' + BAG + '</section>';
+const HEAD = (t, n, end) => '<div class="bhead"><h3>'+t+'</h3>'+(end||'')+'</div>';
+const SORTBTN = '<button class="bhead__link" type="button"><span>הכי משתלם</span>'+SORT+'</button>';
+
+
+/* the buy button on every card: a quiet arrow beside the points */
+const BUY = d => '<button class="buy" type="button" aria-label="לרכישת '+d.t+'">'+ARR_L+'</button>';
+const strip = d => '<article class="row"><div class="row__v">' +
+  '<video src="'+d.v+'" poster="'+d.img+'" style="object-position:'+d.pos+'" muted loop playsinline autoplay preload="metadata"></video>' +
+  '<span class="row__kicker">'+d.kick+'</span><h4>'+d.t+'</h4></div>' +
+  '<div class="row__info"><p class="row__meta">'+d.meta.map(m => '<span>'+m+'</span>').join('<i></i>')+'</p>' +
+  '<span class="row__pill"><span class="m-price"><b>'+fmt(d.pts)+'</b> נק׳</span>'+gprice(d)+'</span></div></article>';
+/* the first runs full width; the last does too when the rest don't pair up */
+const kit = (d, i) => '<article class="k'+(i === 0 || (i === kits.length - 1 && kits.length % 2 === 0) ? ' k--hero' : '')+'"><div class="img">'+vis(d)+'</div><div>' +
+  (d.isNew ? '<p class="eyebrow" style="margin:0 0 8px">חדש</p>' : '') +
+  '<h4>'+d.t+'</h4><p>'+d.s+'</p><div class="buyrow">'+pill(d, 1)+BUY(d)+'</div></div></article>';
+
+const stage = document.getElementById('stage');
+stage.className = 'page o2';
+document.title = 'FlyAll — כל התוספות';
+
+const DESK = matchMedia('(min-width:1024px)');
+const KITSUB = '<p class="bhead__sub">עוד כמה דברים קטנים שעושים את כל ההבדל בחופשה.</p>';
+const film = d => '<video class="ph" src="'+d.v+'" poster="'+d.img+'" style="object-position:'+d.pos+'" muted loop playsinline autoplay preload="metadata"></video>';
+const ADD = '<button class="add-cta" type="button">'+PLUS+'<span>הוספה לטיול</span></button>';
+const cap = d => '<h4>'+d.t+'</h4><p>'+d.s+'</p><div class="cap__foot">'+pill(d)+ADD+'</div>';
+const RAILNAV = '<div class="rail-nav">' +
+  '<button class="rail-btn" type="button" data-dir="-1" aria-label="הקודם">'+ARROW+'</button>' +
+  '<button class="rail-btn" type="button" data-dir="1" aria-label="הבא">'+ARR_L+'</button></div>';
+
+/* phone: the way as strips, the kits as a grid on the band */
+const MOBILE = () => LEAD +
+  '<section class="road">' +
+    HEAD('משדרגים את החופשה', road.length) + '<div class="rows">' + road.map(strip).join('') + '</div></section>' +
+  '<section class="band ask__panel">' + HEAD('משלימים את הטיול', kits.length) + KITSUB +
+    '<div class="kits">' + kits.map(kit).join('') + '</div></section>';
+
+/* desktop: one add-on on the stage, the other two beside it; the kits on a rail
+   (kit(d, -1) keeps every card plain — no hero on the rail) */
+const DESKTOP = () => LEAD +
+  '<section class="dsk s3">' + HEAD('משדרגים את החופשה', road.length) +
+    '<div class="s3__stage"><div class="v s3__main">' + film(road[0]) + '<span class="tag">'+TAG.road+'</span><div class="cap"></div></div>' +
+    '<div class="s3__side"></div></div></section>' +
+  '<section class="band ask__panel"><div class="dsk">' + HEAD('משלימים את הטיול', kits.length, RAILNAV) + KITSUB +
+    '<div class="kits kits--rail">' + kits.map(d => kit(d, -1)).join('') + '</div></div></section>';
+
+function wireDesktop() {
+  const vid = stage.querySelector('.s3__main video'), c = stage.querySelector('.s3__main .cap'), side = stage.querySelector('.s3__side');
+  const show = i => {
+    const d = road[i];
+    if (vid.getAttribute('src') !== d.v) {
+      vid.src = d.v; vid.poster = d.img; vid.style.objectPosition = d.pos;
+      const p = vid.play(); if (p && p.catch) p.catch(()=>{});
+    }
+    c.innerHTML = cap(d);
+    side.innerHTML = road.map((e, j) => j === i ? '' : '<button class="s3__thumb" type="button" data-i="'+j+'">' +
+      '<img src="'+e.img+'" alt="" style="object-position:'+e.pos+'"><span class="s3__tt"><b>'+e.t+'</b>'+pill(e, 1)+'</span></button>').join('');
+    side.querySelectorAll('button').forEach(b => b.onclick = () => show(+b.dataset.i));
+  };
+  show(0);
+  /* in RTL the rail runs leftwards: "next" is a negative scroll */
+  const track = stage.querySelector('.kits--rail');
+  stage.querySelectorAll('.rail-btn').forEach(b => b.onclick = () =>
+    track.scrollBy({ left: -b.dataset.dir * track.clientWidth * .8, behavior: 'smooth' }));
+}
+
+/* the films play only while they're on screen */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  const v = e.target; if (e.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(()=>{}); } else v.pause();
+}), { threshold: .25 });
+
+/* the strips float in as they reach the screen, a beat apart when they arrive together */
+const rise = new IntersectionObserver(es => {
+  let k = 0;
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.style.setProperty('--d', (k++ * .22).toFixed(2) + 's');
+    e.target.classList.add('in');
+    rise.unobserve(e.target);
+  });
+}, { rootMargin: '0px 0px -12% 0px' });
+
+function render() {
+  io.disconnect();
+  if (DESK.matches) { stage.innerHTML = DESKTOP(); wireDesktop(); }
+  else stage.innerHTML = MOBILE();
+  stage.querySelectorAll('video').forEach(v => io.observe(v));
+  stage.querySelectorAll('.row').forEach(r => rise.observe(r));
+  /* the tag's ride along the path starts over whenever the page is drawn */
+  stage.querySelectorAll('.trip__arc').forEach(rideTag);
+}
+/* moves the tag along its path from the start to halfway, turned with the line (JS, not SMIL:
+   iOS Safari never started the animateMotion and left the tag in the svg's corner) */
+function rideTag(svg) {
+  const path = svg.querySelector('path'), tag = svg.querySelector('.trip__tag');
+  if (!path || !tag || !path.getTotalLength) return;
+  const len = path.getTotalLength(), turn = +tag.dataset.turn || 0;
+  const place = f => {
+    const l = len * f, p = path.getPointAtLength(l),
+          q = path.getPointAtLength(Math.min(len, l + 1)), o = path.getPointAtLength(Math.max(0, l - 1));
+    const deg = Math.atan2(q.y - o.y, q.x - o.x) * 180 / Math.PI + turn;
+    tag.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ') rotate(' + deg + ')');
+  };
+  /* cubic-bezier(.2,.7,.2,1) */
+  const bz = (a, b, t) => 3 * a * t * (1 - t) * (1 - t) + 3 * b * t * t * (1 - t) + t * t * t;
+  const ease = x => { let lo = 0, hi = 1, t = x; for (let i = 0; i < 20; i++) { t = (lo + hi) / 2; if (bz(.2, .2, t) < x) lo = t; else hi = t; } return bz(.7, 1, t); };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return place(.5);
+  const t0 = performance.now(), dur = 1800;
+  place(0);
+  const step = now => { const x = Math.min(1, (now - t0) / dur); place(.5 * ease(x)); if (x < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+DESK.addEventListener('change', render);
+render();
+
+/* ================= demo · guest / signed-in switch (shared with the other pages) ================= */
+(function(){
+  const KEY = 'flyall-who';
+  let mode = 'user';
+  try { mode = localStorage.getItem(KEY) || 'user'; } catch(e){}
+  const bar = document.createElement('div');
+  bar.className = 'who';
+  bar.innerHTML = '<button type="button" data-m="guest">אורח</button><button type="button" data-m="user">משתמש מזוהה</button>';
+  bar.setAttribute('role','group');
+  bar.setAttribute('aria-label','מצב תצוגה');
+  function set(m){
+    mode = m;
+    document.body.classList.toggle('is-guest', m === 'guest');
+    bar.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+    try { localStorage.setItem(KEY, m); } catch(e){}
+  }
+  bar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.m); });
+  document.body.appendChild(bar);
+  set(mode);
+})();
+</script>
+</body>
+</html>

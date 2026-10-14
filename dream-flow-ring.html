@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlyAll — הזמנת החלום · טבעת</title>
+<style>
+/* ---- brand face ---- */
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-ultralight-aaa.otf') format('opentype');font-weight:200;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-light-aaa.otf') format('opentype');font-weight:300;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-regular-aaa.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-medium-aaa.otf') format('opentype');font-weight:500;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-demibold-aaa.otf') format('opentype');font-weight:600;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-bold-aaa.otf') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-ultrabold-aaa.otf') format('opentype');font-weight:800;font-display:swap}
+@font-face{font-family:'Ploni';src:url('assets/fonts/ploni-black-aaa.otf') format('opentype');font-weight:900;font-display:swap}
+
+/* ============================================================
+   FLYALL DESIGN SYSTEM — tokens (Figma: FlyAll – New Design / Design System)
+   ============================================================ */
+@font-face{font-family:'Almoni';src:url('assets/fonts/almoni-dl-aaa-400.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Almoni';src:url('assets/fonts/almoni-dl-aaa-700.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{
+  /* colours */
+  --ds-blue:#1B5ECE;  --ds-blue-hover:#3D76D5;  --ds-blue-press:#1855B9;
+  --ds-purple:#824AEA; --ds-pink:#F63DE4;
+  --ds-gradient:linear-gradient(90deg,#1B5ECE 0%,#824AEA 50.481%,#F63DE4 100%);
+  --ds-black:#040F21; --ds-white:#FFFFFF; --ds-gray:#818790;
+  --ds-light-blue-1:#F0F8FF; --ds-light-blue-2:#E3F2FF;
+  --ds-bg:#FDFDFD; --ds-cal-blue:#1E5CB3; --ds-step-off:#E6E7E9;
+
+  /* fonts — text styles are Almoni, buttons are Ploni */
+  --ds-font:'Almoni','Ploni',system-ui,sans-serif;
+  --ds-font-btn:'Ploni',system-ui,sans-serif;
+
+  /* type scale (Mobile) — use as  font: var(--ds-body3);  */
+  --ds-body1:      400 12px/normal var(--ds-font);
+  --ds-body1-demi: 600 12px/normal var(--ds-font);
+  --ds-body1-bold: 700 12px/normal var(--ds-font);
+  --ds-body2:      400 14px/16px   var(--ds-font);
+  --ds-body2-demi: 600 14px/normal var(--ds-font);
+  --ds-body2-bold: 700 14px/normal var(--ds-font);
+  --ds-body3:      400 16px/20px   var(--ds-font);
+  --ds-body3-demi: 600 16px/16px   var(--ds-font);
+  --ds-body3-bold: 700 16px/normal var(--ds-font);
+  --ds-body4:      400 18px/20px   var(--ds-font);
+  --ds-body4-demi: 600 18px/18px   var(--ds-font);
+  --ds-body4-bold: 700 18px/normal var(--ds-font);
+  --ds-body5:      400 20px/24px   var(--ds-font);
+  --ds-h1:         700 26px/normal var(--ds-font);
+  --ds-h2:         600 24px/normal var(--ds-font);
+  --ds-h3:         700 20px/22px   var(--ds-font);
+  --ds-20-demi:    600 20px/22px   var(--ds-font);
+  --ds-btn:        700 18px/20px   var(--ds-font-btn);
+}
+
+/* ---- buttons ---- */
+.ds-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:44px; padding:6px 16px; border-radius:22px; border:0;
+  font:var(--ds-btn); color:#fff; white-space:nowrap; text-decoration:none;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+.ds-btn--block{ display:flex; width:100%; }
+/* Primary 1 — gradient */
+.ds-btn--primary{ background-image:var(--ds-gradient); }
+.ds-btn--primary:hover{ background-image:linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)),var(--ds-gradient); }
+.ds-btn--primary:active{ background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),var(--ds-gradient); }
+/* Primary 2 — solid blue */
+.ds-btn--blue{ background:var(--ds-blue); }
+.ds-btn--blue:hover{ background-image:linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)); }
+.ds-btn--blue:active{ background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)); }
+/* Secondary — white, 1.5px blue outline */
+.ds-btn--secondary{ background:#fff; border:1.5px solid var(--ds-blue); color:var(--ds-blue); }
+.ds-btn--secondary:hover{ border-color:var(--ds-blue-hover); color:var(--ds-blue-hover); }
+.ds-btn--secondary:active{ border-color:var(--ds-blue-press); color:var(--ds-blue-press); }
+/* Secondary · gradient stroke (Figma 4691:357424) — white fill, 1.5px brand-gradient border, blue label */
+.ds-btn--secondary-grad{ border:1.5px solid transparent; color:var(--ds-blue);
+  background:linear-gradient(#fff,#fff) padding-box, var(--ds-gradient) border-box; }
+.ds-btn--secondary-grad:hover{ color:var(--ds-blue-hover); }
+.ds-btn--secondary-grad:active{ color:var(--ds-blue-press); }
+.ds-btn:disabled,.ds-btn[aria-disabled="true"]{ opacity:.5; pointer-events:none; }
+.ds-btn svg{ width:16px; height:16px; flex:none; }
+
+/* Outline / text link — "הצג הכל" + 16px chevron, 4px gap */
+.ds-link{
+  display:inline-flex; align-items:center; gap:4px;
+  font:var(--ds-body3-bold); color:var(--ds-blue); text-decoration:none;
+  background:none; border:0; padding:0; cursor:pointer;
+}
+.ds-link:hover{ color:var(--ds-blue-hover); text-decoration:underline; }
+.ds-link:active{ color:var(--ds-blue-press); text-decoration:underline; }
+.ds-link svg{ width:16px; height:16px; flex:none; }
+
+/* Chip — Filter & Sort */
+.ds-chip{
+  display:inline-flex; align-items:center; gap:4px;
+  height:32px; padding:8px 12px; border-radius:60px;
+  border:1px solid var(--ds-blue); background:#fff;
+  font:var(--ds-body3); color:var(--ds-black); white-space:nowrap;
+}
+.ds-chip.is-on{ background:var(--ds-light-blue-1); }
+.ds-chip--ai{
+  border:1.5px solid var(--ds-black); gap:2px;
+  background-image:linear-gradient(90deg,rgba(27,94,206,.15),rgba(130,74,234,.15) 50.481%,rgba(246,61,228,.15)),linear-gradient(#fff,#fff);
+}
+
+/* Step indicator — 24px circle, Ploni Bold 12 digit, Body1 label */
+.ds-step{ width:24px; height:24px; border-radius:75px; display:inline-flex; align-items:center; justify-content:center;
+  background:var(--ds-step-off); color:var(--ds-gray); font:700 12px/normal var(--ds-font-btn); }
+.ds-step.is-on,.ds-step.is-done{ background:var(--ds-blue); color:#fff; }
+
+/* ============================================================
+   FLYALL — TOP NAVIGATION BAR
+   Reference: Hader.svg, authored at 390 x 123 (iPhone 13/14 logical width).
+   Every number below is traced from that file.
+   ============================================================ */
+
+:root {
+  --fa-font: 'Ploni', system-ui, sans-serif;
+  --fa-ink: #1B5ECE;                 /* single UI colour: logo, avatar, points, menu */
+  --fa-grad-a: #1B5ECE;
+  --fa-grad-b: #824AEA;              /* stop at 50.48% */
+  --fa-grad-c: #F63DE4;
+
+  --fa-bar-h: 64px;                  /* fixed: bar height does NOT scale */
+  --fa-bar-radius: 16px;
+  --fa-pad: 20px;                    /* physical side padding */
+
+  --fa-notch-w: 33.846%;             /* 132 / 390 — scales with viewport width */
+  --fa-notch-ratio: 132 / 42.9006;   /* 63.7988 -> 106.6994 */
+  --fa-notch-top: 63.8px;            /* meets the bar's bottom edge */
+
+  --fa-orb-size: 25.7576%;           /* 34 / 132 of the notch — scales with it.
+                                        To pin the orb at a fixed 34px instead,
+                                        set: --fa-orb-size: 34px */
+  --fa-orb-left: 36.29%;             /* 47.903 / 132 */
+  --fa-orb-top: 3.651%;              /* 1.5664 / 42.9006 */
+
+  /* type trims, measured against Hader.svg with Ploni */
+  --fa-points-nudge: -0.767px;
+  --fa-points-baseline: 13px;        /* box top -> baseline, at 16.3px/1 */
+  --fa-avatar-nudge: 0.13px;
+  --fa-z: 100;
+}
+
+/* ---- shell ------------------------------------------------ */
+.fa-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--fa-z);
+  height: var(--fa-bar-h);
+  direction: ltr;                    /* the bar is NOT mirrored in RTL */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---- layer 0 : ambient glow + stars (behind the white bar) -- */
+.fa-header__decor {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.fa-header__decor svg { display: block; width: 100%; height: auto; }
+
+/* ---- layer 1 : the white silhouette (bar + notch share one shadow) ---- */
+.fa-header__shape {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .25));
+  pointer-events: none;
+}
+.fa-header__bar {
+  height: var(--fa-bar-h);
+  background: #fff;
+  border-radius: 0 0 var(--fa-bar-radius) var(--fa-bar-radius);
+}
+.fa-header__notch {
+  position: absolute;
+  top: var(--fa-notch-top);
+  left: 50.128%;                     /* the traced shape sits 0.5px right of centre */
+  transform: translateX(-50%);
+  width: var(--fa-notch-w);
+  aspect-ratio: var(--fa-notch-ratio);
+}
+.fa-header__notch svg { display: block; width: 100%; height: 100%; }
+
+/* the orb needs its own stacking layer: translateX(-50%) on .fa-header__notch
+   makes it a stacking context, so a z-index on the child alone stays trapped inside */
+.fa-header__notch--orb { z-index: 3; pointer-events: none; }
+
+/* ---- layer 2 : controls ------------------------------------ */
+.fa-header__content {
+  position: relative;
+  z-index: 2;
+  height: var(--fa-bar-h);
+}
+
+.fa-header__left {
+  position: absolute;
+  left: 20.4px;
+  top: 0;
+  height: var(--fa-bar-h);
+  display: flex;
+  align-items: center;
+}
+
+/* avatar — 24px circle + 1.2px ring (outer 25.2) */
+.fa-avatar {
+  width: 25.2px;                     /* 24 + 1.2 ring, matching the SVG stroke */
+  height: 25.2px;
+  box-sizing: border-box;
+  border: 1.2px solid var(--fa-ink);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--fa-ink);
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+/* traced ink: 14.590 x 7.482, centred on the circle, baseline y 35.732 */
+.fa-avatar__txt {
+  font: 700 11.79px/1 var(--fa-font);
+  transform: translateY(var(--fa-avatar-nudge));
+}
+
+/* points — the underline means it is a link */
+.fa-points {
+  margin-left: 10.07px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--fa-ink);
+  cursor: pointer;
+}
+.fa-points__value {
+  /* traced: ink 20.808 x 8.620 at (56.484, 27.465) · baseline y 36.085
+              underline 22.320 x 0.641 at (55.674, 38.031)
+     min-width pins the underline (and the coin icon after it) to the traced
+     box; longer balances simply grow past it. */
+  font: 700 16.3px/1 var(--fa-font);
+  display: inline-block;
+  position: relative;
+  min-width: 22.32px;
+  text-align: center;
+  transform: translateY(var(--fa-points-nudge));
+}
+/* the underline is hung off the baseline, not off the box, so a font swap
+   moves it correctly instead of silently drifting */
+.fa-points__value::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(var(--fa-points-baseline) + 1.946px);
+  height: .641px;
+  background: currentColor;
+}
+
+.fa-points__coins {
+  margin-left: 4.63px;
+  width: 18.75px;
+  height: 13.75px;
+  display: block;
+  fill: var(--fa-ink);
+}
+
+/* logo — centred on the page, not between its neighbours */
+.fa-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18.998px;
+  width: 88.889px;
+  height: 26.009px;
+  display: block;
+}
+
+/* menu — 24 x 17.5 visual box, 20px from the right edge */
+.fa-menu {
+  position: absolute;
+  right: var(--fa-pad);
+  top: 22.498px;
+  width: 24px;
+  height: 17.5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.fa-menu svg { display: block; width: 100%; height: 100%; }
+
+/* generous touch targets without changing the visuals */
+.fa-avatar::after, .fa-menu::after, .fa-points::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 44px; height: 44px;
+  transform: translate(-50%, -50%);
+}
+.fa-avatar, .fa-points { position: relative; }   /* .fa-menu is already absolute */
+
+/* ---- layer 3 : the orb (SOL) ------------------------------- */
+.fa-orb {
+  position: absolute;
+  pointer-events: auto;
+  left: var(--fa-orb-left);
+  top: var(--fa-orb-top);
+  width: var(--fa-orb-size);
+  aspect-ratio: 1;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: #fff url("assets/orb.png") center / cover no-repeat;
+  box-shadow: 0 1px 7.6px rgba(136, 73, 234, .5),
+              inset 0 -1px 38.2px rgba(27, 94, 206, .11);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fa-orb { transition: transform .25s cubic-bezier(.2, .8, .2, 1); }
+  .fa-orb:active { transform: scale(.92); }
+}
+
+.fa-sr {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+
+:root{ --notch-clear:56px; }
+/* ============================================================
+   RESPONSIVE — header only for now, same lines as the lobby (pov-reels.html):
+   below 1024px the mobile header, 1024px and up the design system's desktop bar
+   ============================================================ */
+.fa-dh{display:none}
+@media (min-width:600px) and (max-width:1023px){
+  :root{ --fa-notch-w:132px; }                 /* the tongue stops growing with the screen */
+  .fa-header__decor{left:50%;width:390px;transform:translateX(-50%)}
+}
+@media (min-width:1024px){
+  /* header — the design system's desktop bar replaces the traced mobile one.
+     Figma: Header / Desktop / "Header - Login + Points" (1440 wide, bar 78 tall).
+     Every number is from that node; the side padding and the two gaps close in
+     from 140 / 88 at 1440 to 40 / 32 at 1024 so the points line still fits. */
+  :root{ --fa-bar-h:78px; }
+  .fa-header__decor,.fa-header__shape,.fa-header__content,.fa-header__notch--orb{display:none}
+  .fa-dh{display:block;position:relative;height:78px}
+  .fa-dh__bar{position:relative;z-index:2;height:78px;box-sizing:border-box;
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(32px, calc((100vw - 1024px) * .134 + 32px), 88px);
+    padding:18px clamp(40px, calc((100vw - 1024px) * .24 + 40px), 140px);
+    background:#fff;border-radius:0 0 16px 16px;filter:drop-shadow(0 4px 10px rgba(38,48,61,.15))}
+  .fa-dh__start{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:24px}
+  .fa-dh__end{flex:1 1 0;min-width:0;height:40px;display:flex;align-items:center;justify-content:flex-end}
+  .fa-dh__logo{flex:none;width:147px;display:flex}
+  .fa-dh__logo img,.fa-dh__points img{display:block}
+  /* avatar: a 31.5 ring (1.969 stroke) centred in its 42 box */
+  .fa-dh__avatar{flex:none;position:relative;width:31.5px;height:31.5px;margin:5.25px;padding:0;box-sizing:border-box;
+    border:1.969px solid var(--ds-blue);border-radius:32.484px;background:#fff;cursor:pointer}
+  .fa-dh__avatar img{position:absolute;left:3.31px;top:7.87px}
+  /* the 42px divider is drawn horizontal in the file and stood on its end */
+  .fa-dh__rule{align-self:stretch;width:0;position:relative;flex:none}
+  .fa-dh__rule img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg)}
+  .fa-dh__points{display:flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;
+    color:var(--ds-blue);font:400 16px/20px var(--ds-font)}
+  .fa-dh__points b{font-weight:600;line-height:16px;text-decoration:underline;text-underline-position:from-font}
+  .fa-dh__menu{width:42px;height:42px;display:grid;place-items:center;padding:0;border:0;background:none;cursor:pointer}
+  .fa-dh__menu span{position:relative;display:block;width:31.5px;height:21px}
+  .fa-dh__menu img{position:absolute;left:0;bottom:0}
+  /* the tongue and the orb hang under the bar, 2.5px left of centre as drawn */
+  .fa-dh__notch{position:absolute;z-index:3;top:78px;left:calc(50% - 2.5px);transform:translateX(-50%);
+    width:240.997px;height:78.788px;pointer-events:none}
+  .fa-dh__union{position:absolute;left:.58px;top:0;width:297.33px;height:78.892px;
+    display:flex;align-items:center;justify-content:center}
+  .fa-dh__union img{flex:none;transform:rotate(90deg)}
+  .fa-dh__orb{position:absolute;left:91.04px;top:13px;width:55px;height:55px;padding:0;border:0;
+    border-radius:37.206px;pointer-events:auto;cursor:pointer;
+    background:#fff url("assets/orb.png") center / cover no-repeat;
+    box-shadow:0 1.618px 12.294px rgba(136,73,234,.5), inset 0 -1.618px 61.794px rgba(27,94,206,.11);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+  .fa-dh__orb:active{transform:scale(.94)}
+  /* the soft bloom behind the tongue: a 314 × 170.57 box whose art bleeds 37.37% / 20.3% out */
+  .fa-dh__glow{position:absolute;z-index:1;top:-66.74px;left:calc(50% - 215.24px);
+    width:441.492px;height:298.06px;max-width:none;pointer-events:none}
+
+}
+
+/* ============ DESKTOP · the category as a list beside a story player ============
+   Laid out like the lobby's split option: title, search and a compact list on
+   the right; on the left a vertical story card playing the row in focus, with the
+   next one peeking out behind it. Below 1024px none of this applies. */
+.split{display:contents}
+.player,.row__txt,.row__bar{display:none}
+@keyframes rowFill{to{width:100%}}
+
+@media (min-width:1024px){
+  :root{ --gutter:clamp(40px,7.6vw,110px); }
+  .split{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr;
+    column-gap:clamp(56px,6vw,120px);
+    padding:128px max(var(--gutter), calc((100% - 1440px) / 2 + var(--gutter))) 96px;
+    background:
+      radial-gradient(900px 620px at 92% 0%, #FFDCF3 0%, rgba(255,220,243,0) 70%),
+      radial-gradient(800px 600px at 30% 100%, #D6ECFF 0%, rgba(214,236,255,0) 72%),
+      linear-gradient(180deg,#EFEDFF 0%,#F7F0FB 45%,#FFF6ED 100%)}
+  .split > .arc{grid-column:1;grid-row:1}
+  .split > .list{grid-column:1;grid-row:2}
+  .split > .player{grid-column:2;grid-row:1 / span 2}
+
+  /* the title block, set to the right like the lobby's headline */
+  .arc .lead{padding:0;align-items:flex-start;text-align:right}
+  .lead__home{margin-bottom:26px}
+  .arc h2{font-size:clamp(72px,6.4vw,96px);line-height:1}
+  .arc .lead__sub{justify-content:flex-start;margin-top:18px;font-size:20px}
+
+  /* the list loses its band and becomes a compact column of rows */
+  .list{margin:40px 0 0;padding:0;background:none;border-radius:0;overflow:visible}
+  .list__head{padding:0}
+  .seek{margin:20px 0 0}
+  .seek__reset{margin-inline:0}
+  .list__rows{margin-top:28px;padding:12px 0 0;border-top:1px solid rgba(4,15,33,.1)}
+  .list.has-sel .list__rows{padding-top:12px}
+  .row{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;column-gap:16px;
+    padding:10px 12px;border-radius:16px;transition:background .3s var(--ease), box-shadow .3s var(--ease)}
+  .row + .row{margin-top:4px}
+  .row__v{width:64px;height:64px;aspect-ratio:auto;border-radius:14px;border:0;box-shadow:none}
+  .row__v::after{background:rgba(6,7,16,.04)}
+  .row__kicker,.row h4,.row__play,.row__meta{display:none}
+  .row__txt{display:block;min-width:0;opacity:0;transform:translateY(12px);
+    transition:opacity .6s var(--ease) calc(var(--d,0s) + .45s), transform .8s var(--ease) calc(var(--d,0s) + .45s)}
+  .row.in .row__txt{opacity:1;transform:none}
+  .row__txt b{display:block;font:700 19px/1.15 var(--pf);color:var(--ink)}
+  .row__txt small{display:block;margin-top:5px;font:400 14px/1.2 var(--pf);color:var(--ds-gray);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row__info{padding:0}
+  .row__bar{display:block;grid-column:1 / -1;height:2px;margin:10px 0 -4px;border-radius:2px;
+    background:rgba(4,15,33,.06);overflow:hidden;opacity:0;transition:opacity .3s}
+  .row__bar b{display:block;height:100%;width:0;background-image:var(--ds-gradient)}
+  .row:hover{background:rgba(255,255,255,.55)}
+  .row.is-now{background:rgba(255,255,255,.82);box-shadow:0 8px 20px rgba(58,26,124,.08)}
+  .row.is-now .row__bar{opacity:1}
+  .row.is-now .row__bar b{animation:rowFill 5s linear forwards}
+  .row.in.open .row__v{transform:none;box-shadow:none}
+  .row.in.open .row__v video{transform:none}
+
+  /* the player: sticky under the bar, as tall as the screen allows */
+  .player{display:block;position:sticky;top:110px;align-self:start;
+    --ph:min(711px, calc(100svh - 150px)); --pw:calc(var(--ph) * 400 / 711);
+    width:calc(var(--pw) + 90px);height:calc(var(--ph) + 40px)}
+  .pcard{position:absolute;top:0;right:0;width:var(--pw);height:var(--ph);border-radius:24px;overflow:hidden;
+    background:#11121C;border:1.5px solid rgba(255,255,255,.72);box-shadow:0 26px 50px rgba(58,26,124,.32);color:#fff;
+    opacity:0;transform:translateY(40px) scale(.85);pointer-events:none;
+    transition:transform .8s var(--ease), opacity .8s var(--ease)}
+  .pcard::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to top,rgba(6,7,16,.92) 0%,rgba(6,7,16,.5) 34%,rgba(6,7,16,0) 66%),
+               linear-gradient(to bottom,rgba(6,7,16,.5) 0%,transparent 26%)}
+  .pcard.is-front{opacity:1;transform:none;z-index:3;pointer-events:auto;cursor:pointer}
+  .pcard.is-next{opacity:.9;z-index:2;transform:translateX(-86px) translateY(18px) rotate(-6deg) scale(.93)}
+  .pcard__v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .pcard__crest{position:absolute;z-index:2;top:52px;left:16px;right:16px;height:128px;
+    display:flex;align-items:center;justify-content:center;gap:12px;transition:opacity .4s var(--ease)}
+  .pcard__crest img{max-height:128px;max-width:70%;filter:drop-shadow(0 8px 22px rgba(6,7,16,.55))}
+  .pcard__crest.duo img{max-height:100px;max-width:40%}
+  .pcard__crest em{font-style:normal;font-weight:300;font-size:40px;opacity:.85}
+  .pcard__copy{position:absolute;z-index:2;right:24px;left:24px;bottom:24px;text-align:center;transition:opacity .4s var(--ease)}
+  .pcard__copy b{display:block;font:700 30px/1.1 var(--fa-font)}
+  .pcard__copy span{display:block;margin-top:8px;font:400 16px/1.3 var(--fa-font);opacity:.9}
+  .pcard__copy .ds-btn{margin-top:18px;height:48px;border-radius:24px}
+  .pcard.is-next .pcard__copy,.pcard.is-next .pcard__crest{opacity:0}
+  .player__bars{position:absolute;z-index:4;top:14px;right:16px;width:calc(var(--pw) - 32px);display:flex;gap:4px}
+  .player__bars i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden}
+  .player__bars i b{display:block;height:100%;width:0;background:#fff}
+  .player__bars i.done b{width:100%}
+  .player__bars i.on b{animation:rowFill 5s linear forwards}
+
+  /* the search opens its choices right under the bar: no dim, the page keeps
+     scrolling, a click anywhere outside closes it */
+  body.sheet-open{overflow:visible}
+  .seek{position:relative;z-index:31}
+  .seek__seg.is-on{background:var(--ds-light-blue-1)}
+  .sheet{position:relative;inset:auto;height:0;z-index:30}
+  .sheet__dim{position:fixed;inset:0;background:transparent}
+  .sheet__panel{position:absolute;z-index:31;top:12px;left:0;right:0;bottom:auto;width:auto;
+    max-height:min(440px, calc(100svh - 240px));padding:14px 0;border-radius:20px;
+    background:#fff;border:1px solid rgba(4,15,33,.06);box-shadow:0 20px 40px rgba(58,26,124,.16);
+    transform:translateY(-8px);opacity:0;transition:transform .35s var(--glide), opacity .25s linear}
+  .sheet.open .sheet__panel{transform:none;opacity:1}
+  .sheet__handle,.sheet__tabs{display:none}
+  .sheet__clear,.sheet__clear[hidden]{display:none}   /* it lives under the search bar on desktop */
+  /* sized to the desktop style guide: 20 demi question, 44px buttons, compact choices */
+  .sheet__x{display:grid;place-items:center;position:absolute;top:10px;left:10px;z-index:2;width:32px;height:32px;
+    border-radius:50%;color:var(--ink);background:#F3F4F7;transition:background .2s var(--ease)}
+  .sheet__x:hover{background:#E8EAEF}
+  .sheet__x svg{width:14px;height:14px}
+  .sheet__body{padding:4px 18px 14px}
+  .sheet__q{margin:0 0 12px;padding-left:44px;font:var(--ds-20-demi)}
+  .sheet__opts,.sheet__opts--when{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+  .sheet__opt{aspect-ratio:auto;height:96px;border-radius:12px;padding:8px 6px;gap:2px}
+  .sheet__opt img{top:14%;max-height:36%}
+  .sheet__opt b{font-size:14px}
+  .sheet__opt small{font-size:12px}
+  .sheet__opt--all b{font-size:16px}
+  .sheet__opts--when .sheet__opt{height:56px}
+  .sheet__foot{padding:12px 18px 0}
+  .sheet__cta{flex:none;height:44px;border-radius:22px;padding:6px 24px;margin-inline-start:auto;font:var(--ds-btn)}
+
+  /* footer — the groups side by side */
+  .foot{padding:64px var(--gutter) 40px}
+  .foot__groups{flex-direction:row;gap:clamp(48px,8vw,120px)}
+  .foot__legal{width:auto;max-width:900px}
+
+  /* the experience view — split: the footage keeps its 9:16 at full height on the
+     right, dissolving into the dark the way the mobile sheet does, and every
+     detail sits on the left with no scrolling. Arrows under the footage. */
+  .reel{--vw:min(calc(100svh * 9 / 16 * 1.7), 60vw);
+    background:radial-gradient(60% 50% at 20% 10%,rgba(130,74,234,.28) 0%,transparent 70%),
+               radial-gradient(50% 40% at 10% 100%,rgba(27,94,206,.26) 0%,transparent 70%),#06070F}
+  .reel__slide{display:grid;grid-template-columns:var(--vw) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;
+    overflow:hidden}
+  .reel__stage{position:relative;grid-column:1;grid-row:1 / span 2;height:100%;overflow:hidden}
+  /* clear, then a soft ramp to ink toward the details — the mobile veil's own steps, turned sideways */
+  .reel__stage::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(to left,
+      rgba(6,7,16,0) 0%, rgba(6,7,16,0) 58%, rgba(6,7,16,.28) 68%,
+      rgba(6,7,16,.62) 80%, rgba(6,7,16,.86) 91%, #06070F 100%)}
+  .reel__veil,.reel__copy,.reel__hint{display:none}
+  .reel__foot{height:30%}
+  .reel__crest{top:clamp(64px,10vh,110px)}
+
+  /* the details column */
+  html .reel__slide .reel__detail{grid-column:2;grid-row:1;align-self:stretch;min-height:0;justify-self:start;
+    display:flex;flex-direction:column;
+    width:100%;max-width:640px;box-sizing:border-box;overflow-y:auto;scrollbar-width:none;pointer-events:auto;
+    padding:clamp(96px,14vh,140px) clamp(20px,2.5vw,40px) 0 clamp(32px,3.5vw,64px)}
+  .reel__detail::-webkit-scrollbar{display:none}
+  /* sits at the foot of its column, but scrolls from the top when a short screen can't hold it */
+  .reel__detail > .rd__title{margin-top:auto}
+  .rd__kicker{display:none}
+  .rd__meta{display:flex;margin:0}
+  .rd__title{margin-top:14px;text-align:right;font-size:clamp(42px,4.2vw,68px);line-height:1}
+  .rd__about{margin:20px 0 0;max-width:46ch;text-align:right;font:400 19px/1.45 var(--fa-font)}
+  /* the facts lose their glass: dates and packages in two columns, the price across the foot */
+  .rd__glass{margin-top:34px;padding:0;border:0;border-radius:0;background:none;
+    backdrop-filter:none;-webkit-backdrop-filter:none;text-align:right;
+    display:grid;grid-template-columns:auto auto;justify-content:start;column-gap:clamp(28px,3vw,48px);row-gap:12px}
+  .rd__glass > :nth-child(1){grid-column:1;grid-row:1}
+  .rd__glass > :nth-child(2){grid-column:1;grid-row:2}
+  .rd__glass > :nth-child(3){display:none}
+  .rd__glass > :nth-child(4){grid-column:2;grid-row:1}
+  .rd__glass > :nth-child(5){grid-column:2;grid-row:2}
+  .rd__glass > :nth-child(6){grid-column:1 / -1;grid-row:3}
+  .rd__lbl{font-size:14px;opacity:.55;letter-spacing:.02em}
+  .rd__dates,.rd__tiers{margin:0;justify-content:flex-start;gap:10px}
+  .rd__dates i{display:none}
+  .rd__dates span,.rd__tiers span{height:44px;padding:0 20px;border-radius:22px;display:inline-flex;align-items:center;
+    font:400 17px/1 var(--fa-font);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.22)}
+  .rd__price{margin-top:22px}
+  .rd__price b{font-size:30px}
+  .rd__price span{font-size:16px}
+
+  /* the buttons: under the details, side by side; the "you have enough" banner above them */
+  html .reel__slide .reel__act{grid-column:2;grid-row:2;position:relative;bottom:auto;justify-self:start;
+    width:100%;max-width:640px;box-sizing:border-box;height:auto;margin:0;opacity:1;transform:none;pointer-events:auto;
+    display:flex;flex-wrap:wrap;gap:12px;background:none;
+    padding:24px clamp(20px,2.5vw,40px) clamp(36px,6vh,56px) clamp(32px,3.5vw,64px)}
+  .reel__act::before{content:"";flex:0 0 100%;height:1px;margin-bottom:14px;background:rgba(255,255,255,.14)}
+  .rd__have{flex:0 0 100%;box-sizing:border-box;margin:0 0 4px;padding:12px 12px 12px 16px}
+  .rd__have__tx b{font-size:17px}
+  .rd__have__tx span{font-size:14px}
+  .rd__have__go{height:40px;line-height:40px;padding:0 22px;font-size:16px}
+  .rd__cta,.rd__buy{flex:1 1 220px;width:auto;margin:0;height:54px;border-radius:27px;font-size:18px}
+  .rd__buy svg{width:16px;height:16px}
+  @media (max-width:1279px){
+    .rd__glass{grid-template-columns:auto}
+    .rd__glass > :nth-child(4){grid-column:1;grid-row:3;margin-top:10px}
+    .rd__glass > :nth-child(5){grid-column:1;grid-row:4}
+    .rd__glass > :nth-child(6){grid-row:5}
+  }
+
+  .reel__bars{top:22px;left:auto;right:22px;width:calc(var(--vw) - 44px)}
+  .reel__close,.how__close{top:28px;right:auto;left:32px}
+  .reel__nav{display:grid;place-items:center;position:absolute;top:auto;bottom:28px;z-index:6;width:52px;height:52px;
+    border-radius:50%;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:opacity .3s var(--ease), transform .2s var(--ease)}
+  .reel__nav svg{width:22px;height:22px}
+  .reel__nav:hover{transform:scale(1.06)}
+  .reel__nav:disabled{opacity:.25;pointer-events:none}
+  .reel__nav--prev{right:calc(var(--vw) / 2 - 59px)}   /* RTL: back on the right, next on the left */
+  .reel__nav--next{right:calc(var(--vw) / 2 + 7px)}
+  .reel.how-open .reel__nav{opacity:0;pointer-events:none}
+  /* the points switch sits beside the close button, clear of the buy buttons */
+  body.reel-open .who--pts{top:32px;left:92px}
+
+  /* the walkthrough takes over the details column; the footage keeps running beside it */
+  .how{top:0;bottom:0;left:0;right:var(--vw);width:auto}
+  .how__veil{background:#06070F}
+  .how__track{top:14%}
+  .how__step{padding:6px max(24px, calc(50% - 250px)) 110px}
+  .how__art svg{max-width:300px;max-height:30vh}
+
+  /* on desktop the swipe gives way to an accordion: all three steps listed,
+     the open one carries its drawing beside the copy, and it moves on by itself */
+  .how__track,.how__dots{display:none}
+  .how__acc{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;
+    width:100%;max-width:640px;box-sizing:border-box;
+    padding:clamp(96px,14vh,140px) clamp(20px,2.5vw,40px) clamp(36px,6vh,56px) clamp(32px,3.5vw,64px)}
+  .how__acc-title{margin:0;font:700 clamp(30px,2.6vw,38px)/1.1 var(--ds-font);color:#fff;text-align:right}
+  .how__acc-title b{background:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .how__acc-list{margin-top:clamp(20px,3.4vh,32px);display:flex;flex-direction:column;gap:10px}
+  .hacc{position:relative;border-radius:22px;border:1px solid rgba(255,255,255,.1);overflow:hidden;
+    transition:background .35s var(--ease), border-color .35s var(--ease)}
+  .hacc:hover:not(.on){border-color:rgba(255,255,255,.2)}
+  .hacc__hd{display:flex;align-items:center;gap:14px;width:100%;padding:18px 22px;text-align:right;cursor:pointer}
+  .hacc__n{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+    font:700 15px/1 var(--fa-font);color:rgba(255,255,255,.6);border:1.5px solid rgba(255,255,255,.28);
+    transition:background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease)}
+  .hacc__hd h3{margin:0;font:700 22px/1.15 var(--ds-font);color:#fff;transition:color .35s var(--ease)}
+  .hacc__more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+  .hacc__more > div{overflow:hidden}
+  .hacc__row{display:grid;grid-template-columns:minmax(0,1fr) clamp(110px,10vw,150px);gap:20px;align-items:center;
+    padding:0 22px 20px 70px}
+  .hacc__row p{margin:0;font:var(--ds-body3);color:#fff;opacity:.82}
+  .hacc__row .how__note{margin-top:12px;color:#fff}
+  .hacc__art svg{display:block;width:100%;height:auto;max-height:clamp(110px,16vh,150px);
+    fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .hacc__bar{position:absolute;bottom:0;right:0;height:2px;width:0;background:var(--tone-fg)}
+  .hacc.on{background:var(--tone-bg);border-color:var(--tone-br)}
+  .hacc.on .hacc__n{background:var(--tone-fg);border-color:transparent;color:#06070F}
+  .hacc.on .hacc__hd h3{color:var(--tone-fg)}
+  .hacc.on .hacc__more{grid-template-rows:1fr}
+  .hacc.on .hacc__bar{animation:haccFill var(--hacc-t,6s) linear forwards}
+  .how__acc > .how__cta{margin-top:auto;height:54px;border-radius:27px;font-size:18px}
+  @keyframes haccFill{to{width:100%}}
+}
+@media (min-width:1024px) and (prefers-reduced-motion: reduce){
+  .hacc__more,.hacc,.hacc__n{transition:none}
+  .hacc.on .hacc__bar{animation:none}
+}
+@media (max-width:1023px){ .how__acc{display:none} }
+.reel__nav{display:none}
+@media (min-width:1024px){ .reel__nav{display:grid} }
+@media (min-width:1024px) and (prefers-reduced-motion: reduce){
+  .pcard,.row__txt{transition:none}
+  .row.is-now .row__bar b,.player__bars i.on b{animation:none;width:100%}
+}
+
+/* ---- signed in: what the points already hold, and what is left to the first experience ---- */
+.lead__me{width:100%;max-width:360px;margin:26px auto 0;display:flex;align-items:center;gap:14px;padding:14px 16px 14px 18px;border-radius:20px;text-align:right;font-family:var(--pf);color:#fff;
+  /* the brand ramp, mirrored so it loops without a seam, drifting slowly across the card */
+  background:linear-gradient(90deg,#1B5ECE,#824AEA,#F63DE4,#824AEA,#1B5ECE) 0 0/300% 100%;
+  animation:meFlow 7s linear infinite;box-shadow:0 14px 30px rgba(130,74,234,.28)}
+@keyframes meFlow{to{background-position:150% 0}}
+/* one teaser, no balance on show: a plane in a white disc, then the line and what waits here */
+.lead__me__ic{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;background:#fff;color:var(--ds-purple)}
+.lead__me__ic svg{width:24px;height:24px;transform:rotate(90deg)}
+.lead__me__tx{flex:1;min-width:0}
+.lead__me__tx b{display:block;font-size:17px;line-height:1.2;font-weight:700}
+.lead__me__tx small{display:block;margin-top:4px;font-size:14px;line-height:1.3;opacity:.9}
+@media (prefers-reduced-motion: reduce){ .lead__me{animation:none;background:var(--ds-gradient)} }
+body.is-guest .lead__me{display:none}
+/* guest: why pay in money — a line, a sub line and a text link, straight on the page */
+.lead__why{display:none;flex-direction:column;align-items:center;width:100%;margin:26px auto 0;text-align:center;font-family:var(--pf)}
+body.is-guest .lead__why{display:flex}
+.lead__why p{margin:0;max-width:300px;font-size:21px;line-height:1.3;font-weight:400;color:var(--ink)}
+.lead__why p b{font-weight:700}
+.lead__why p em{font-style:normal;font-weight:700;background:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead__why small{margin-top:8px;font-size:15px;line-height:1.35;color:var(--ds-gray)}
+.lead__why a{margin-top:14px;display:inline-flex;align-items:center;gap:6px;font:700 16px/1 var(--pf);color:var(--ds-blue);text-decoration:none}
+.lead__why a svg{flex:none}
+@media (min-width:1024px){
+  /* desktop: wider, lower tiles — label, number and unit read as one line ("כבר צברת 500 נקודות") */
+  .lead__me{margin:28px 0 0;max-width:600px;gap:16px;padding:16px 20px 16px 24px}
+  .lead__me__ic{width:52px;height:52px}
+  .lead__me__ic svg{width:28px;height:28px}
+  .lead__me__tx b{font-size:20px}
+  .lead__me__tx small{font-size:16px}
+  /* desktop: the question runs as one line, the hint and the link share the line under it */
+  .lead__why{margin:30px 0 0;flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px;row-gap:10px;text-align:right}
+  .lead__why p{flex-basis:100%;max-width:none;font-size:28px;line-height:1.2}
+  .lead__why p br{display:none}
+  .lead__why small{margin:0;font-size:17px}
+  .lead__why small::after{content:"";display:inline-block;width:4px;height:4px;margin-inline-start:14px;border-radius:50%;
+    background:currentColor;opacity:.5;vertical-align:middle}
+  .lead__why a{margin:0;font-size:17px}
+}
+
+/* ---- demo: guest / signed-in switch ---- */
+/* guest: money price up front, points as the card holder's teaser */
+.g-price,.m-price{display:contents}
+/* money or points with the spark for everyone, signed in or not */
+.m-price{display:none!important}
+body:not(.is-guest) .rd__price .m-price{display:contents!important}
+body.is-guest .rd__price .m-price,body:not(.is-guest) .rd__price .g-price{display:none}
+/* guest: the card holder's deal, framed in the brand gradient so it reads as the better way in */
+.rd__price .g-price,.rd__price .m-price{display:contents}
+.rd__price .rd__deal{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;padding:11px 14px;border-radius:16px;opacity:1;color:#fff;text-align:center;border:1.5px solid transparent;background:linear-gradient(rgba(24,18,46,.94),rgba(24,18,46,.94)) padding-box,var(--ds-gradient) border-box;box-shadow:0 10px 28px rgba(130,74,234,.38)}
+.rd__price .rd__deal > span{display:block;margin:0;opacity:1}
+.rd__price .rd__deal .spark{flex:none;width:20px;height:20px}
+.rd__price b .rd__from{font-size:.62em;font-weight:500;margin-left:.25em;vertical-align:.12em}
+.rd__price .m-price b{white-space:nowrap}
+@media (max-width:1023px){.rd__price .m-price b{font-size:min(24px,6vw)}}
+.rd__price b .spark{display:inline-block;margin:0;width:.85em;height:.85em;vertical-align:-.05em;opacity:1}
+.rd__deal strong{font-weight:700}
+/* on film and on the dark glass the brand ramp sinks — the same ramp, lifted */
+.tile__from .spark,.perk__copy .spark,.rd__deal .spark{background:linear-gradient(90deg,#C6D8FF 0%,#E4D0FF 50%,#FFC8F8 100%)}
+.spark{display:inline-block;width:.95em;height:.95em;vertical-align:-.12em;background:var(--ds-gradient);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 5Q11.53 12.47 19 14Q11.53 15.53 10 23Q8.47 15.53 1 14Q8.47 12.47 10 5ZM19 .5Q19.77 4.23 23.5 5Q19.77 5.77 19 9.5Q18.23 5.77 14.5 5Q18.23 4.23 19 .5Z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 5Q11.53 12.47 19 14Q11.53 15.53 10 23Q8.47 15.53 1 14Q8.47 12.47 10 5ZM19 .5Q19.77 4.23 23.5 5Q19.77 5.77 19 9.5Q18.23 5.77 14.5 5Q18.23 4.23 19 .5Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.who{position:fixed;left:12px;bottom:12px;z-index:900;display:flex;padding:3px;border-radius:20px;
+  background:rgba(255,255,255,.92);box-shadow:0 2px 12px rgba(4,15,33,.18);backdrop-filter:blur(8px);
+  font:600 12px/1 var(--ds-font);direction:rtl}
+.who button{border:0;background:none;padding:7px 12px;border-radius:17px;color:var(--ds-gray);font:inherit;cursor:pointer}
+.who button[aria-pressed="true"]{background:var(--ds-blue);color:#fff}
+body.reel-open .who{display:none}
+/* the points switch lives only in the experience view, up top, clear of the buy buttons */
+.who.who--pts{display:none}
+
+/* ============================================================
+   DREAM FLOW — package · hotel · room · flight · checkout
+   The old package pages (Figma "עמוד חבילה - הופעה") in the Dream Store
+   language, with the future-points strip riding on top of every step.
+   ============================================================ */
+:root{
+  --ink:var(--ds-black);
+  --line:#ECEAF3;
+  --soft:#F6F4FC;
+  --ok:#14A160;
+  --card-shadow:0 14px 40px rgba(24,22,64,.08),0 1px 3px rgba(24,22,64,.05);
+  --ease:cubic-bezier(.22,.9,.24,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ds-bg)}
+body{font-family:var(--ds-font);color:var(--ink);min-height:100vh;
+  background:radial-gradient(50% 30% at 92% 0%,#FBEAF8 0%,transparent 70%),
+             radial-gradient(45% 30% at 0% 18%,#E8F0FF 0%,transparent 70%),var(--ds-bg)}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+img{display:block}
+a{color:inherit}
+.fl{max-width:1180px;margin:0 auto;padding:0 16px 96px}
+@media (min-width:1024px){ .fl{padding-bottom:84px} }   /* room for the bottom bar, short enough to keep the sticky side column in place */
+
+/* ===== the ring: what you have, out of the dream — it rides along every step ===== */
+.rg{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:22px;border:1px solid #ECEAF3;
+  background:radial-gradient(70% 90% at 100% 0%,#FBEAF8,transparent 70%),radial-gradient(70% 90% at 0% 100%,#E8F0FF,transparent 70%),#fff;box-shadow:var(--card-shadow)}
+.rg__ring{position:relative;flex:none;width:96px;height:96px}
+.rg__ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible;transition:transform 1.4s cubic-bezier(.3,.7,.3,1)}
+.rg__ring circle{fill:none;stroke-width:7}
+.rg__ring .bg{stroke:rgba(130,74,234,.12)}
+.rg__ring .fg{stroke:url(#rgG);stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.3,1.2,.5,1)}
+/* hover: the filled part only drifts a few degrees, nothing else */
+.rg:hover .rg__ring svg{transform:rotate(-82deg)}
+.rg__n{position:absolute;inset:0;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.rg__n b{font:700 20px/1 var(--ds-font-btn);color:var(--ds-purple)}
+.rg__n small{margin-top:3px;font:400 11px/1.2 var(--ds-font);color:var(--ink);opacity:.65}
+.rg__n small span{font-family:var(--ds-font-btn);font-weight:700}
+.rg__tx{min-width:0}
+.rg__t{margin:0;font:700 17px/1.2 var(--ds-font)}
+.rg__s{margin:6px 0 0;font:400 14px/1.4 var(--ds-font);color:#3A3F4B}
+.rg__s b{color:var(--ink);font:700 15px/1 var(--ds-font-btn)}
+/* the ring's calculator: a small secondary button under the line */
+.rg{position:relative}
+/* the ring's calculator: a small icon in its top-left corner, hopping now and then */
+.rg__calc{position:absolute;top:12px;inset-inline-end:12px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  background:#fff;border:1px solid #E6E1F2;box-shadow:0 4px 12px rgba(58,26,124,.10);color:var(--ds-purple);transition:transform .2s,box-shadow .2s}
+.rg__calc:hover{transform:scale(1.08);box-shadow:0 6px 16px rgba(130,74,234,.22)}
+.rg__calc svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+  animation:rgHop 3s cubic-bezier(.3,.7,.4,1) infinite;transform-origin:50% 100%}
+@keyframes rgHop{0%,50%,100%{transform:translateY(0)}12%{transform:translateY(-4px) rotate(-6deg)}24%{transform:translateY(0) scale(1.06,.94)}34%{transform:translateY(-1px)}}
+@media (prefers-reduced-motion:reduce){ .rg__calc svg{animation:none} }
+.rg__tx{padding-inline-end:28px}
+/* mobile: the icon sits in the bottom corner, clear of the headline */
+@media (max-width:1023px){ .rg__calc{top:auto;bottom:12px} .rg__tx{padding-inline-end:0} }
+/* the way home, as on the category page */
+.homerow{margin:18px 0 0;text-align:right}
+.lead__home{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 13px 0 12px;border-radius:999px;
+  font:600 14px/1 var(--ds-font-btn);color:var(--ds-blue);text-decoration:none;white-space:nowrap;
+  background:rgba(255,255,255,.75);border:1px solid #E6E1F2;box-shadow:0 4px 12px rgba(58,26,124,.08);transition:background .2s}
+.lead__home:hover{background:#fff}
+.lead__home:active{transform:scale(.96)}
+.lead__home svg{flex:none}
+.fa-card{position:relative;direction:ltr;width:50px;height:32px;border-radius:6px;transform:rotate(-6deg);flex:none}
+.fa-card::before,.fa-card i{content:"";position:absolute;border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--ds-gradient) border-box}
+.fa-card::before{inset:0;border-radius:inherit}
+.fa-card b,.fa-card span{position:absolute;background:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fa-card b{top:5px;left:5px;font:700 7px/1 var(--ds-font-btn)}
+.fa-card i{top:12px;right:6px;width:10px;height:7px;border-radius:2px}
+.fa-card span{bottom:5px;right:6px;font:400 5px/1 var(--ds-font-btn);letter-spacing:1px}
+/* the popup */
+.cc-scrim{position:fixed;inset:0;z-index:300;background:rgba(4,15,33,.4);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.cc{position:fixed;inset-inline:0;bottom:0;z-index:301;max-height:92vh;overflow-y:auto;padding:12px 22px 26px;border-radius:24px 24px 0 0;background:#fff;color:var(--ds-black);
+  box-shadow:0 -18px 44px rgba(4,15,33,.18);transform:translateY(calc(100% + 60px));visibility:hidden;transition:transform .45s cubic-bezier(.2,.8,.2,1),visibility .45s}
+.cc::before{content:"";display:block;width:40px;height:4px;margin:0 auto 18px;border-radius:2px;background:#E1E3EA}
+body.cl--open .cc-scrim{opacity:1;visibility:visible}
+body.cl--open .cc{transform:none;visibility:visible}
+.cc__x{position:absolute;top:16px;inset-inline-end:16px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--ds-black);background:#F3F4F8;border:0}
+.cc__x svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.cc__top{display:flex;align-items:center;gap:12px;padding-inline-end:42px}
+.cc__h{margin:0;font:300 24px/1.15 'Ploni',var(--ds-font-btn)}
+.cc__h b{font-weight:700;background:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cc__lbl{margin:28px 0 14px;font:700 14px/1.3 var(--ds-font);color:var(--ds-black)}
+/* a very light divider between the spend and the time */
+.cc__range + .cc__lbl{margin-top:24px;padding-top:24px;border-top:1px solid #EEF0F4}
+/* the spend: − amount + and a slider under it */
+.cc__spend{display:flex;align-items:center;justify-content:center;gap:18px}
+.cc__step{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid #DCDFE7;background:#fff;color:var(--ds-blue);font:400 24px/1 var(--ds-font-btn)}
+.cc__step:hover{background:var(--ds-light-blue-1,#F0F8FF)}
+.cc__amt{min-width:5ch;text-align:center;font:400 32px/1 var(--ds-font-btn);direction:ltr}
+.cc__amt small{font-size:18px;margin-inline-end:2px}
+.cc__range{display:block;width:100%;margin:18px 0 0;accent-color:var(--ds-blue);cursor:pointer}
+.cc__mo{display:flex;gap:8px}
+.cc__mo button{flex:1;height:38px;border-radius:19px;cursor:pointer;border:1px solid #DCDFE7;background:#fff;font:400 14px/1 var(--ds-font);color:var(--ds-black)}
+.cc__mo button.on{border-color:var(--ds-blue);background:var(--ds-light-blue-1,#F0F8FF);color:var(--ds-blue);font-weight:700}
+/* the answer */
+.cc__res{margin-top:28px;padding:6px 18px;border-radius:18px;background:var(--ds-light-blue-1,#F0F8FF)}
+.cc__res p{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0;padding:16px 0;font:400 14px/1.3 var(--ds-font);color:#5B6170}
+.cc__res p + p{border-top:1px solid rgba(27,94,206,.12)}
+/* what you earn is the smaller line; the total, with what you already have, is the answer */
+.cc__res p b{flex:none;font:700 20px/1 var(--ds-font-btn);color:var(--ds-black)}
+.cc__res p + p b{font-size:30px;color:var(--ds-blue)}
+.cc__res p b small{margin-inline-start:4px;font-size:14px;color:var(--ds-black)}
+.cc__go{display:flex;align-items:center;justify-content:center;width:100%;height:50px;margin-top:24px;border-radius:25px;color:#fff;text-decoration:none;
+  font:700 17px/1 var(--ds-font-btn);background:var(--ds-gradient)}
+
+/* the dream's own answer, under the two lines */
+.cc__res p.cc__end{display:block;padding:14px 0 16px;font:700 15px/1.35 var(--ds-font);color:var(--ink)}
+.cc__res p.cc__end.ok{color:var(--ok)}
+.cc__fixed{margin:10px 0 0;font:400 13px/1.3 var(--ds-font);color:var(--ds-gray);text-align:center}
+@media (min-width:1024px){
+  .cc{inset:auto;left:50%;top:50%;bottom:auto;width:560px;max-height:none;padding:34px 36px 30px;border-radius:24px;opacity:0;visibility:hidden;
+    transform:translate(-50%,-46%);transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s,visibility .3s}
+  .cc::before{display:none}
+  body.cl--open .cc{transform:translate(-50%,-50%);opacity:1;visibility:visible}
+  .cc__h{font-size:30px}
+}
+body.cl--open{overflow:hidden}
+
+@media (prefers-reduced-motion:reduce){ .rg__ring .fg,.rg__ring svg{transition:none} .rg:hover .rg__ring svg{transform:rotate(-90deg)} }
+.ev__logo{z-index:1}
+/* mobile: the event card (with the bar) comes first, the summary after the step */
+@media (max-width:1023px){
+  .grid > .side{display:contents}
+  .grid > .side > .rg{order:-1}
+  .grid > .side > .ev{order:0}
+  .grid > .main{order:1}
+  .grid > .side > .sum,.grid > .side > .acc{order:2}
+}
+
+/* ===== steps — sticky, in the Figma blue ===== */
+.st{display:flex;align-items:center;justify-content:center;gap:0;margin:0 auto 18px}
+/* the band sticks under the header; its colour runs edge to edge, and it leaves room for the header's tongue and orb */
+.st{position:sticky;top:var(--fa-bar-h);z-index:40;padding:18px 0 12px;background:var(--ds-bg);
+  box-shadow:0 0 0 100vmax var(--ds-bg);clip-path:inset(0 -100vmax)}
+@media (min-width:1024px){ .st{padding-top:26px} }
+/* for now the flow's header has no tongue and orb under it */
+.fa-header__notch,.fa-header__decor,.fa-dh__notch,.fa-dh__orb,.fa-dh__glow{display:none!important}
+.st__i{display:flex;align-items:center;gap:8px;flex:none;font:400 14px/1 var(--ds-font);color:var(--ds-gray);white-space:nowrap}
+.st__i b{width:24px;height:24px;border-radius:75px;display:grid;place-items:center;flex:none;font:700 12px/1 var(--ds-font-btn);
+  background:var(--ds-step-off);color:var(--ds-gray);transition:background .3s,color .3s}
+.st__i b svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.st__i.done{color:var(--ink);cursor:pointer}
+.st__i.done b{background:var(--ds-blue);color:#fff}
+.st__i.on{color:var(--ds-black)}
+.st__i.on b{background:var(--ds-blue);color:#fff}
+.st__ln{flex:1;min-width:14px;height:1px;margin:0 10px;background:var(--ds-step-off)}
+.st__ln.done{background:var(--ds-step-off)}
+@media (max-width:599px){
+  .st__i span{display:none}
+  .st__i.on span{display:inline}
+  .st__ln{margin:0 6px}
+}
+
+.confetti{position:fixed;z-index:200;width:0;height:0;pointer-events:none}
+.confetti i{position:absolute;left:-3px;top:-4px;width:6px;height:8px;border-radius:2px}
+
+/* ===== the two columns ===== */
+.grid{display:flex;flex-direction:column;gap:18px;margin-top:22px}
+.side{order:2;display:flex;flex-direction:column;gap:14px}
+.main{order:1;min-width:0}
+@media (min-width:1024px){
+  .grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:32px;align-items:start}
+  /* the side column holds still under the sticky strip, and scrolls inside itself if it must */
+  .side{order:0;position:sticky;top:192px;max-height:calc(100vh - 264px);   /* under the stepper, now that the header has no tongue */overflow-y:auto;scrollbar-width:none;padding-bottom:4px}
+  .side::-webkit-scrollbar{display:none}
+  .side > *{flex:none}
+  .main{order:0}
+}
+
+/* ===== cards ===== */
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--card-shadow)}
+.card + .card{margin-top:14px}
+.card h2{margin:0;font:700 20px/1.2 var(--ds-font)}
+.card .sub{margin:6px 0 0;font:400 14px/1.4 var(--ds-font);color:var(--ds-gray)}
+
+/* the event card */
+.ev{padding:0;overflow:hidden}
+.ev__img{position:relative;height:96px;background:#0C0A1A url('assets/posters/0_Concert_Crowd_720x1280.jpg') center 35%/cover}
+.ev__img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,7,16,.75),rgba(6,7,16,0) 60%)}
+.ev__logo{position:absolute;z-index:1;bottom:10px;inset-inline-start:14px;height:26px;width:auto;filter:brightness(0) invert(1)}
+.ev__body{padding:12px 16px 14px}
+.ev__kick{margin:0;font:400 13px/1 var(--ds-font);color:var(--ds-gray)}
+.ev__t{margin:4px 0 0;font:700 19px/1.15 var(--ds-font)}
+/* the countdown, quieter: one small line in a light pill */
+.ev__cd{display:inline-flex;align-items:baseline;gap:5px;margin-top:8px;padding:5px 10px;border-radius:12px;color:var(--ds-purple);background:var(--soft)}
+.ev__cd b{font:700 14px/1 var(--ds-font-btn)}
+.ev__cd span{font:400 12px/1.2 var(--ds-font)}
+.ev__meta{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:4px;font:400 13px/1.3 var(--ds-font)}
+.ev__meta li{display:flex;gap:8px;align-items:center}
+.ev__meta svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ds-purple);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* the summary */
+.sum h3,.acc summary{margin:0;font:700 18px/1.2 var(--ds-font)}
+.sum dl{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;gap:9px 12px;font:400 14px/1.3 var(--ds-font)}
+.sum dt{color:var(--ds-gray)}
+.sum dd{margin:0;text-align:left;font-weight:700}
+.sum__tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.sum__tot span{font:400 14px/1 var(--ds-font);color:var(--ds-gray)}
+.sum__tot b{font:700 24px/1 var(--ds-font-btn)}
+.sum__tot small{font:400 13px/1 var(--ds-font-btn);color:var(--ds-gray);margin-inline-start:4px}
+.sum__dep{margin:10px 0 0;padding:9px 12px;border-radius:12px;background:var(--soft);font:400 13px/1.35 var(--ds-font);color:#3A3F4B}
+.sum__dep b{color:var(--ds-purple)}
+.acc{padding:0}
+.acc summary{list-style:none;padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"";width:9px;height:9px;border:solid var(--ink);border-width:0 0 2px 2px;transform:rotate(-45deg) translateY(-3px);transition:transform .25s}
+.acc[open] summary::after{transform:rotate(135deg) translateY(-3px)}
+.acc ul{margin:0;padding:0 20px 18px 20px;list-style:none;display:grid;gap:8px;font:400 14px/1.4 var(--ds-font);color:#3A3F4B}
+.acc li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:8px}
+.acc p{margin:0;padding:0 20px 18px;font:400 14px/1.5 var(--ds-font);color:#3A3F4B}
+
+/* ===== shared controls ===== */
+.pill{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:12px;font:700 12px/1 var(--ds-font);
+  background:var(--ds-light-blue-2);color:var(--ds-blue);white-space:nowrap}
+.pts{font:700 18px/1 var(--ds-font-btn);color:var(--ink)}
+.pts small{font:400 13px/1 var(--ds-font-btn);color:var(--ds-gray);margin-inline-start:4px}
+.pts--plus{color:var(--ds-purple)}
+.per{display:block;margin-top:4px;font:400 12px/1.3 var(--ds-font);color:var(--ds-gray)}
+.radio{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #C9C6D8;display:grid;place-items:center;transition:border-color .2s}
+.radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--ds-gradient);transform:scale(0);transition:transform .2s var(--ease)}
+.opt{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:right;padding:16px;border-radius:18px;border:1.5px solid var(--line);background:#fff;
+  transition:border-color .2s,box-shadow .2s}
+.opt + .opt{margin-top:10px}
+.opt:hover{border-color:#D7CFF2}
+.opt[aria-checked="true"]{border-color:transparent;background:linear-gradient(#fff,#fff) padding-box,var(--ds-gradient) border-box;box-shadow:0 10px 26px rgba(130,74,234,.14)}
+.opt[aria-checked="true"] .radio{border-color:var(--ds-purple)}
+.opt[aria-checked="true"] .radio::after{transform:scale(1)}
+.opt__b{flex:1;min-width:0}
+.opt__b h4{margin:0;font:700 17px/1.25 var(--ds-font)}
+.opt__b p{margin:4px 0 0;font:400 14px/1.4 var(--ds-font);color:#5B6170}
+.opt__f{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.stepper{display:inline-flex;align-items:center;gap:14px}
+.stepper button{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--ds-light-blue-1);color:var(--ds-blue);
+  font:700 20px/1 var(--ds-font-btn);transition:background .2s}
+.stepper button:hover{background:var(--ds-light-blue-2)}
+.stepper button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:20px;text-align:center;font:700 22px/1 var(--ds-font-btn);color:var(--ds-blue)}
+
+/* step 1 — passengers and the arena */
+.pax{display:flex;align-items:center;justify-content:space-between;gap:12px}
+/* the hall map from Figma ("עמוד חבילה - הופעה"): the package's blocks light up in its colour, the rest stays grey */
+.arena{margin:16px auto 6px;max-width:460px}
+.arena img{display:block;width:100%;height:auto;transition:filter .45s}
+.arena[data-z=""] img{filter:grayscale(1) opacity(.75)}
+.arena[data-z="main"] img{filter:hue-rotate(207deg) saturate(.8)}
+.arena[data-z="floor"] img{filter:hue-rotate(-52deg) saturate(1.2) brightness(1.08)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:6px;vertical-align:0}
+
+/* step 2/3 — hotels and rooms */
+.lodge{display:flex;gap:0;padding:0;overflow:hidden;align-items:stretch}
+.lodge__img{position:relative;flex:none;width:132px;background:#EEE center/cover}
+.lodge__img .pill{position:absolute;top:10px;inset-inline-start:10px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.lodge .opt__b{padding:14px 16px;padding-inline-end:46px}   /* room for the radio in the corner */
+.lodge .radio{position:absolute;top:12px;inset-inline-end:12px}
+.lodge{position:relative}
+.stars{color:var(--ds-pink);letter-spacing:1px;font-size:13px}
+.score{display:inline-grid;place-items:center;min-width:30px;height:20px;padding:0 5px;border-radius:6px;background:var(--ds-gradient);color:#fff;font:700 11px/1 var(--ds-font-btn);margin-inline:6px}
+.perk{display:block;margin-top:4px;font:400 13px/1.3 var(--ds-font);color:var(--ok)}
+.perk::before{content:"✓ "}
+@media (min-width:600px){ .lodge__img{width:220px} }
+.room{display:flex;padding:0;overflow:hidden;position:relative;align-items:stretch}
+.room .lodge__img{min-height:150px}
+.room__qty{margin-top:12px}
+.warn{margin:12px 0 0;padding:10px 12px;border-radius:12px;background:#FFF4E5;color:#8A5300;font:400 14px/1.35 var(--ds-font)}
+
+/* step 4 — flights */
+.leg{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:12px 0}
+.leg + .leg{border-top:1px solid var(--line)}
+.leg__pt b{display:block;font:700 22px/1 var(--ds-font-btn);direction:ltr}
+.leg__pt small{display:block;margin-top:5px;font:400 13px/1 var(--ds-font-btn);color:var(--ds-gray);direction:ltr}
+.leg__pt:last-child{text-align:left}
+.leg__mid{text-align:center;font:400 12px/1 var(--ds-font);color:var(--ds-gray)}
+.leg__mid i{display:block;position:relative;height:2px;margin:6px 4px;background:repeating-linear-gradient(270deg,var(--ds-blue) 0 4px,transparent 4px 8px)}
+.leg__mid i::after{content:"";position:absolute;left:-2px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--ds-blue)}
+.air{display:flex;align-items:center;gap:8px;font:700 14px/1 var(--ds-font-btn)}
+.air i{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#1E2A78;color:#fff;font:700 11px/1 var(--ds-font-btn);font-style:normal}
+.air small{font:400 12px/1 var(--ds-font-btn);color:var(--ds-gray)}
+.bag{margin-top:8px;border-radius:12px;background:var(--ds-light-blue-1)}
+.bag summary{list-style:none;padding:11px 14px;cursor:pointer;font:700 14px/1 var(--ds-font);display:flex;justify-content:space-between}
+.bag summary::-webkit-details-marker{display:none}
+.bag p{margin:0;padding:0 14px 12px;font:400 13px/1.5 var(--ds-font);color:#3A3F4B}
+.flight .opt__b{width:100%}
+
+/* step 5 — checkout (content as in Figma "צ׳ק־אאוט מובייל") */
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:16px;border:1.5px solid var(--line)}
+.toggle span{font:400 15px/1.3 var(--ds-font)}
+.toggle span b{font-family:var(--ds-font-btn)}
+.sw{position:relative;width:44px;height:26px;border-radius:13px;background:#D9D7E3;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:inset-inline-start .2s var(--ease)}
+.sw[aria-checked="true"]{background:var(--ds-gradient)}
+.sw[aria-checked="true"]::after{inset-inline-start:21px}
+.pay .opt__b p b{color:var(--ink)}
+.pay__box{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--ds-light-blue-1);font:400 13px/1.45 var(--ds-font);color:#24406E}
+.reco{display:inline-flex;margin-inline-start:6px;height:20px;padding:0 8px;border-radius:10px;background:var(--ds-gradient);color:#fff;font:700 11px/20px var(--ds-font);vertical-align:2px}
+.fields{display:grid;gap:10px;margin-top:14px}
+.fields .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fields label{display:block;font:400 13px/1 var(--ds-font);color:#5B6170;margin-bottom:6px}
+.fields input{width:100%;height:48px;border-radius:8px;border:1px solid var(--ds-light-blue-2);padding:0 14px;font:var(--ds-body3);color:var(--ds-black);background:#fff;direction:ltr;text-align:right;transition:border-color .2s,box-shadow .2s}
+.fields input::placeholder{color:var(--ds-gray)}
+.fields input:focus{outline:0;border-color:var(--ds-blue);box-shadow:0 0 0 3px var(--ds-light-blue-1)}
+.secure{display:flex;align-items:center;gap:8px;margin-top:12px;font:400 12px/1.3 var(--ds-font);color:var(--ds-gray)}
+.secure svg{width:16px;height:16px;fill:none;stroke:var(--ok);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.terms{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font:400 14px/1.4 var(--ds-font);cursor:pointer}
+.terms{color:var(--ds-black);font:var(--ds-body2);line-height:1.45}
+/* design-system checkbox: 20px, 6px radius, blue outline; checked = the brand gradient with a white tick */
+.terms input{appearance:none;-webkit-appearance:none;width:20px;height:20px;margin:0;flex:none;cursor:pointer;border-radius:6px;
+  border:1.5px solid var(--ds-blue);background:#fff center/14px no-repeat;transition:background-color .2s,border-color .2s}
+.terms input:checked{border-color:transparent;background-color:var(--ds-blue);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"),var(--ds-gradient)}
+.terms input:focus-visible{outline:2px solid var(--ds-purple);outline-offset:2px}
+.terms a{color:var(--ds-blue)}
+
+/* ===== the action row ===== */
+.act{display:flex;align-items:center;gap:16px;margin-top:20px}
+.backrow{margin:0 0 12px}
+.act .ds-btn{min-width:160px;height:38px;border-radius:19px;font-size:15px;box-shadow:none}
+.act .ds-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.back{font:700 15px/1 var(--ds-font);color:var(--ds-blue);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* the step's button rides in a bar stuck to the foot of the screen — mobile and desktop */
+.act{position:fixed;z-index:50;left:0;right:0;bottom:0;margin:0;padding:7px 16px calc(7px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.act .act__tot{display:block}
+@media (max-width:1023px){ .act .ds-btn{flex:1;min-width:0} }
+@media (min-width:1024px){
+  /* desktop: the bar's content lines up with the page column; the button sits at the end */
+  .act{justify-content:flex-end;gap:20px;padding:8px max(16px, calc((100vw - 1180px) / 2 + 16px))}
+}
+.act__tot{display:none;flex:none;font:400 12px/1.2 var(--ds-font);color:var(--ds-gray)}
+.act__tot b{display:block;font:700 15px/1.1 var(--ds-font-btn);color:var(--ink)}
+
+.st{flex-direction:column}
+.st__row{display:flex;align-items:center;width:100%;padding:14px 26px;border-radius:18px;background:#fff;
+  border:1px solid var(--line);box-shadow:0 6px 18px rgba(24,22,64,.06)}
+.st__i{font-size:15px}
+@media (max-width:599px){ .st__row{padding:12px 14px} }
+/* step 5 — who is it for, and the passengers */
+.forwho{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:12px}
+.forwho__o{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:400 15px/1.2 var(--ds-font)}
+.forwho__o[aria-checked="true"] .radio{border-color:var(--ds-purple)}
+.forwho__o[aria-checked="true"] .radio::after{transform:scale(1)}
+.pxbox{margin-top:16px;padding:16px;border-radius:18px;border:1.5px solid var(--line)}
+.pxbox h3{margin:0;font:700 17px/1.2 var(--ds-font)}
+.pxbox h4{margin:12px 0 0;font:700 15px/1.2 var(--ds-font)}
+.pxbox .fields{margin-top:10px}
+.who__go{display:flex;width:100%;height:48px;margin-top:18px;border-radius:24px}
+.who__go[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.whodone{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.whodone__ic{width:30px;height:30px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--ds-gradient)}
+.whodone__ic svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.whodone__tx{flex:1;min-width:0}
+.whodone__tx b{display:block;font:700 15px/1.2 var(--ds-font)}
+.whodone__tx span{display:block;margin-top:3px;font:400 13px/1.3 var(--ds-font);color:var(--ds-gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.whodone__ed{flex:none;display:inline-flex;align-items:center;gap:5px;font:700 14px/1 var(--ds-font);color:var(--ds-blue)}
+.whodone__ed svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.whodone__ed:hover{text-decoration:underline;text-underline-offset:3px}
+.paywrap{margin-top:14px;scroll-margin-top:90px;animation:panelIn .45s var(--ease)}
+.pxs{margin-top:12px;border-radius:16px;border:1.5px solid var(--line)}
+.pxs summary{list-style:none;cursor:pointer;padding:14px 16px;font:700 15px/1.2 var(--ds-font)}
+.pxs summary::-webkit-details-marker{display:none}
+.pxs .fields{margin:0;padding:0 16px 16px}
+/* step 7 — confirmed */
+.booked{position:relative;text-align:center;padding:96px 22px 26px;overflow:hidden}
+/* the arc the plane draws over the card */
+.booked__sky{position:absolute;top:10px;left:8%;width:84%;height:96px;overflow:visible}
+.booked__arc{fill:none;stroke:url(#bkG);stroke-width:1.6;stroke-linecap:round;opacity:.55}
+.booked__plane{position:absolute;top:0;left:0;width:28px;height:28px;border-radius:50%;background:#fff;display:grid;place-items:center;opacity:0;
+  box-shadow:0 4px 12px rgba(130,74,234,.4)}
+.booked__plane svg{width:16px;height:16px;fill:var(--ds-purple)}
+.booked__ic{position:relative;width:56px;height:56px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:var(--ds-gradient);box-shadow:0 10px 26px rgba(130,74,234,.35);transform:scale(0)}
+.booked__ic::before,.booked__ic::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(130,74,234,.45);opacity:0}
+.booked.landed .booked__ic,.booked.still .booked__ic{animation:bkPop .55s cubic-bezier(.3,1.6,.5,1) forwards}
+.booked.landed .booked__ic::before{animation:bkRing 1.1s ease-out .1s}
+.booked.landed .booked__ic::after{animation:bkRing 1.1s ease-out .35s}
+.booked__ic svg path{stroke-dasharray:24;stroke-dashoffset:24}
+.booked.landed .booked__ic svg path{animation:bkTick .4s ease-out .3s forwards}
+.booked.still .booked__ic svg path{stroke-dashoffset:0}
+@keyframes bkPop{0%{transform:scale(0)}100%{transform:scale(1)}}
+@keyframes bkRing{0%{transform:scale(1);opacity:.8}100%{transform:scale(2.1);opacity:0}}
+@keyframes bkTick{to{stroke-dashoffset:0}}
+/* the title and the list rise in after the landing */
+.booked h2,.booked .sub,.booked__list li{opacity:0;transform:translateY(8px)}
+.booked.landed h2,.booked.landed .sub,.booked.landed .booked__list li,
+.booked.still h2,.booked.still .sub,.booked.still .booked__list li{animation:bkRise .45s ease-out forwards}
+.booked.landed h2{animation-delay:.15s}.booked.landed .sub{animation-delay:.25s}
+.booked.landed .booked__list li:nth-child(1){animation-delay:.4s}.booked.landed .booked__list li:nth-child(2){animation-delay:.5s}.booked.landed .booked__list li:nth-child(3){animation-delay:.6s}
+@keyframes bkRise{to{opacity:1;transform:none}}
+.act .ds-btn.act__back{box-shadow:none}
+.booked__ic svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.booked h2{font-size:24px}
+.booked__list{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px;text-align:right}
+.booked__list li{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:var(--soft);font:400 14px/1.35 var(--ds-font)}
+.booked__list b{flex:none;text-align:left;color:var(--ds-purple)}   /* the when, on the left */
+.booked__list span{text-align:right}
+.panel{animation:panelIn .35s var(--ease)}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .panel{animation:none} .strip__plane,.strip__end,.opt,.radio::after,.sw::after{transition:none} }
+
+
+/* ============ the popup, functional like Cal's calculator ============ */
+.cc--cal .cal__row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:30px}
+.cal__row p{margin:0;font:700 15px/1.3 var(--ds-font);color:var(--ds-black)}
+.cal__amt{font:700 30px/1 var(--ds-font-btn);color:var(--ds-black);direction:ltr}
+.cal__range{--p:25%;display:block;width:100%;height:28px;margin:18px 0 0;background:none;cursor:pointer;-webkit-appearance:none;appearance:none;direction:rtl}
+.cal__range::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:linear-gradient(to left,#1B5ECE,#824AEA calc(var(--p) * .6),#F63DE4 var(--p),#E6E8EF var(--p))}
+.cal__range::-moz-range-track{height:8px;border-radius:4px;background:linear-gradient(to left,#1B5ECE,#824AEA calc(var(--p) * .6),#F63DE4 var(--p),#E6E8EF var(--p))}
+.cal__range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-10px;border-radius:50%;background:#fff;border:3px solid var(--ds-purple);box-shadow:0 4px 12px rgba(130,74,234,.35)}
+.cal__range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--ds-purple);box-shadow:0 4px 12px rgba(130,74,234,.35)}
+.cal__range:focus-visible{outline:0}
+.cal__range:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(27,94,206,.3)}
+.cal__ends{display:flex;justify-content:space-between;margin-top:8px;font:400 13px/1 var(--ds-font-btn);color:var(--ds-gray)}
+.cal__res{margin-top:28px;padding:22px 20px;border-radius:20px;text-align:center;color:var(--ds-black);
+  background:radial-gradient(70% 90% at 100% 0%,rgba(246,61,228,.10),transparent 70%),radial-gradient(70% 90% at 0% 100%,rgba(27,94,206,.10),transparent 70%),var(--ds-light-blue-1,#F0F8FF)}
+.cal__res p{margin:0}
+.cal__lbl{font:400 15px/1.3 var(--ds-font);color:#5B6170}
+.cal__big{margin-top:6px!important;display:flex;align-items:baseline;justify-content:center;gap:6px}
+.cal__big b{font:700 46px/1 var(--ds-font-btn);background:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cal__big small{font:700 20px/1 var(--ds-font-btn)}
+.cal__eq{margin-top:8px!important;font:400 14px/1.3 var(--ds-font);color:#5B6170}
+.cal__tot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:18px!important;padding-top:16px;border-top:1px solid rgba(27,94,206,.12);
+  font:400 14px/1.3 var(--ds-font);color:#5B6170;text-align:right}
+.cal__tot b{flex:none;font:700 20px/1 var(--ds-font-btn);color:var(--ds-blue)}
+.cal__note{margin:12px 0 0;text-align:center;font:400 12px/1.3 var(--ds-font);color:var(--ds-gray)}
+.cc--cal .cc__end{margin-top:14px!important;padding-top:14px;border-top:1px solid rgba(27,94,206,.12);font:400 14px/1.4 var(--ds-font);color:#5B6170}
+.cc--cal .cc__end b{color:var(--ink);font-family:var(--ds-font-btn)}
+.cc--cal .cc__end.ok{font-weight:700;color:var(--ok)}
+
+/* mobile, from step 2 on: no photo card; the ring rides under the stepper, compact, so what's left is always in sight */
+@media (max-width:1023px){
+  body.past1 .grid > .side > .ev{display:none}
+  body.past1 .grid > .side > .rg{position:sticky;top:calc(var(--fa-bar-h) + var(--st-h, 80px) - 2px);z-index:39;padding:10px 14px;gap:12px;border-radius:18px;
+    box-shadow:0 10px 24px rgba(24,22,64,.12)}
+  body.past1 .rg__ring{width:64px;height:64px}
+  body.past1 .rg__n b{font-size:15px}
+  body.past1 .rg__n small{font-size:9px}
+  body.past1 .rg__t{font-size:15px}
+  body.past1 .rg__s{margin-top:3px;font-size:13px}
+  body.past1 .rg__calc{width:32px;height:32px;bottom:auto;top:50%;transform:translateY(-50%)}
+  body.past1 .rg__calc:hover{transform:translateY(-50%) scale(1.08)}
+  body.past1 .rg__tx{padding-inline-end:38px}
+}
+</style>
+</head>
+<body>
+<header class="fa-header">
+
+  <!-- ambient glow + stars, behind the white silhouette -->
+  <div class="fa-header__decor" aria-hidden="true">
+    <svg viewBox="4 0 390 123" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="faGrad" x1="103" y1="0" x2="301" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1B5ECE"/>
+          <stop offset="0.504808" stop-color="#824AEA"/>
+          <stop offset="1" stop-color="#F63DE4"/>
+        </linearGradient>
+        <filter id="faBlur0" x="174.461" y="-25.793" width="166.538" height="154.018" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="20"/></filter>
+        <filter id="faBlur1" x="126.687" y="-9.23051" width="164.195" height="151.674" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="19.4141"/></filter>
+        <filter id="faBlur2" x="119.687" y="-39.1094" width="185.072" height="169.68" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="19.4141"/></filter>
+        <filter id="faBlur3" x="64.1718" y="-16.8282" width="164.195" height="151.674" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="19.4141"/></filter>
+      </defs>
+      <g filter="url(#faBlur0)"><path d="M283.697 49.3951C283.697 70.8393 305.141 88.2237 283.697 88.2237C262.252 88.2237 214.535 85.3577 214.535 63.9134C214.535 42.4692 212.202 14.207 233.647 14.207C346.189 18.1079 283.697 27.9509 283.697 49.3951Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+<g filter="url(#faBlur1)"><path d="M234.751 64.7857C234.751 86.2299 256.195 103.614 234.751 103.614C213.307 103.614 165.59 100.748 165.59 79.3041C165.59 57.8599 163.257 29.5977 184.701 29.5977C297.243 33.4985 234.751 43.3415 234.751 64.7857Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+<g filter="url(#faBlur2)"><path d="M244.454 43.467C244.454 70.1279 271.072 91.7413 244.454 91.7413C217.837 91.7413 158.608 88.1781 158.608 61.5172C158.608 34.8563 155.712 -0.28125 182.33 -0.28125C322.022 4.56852 244.454 16.8061 244.454 43.467Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+<g filter="url(#faBlur3)"><path d="M172.236 57.1881C172.236 78.6323 193.68 96.0167 172.236 96.0167C150.791 96.0167 103.075 93.1506 103.075 71.7064C103.075 50.2622 100.741 22 122.186 22C234.728 25.9008 172.236 35.7439 172.236 57.1881Z" fill="url(#faGrad)" fill-opacity="0.15"/></g>
+      <circle opacity="0.4" cx="278.542" cy="21.8783" r="1.01115" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="293.206" cy="53.226" r="1.01115" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="208.774" cy="15.8092" r="1.01115" transform="rotate(180 208.774 15.8092)" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="146.081" cy="58.7857" r="1.01115" transform="rotate(180 146.081 58.7857)" fill="white" fill-opacity="0.8"/>
+<circle opacity="0.4" cx="192.086" cy="12.7779" r="1.01115" transform="rotate(180 192.086 12.7779)" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="131.419" cy="27.4381" r="1.01115" transform="rotate(180 131.419 27.4381)" fill="white" fill-opacity="0.5"/>
+<circle opacity="0.4" cx="148.753" cy="113.997" r="1.01115" transform="rotate(-180 148.753 113.997)" fill="white" fill-opacity="0.8"/>
+<circle opacity="0.4" cx="150.823" cy="84.0514" r="1.01115" transform="rotate(-180 150.823 84.0514)" fill="white" fill-opacity="0.7"/>
+<circle opacity="0.4" cx="281.216" cy="77.0893" r="1.01115" fill="white" fill-opacity="0.8"/>
+<circle opacity="0.4" cx="235.211" cy="123.097" r="1.01115" fill="white" fill-opacity="0.7"/>
+<circle opacity="0.4" cx="295.882" cy="108.437" r="1.01115" fill="white" fill-opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- white silhouette: bar + notch under one shadow -->
+  <div class="fa-header__shape" aria-hidden="true">
+    <div class="fa-header__bar"></div>
+    <div class="fa-header__notch">
+      <svg viewBox="129.499 63.7988 132 42.9006" xmlns="http://www.w3.org/2000/svg">
+        <path d="M129.499 63.7988C146.51 63.7988 158.112 79.122 167.491 93.3126C174.724 104.254 185.911 106.827 193.849 106.699C201.926 106.569 210.817 104.672 217.247 97.1036C229.833 82.2878 242.059 63.7988 261.499 63.7988Z" fill="#fff"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- controls -->
+  <div class="fa-header__content">
+
+    <div class="fa-header__left">
+      <button class="fa-avatar" type="button" aria-label="החשבון שלי"><span class="fa-avatar__txt">AG</span></button>
+
+      <a class="fa-points" href="#points">
+        <span class="fa-sr">יתרת הנקודות שלי:</span>
+        <span class="fa-points__value">2,000</span>
+        <svg class="fa-points__coins" viewBox="86.625 25.125 18.75 13.75" aria-hidden="true"
+             xmlns="http://www.w3.org/2000/svg"><path d="M100.375 28.9977V28.5625C100.375 26.6031 97.4195 25.125 93.5 25.125C89.5805 25.125 86.625 26.6031 86.625 28.5625V31.6875C86.625 33.3195 88.6758 34.6164 91.625 35.0047V35.4375C91.625 37.3969 94.5805 38.875 98.5 38.875C102.42 38.875 105.375 37.3969 105.375 35.4375V32.3125C105.375 30.6953 103.389 29.3969 100.375 28.9977ZM104.125 32.3125C104.125 33.3453 101.72 34.5 98.5 34.5C98.2086 34.5 97.9195 34.4898 97.6344 34.4711C99.3195 33.857 100.375 32.8594 100.375 31.6875V30.2609C102.709 30.6086 104.125 31.5523 104.125 32.3125ZM91.625 33.7383V31.8797C92.2467 31.9607 92.873 32.0009 93.5 32C94.127 32.0009 94.7533 31.9607 95.375 31.8797V33.7383C94.7542 33.83 94.1275 33.8757 93.5 33.875C92.8725 33.8757 92.2458 33.83 91.625 33.7383ZM99.125 30.5883V31.6875C99.125 32.343 98.1555 33.0469 96.625 33.4742V31.6484C97.6336 31.4039 98.4875 31.0398 99.125 30.5883ZM93.5 26.375C96.7195 26.375 99.125 27.5297 99.125 28.5625C99.125 29.5953 96.7195 30.75 93.5 30.75C90.2805 30.75 87.875 29.5953 87.875 28.5625C87.875 27.5297 90.2805 26.375 93.5 26.375ZM87.875 31.6875V30.5883C88.5125 31.0398 89.3664 31.4039 90.375 31.6484V33.4742C88.8445 33.0469 87.875 32.343 87.875 31.6875ZM92.875 35.4375V35.1117C93.0805 35.1195 93.2883 35.125 93.5 35.125C93.8031 35.125 94.0992 35.1148 94.3898 35.0977C94.7127 35.2132 95.0416 35.3113 95.375 35.3914V37.2242C93.8445 36.7969 92.875 36.093 92.875 35.4375ZM96.625 37.4883V35.625C97.2465 35.7085 97.8729 35.7503 98.5 35.75C99.127 35.7509 99.7533 35.7107 100.375 35.6297V37.4883C99.1316 37.6706 97.8684 37.6706 96.625 37.4883ZM101.625 37.2242V35.3984C102.634 35.1539 103.488 34.7898 104.125 34.3383V35.4375C104.125 36.093 103.155 36.7969 101.625 37.2242Z"/></svg>
+      </a>
+
+    </div>
+
+    <a class="fa-logo" href="pov-reels-v2.html" aria-label="FlyAll · לעמוד הבית">
+      <svg viewBox="154.555 18.998 88.889 26.009" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="faLogoGrad" x1="160.842" y1="42.732" x2="176.749" y2="20.8419"
+                          gradientUnits="userSpaceOnUse">
+            <stop stop-color="#1B5ECE"/><stop offset="0.11" stop-color="#2F5AD3"/>
+            <stop offset="0.34" stop-color="#644FE0"/><stop offset="0.47" stop-color="#8749EA"/>
+            <stop offset="0.78" stop-color="#CA41E6"/><stop offset="1" stop-color="#FF3CE3"/>
+          </linearGradient>
+        </defs>
+        <path d="M166.969 32.2799H163.768L166.836 37.9317H166.201C165.851 37.9317 165.519 37.7754 165.296 37.5066L161.263 32.6417C161.073 32.413 160.791 32.2812 160.494 32.2812H159.332C158.876 32.2812 158.505 31.9117 158.505 31.4543C158.505 30.9968 158.875 30.6273 159.332 30.6273H160.494C160.791 30.6273 161.073 30.4955 161.263 30.2668L165.296 25.4019C165.519 25.1318 165.851 24.9768 166.201 24.9768H166.836L163.768 30.6286H166.969C172.951 30.6286 177.802 25.7779 177.802 19.7953C177.802 19.3547 177.446 18.998 177.005 18.998H167.013C160.132 18.998 154.555 24.5749 154.555 31.4555C154.555 38.3362 160.132 43.913 167.013 43.913H177.005C177.446 43.913 177.802 43.5564 177.802 43.1158C177.802 37.1332 172.951 32.2825 166.969 32.2825" fill="url(#faLogoGrad)"/>
+<path d="M191.09 23.4069H186.243C184.813 23.3591 183.339 23.9741 182.205 25.097C180.94 26.3478 180.264 28.0198 180.303 29.8004V38.4422C180.303 38.9991 180.757 39.4527 181.313 39.4527H183.241C183.798 39.4527 184.252 38.9991 184.252 38.4422V34.3952C184.252 34.2983 184.331 34.2182 184.429 34.2182H190.449C191.006 34.2182 191.459 33.7647 191.459 33.2078V31.5551C191.459 30.9982 191.006 30.5447 190.449 30.5447L184.252 30.5472V30.1208L184.248 30.0769C184.208 29.812 184.125 28.8856 184.736 28.087C185.638 26.9086 187.215 27.0985 187.23 27.1011L191.09 27.1037C191.585 27.1037 191.986 26.7018 191.986 26.207V24.3049C191.986 23.81 191.585 23.4082 191.09 23.4082V23.4069Z" fill="var(--fa-ink)"/>
+<path d="M197.445 23.4043H195.609C195.051 23.4043 194.598 23.8567 194.598 24.4147V38.428C194.598 38.986 195.051 39.4384 195.609 39.4384H197.445C198.003 39.4384 198.455 38.986 198.455 38.428V24.4147C198.455 23.8567 198.003 23.4043 197.445 23.4043Z" fill="var(--fa-ink)"/>
+<path d="M212.872 27.4915H210.36C209.976 27.4915 209.665 27.8042 209.665 28.1867V33.3669C209.665 34.8192 208.688 35.9137 207.393 35.9137C206.013 35.9137 205.19 34.9872 205.19 33.4354V28.1854C205.19 27.8016 204.877 27.4902 204.495 27.4902H202.075C201.691 27.4902 201.38 27.8029 201.38 28.1854V33.5504C201.38 37.3867 203.421 39.5872 206.981 39.5872C208.09 39.5872 209.011 39.2758 209.691 38.6801C209.533 40.4077 208.528 41.4234 206.936 41.4234C206.137 41.4234 205.43 41.1753 204.893 40.7075C204.656 40.5021 204.314 40.4685 204.039 40.6261L202.051 41.7619C201.858 41.873 201.725 42.063 201.686 42.2826C201.648 42.4997 201.708 42.7194 201.85 42.8874C203.033 44.2738 204.808 45.0065 206.981 45.0065C210.922 45.0065 213.568 42.2477 213.568 38.1426V28.188C213.568 27.8042 213.256 27.4928 212.873 27.4928L212.872 27.4915Z" fill="var(--fa-ink)"/>
+<path d="M226.972 25.7794C226.45 24.1216 225.048 23.0918 223.313 23.0918C221.578 23.0918 220.199 24.1216 219.677 25.7794L215.749 38.5341C215.683 38.7473 215.722 38.9722 215.854 39.1518C215.987 39.3314 216.19 39.4348 216.413 39.4348H218.996C219.305 39.4348 219.58 39.2267 219.665 38.9295L220.417 36.2897L226.232 36.2677L226.984 38.9282C227.068 39.2267 227.343 39.4348 227.653 39.4348H230.235C230.459 39.4348 230.663 39.3314 230.795 39.1518C230.928 38.9722 230.965 38.7473 230.899 38.5341L226.971 25.7794H226.972ZM225.189 32.6859H221.46L223.118 26.9385C223.188 26.6956 223.263 26.6956 223.335 26.6956C223.431 26.6956 223.484 26.6956 223.552 26.9372L225.188 32.6846L225.189 32.6859Z" fill="var(--fa-ink)"/>
+<path d="M233.876 23.4043H235.712C236.271 23.4043 236.723 23.8565 236.723 24.4147V38.428C236.723 38.9862 236.271 39.4384 235.712 39.4384H233.876C233.319 39.4384 232.866 38.9862 232.866 38.428V24.4147C232.866 23.8578 233.318 23.4043 233.876 23.4043Z" fill="var(--fa-ink)"/>
+<path d="M240.597 23.4043H242.433C242.991 23.4043 243.444 23.8565 243.444 24.4147V38.428C243.444 38.9862 242.991 39.4384 242.433 39.4384H240.597C240.04 39.4384 239.587 38.9862 239.587 38.428V24.4147C239.587 23.8578 240.039 23.4043 240.597 23.4043Z" fill="var(--fa-ink)"/>
+      </svg>
+    </a>
+
+    <button class="fa-menu" type="button" aria-label="תפריט" aria-expanded="false">
+      <svg viewBox="0 0 24 17.5" xmlns="http://www.w3.org/2000/svg"
+           stroke="var(--fa-ink)" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0.75" y1="0.75" x2="23.25" y2="0.75"/>
+        <line x1="0.75" y1="8.75" x2="23.25" y2="8.75"/>
+        <line x1="0.75" y1="16.75" x2="23.25" y2="16.75"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- SOL -->
+  <div class="fa-header__notch fa-header__notch--orb">
+    <button class="fa-orb" type="button" aria-label="SOL"></button>
+  </div>
+
+  <!-- desktop bar (1024px and up) — Figma: FlyAll – New Design / Header / Desktop,
+       Property 1=Header - Login + Points. Assets exported from that node. -->
+  <div class="fa-dh">
+    <img class="fa-dh__glow" src="assets/header-desktop/glow.svg" width="441.492" height="298.06" alt="" aria-hidden="true">
+    <div class="fa-dh__bar">
+      <div class="fa-dh__start">
+        <button class="fa-dh__avatar" type="button" aria-label="החשבון שלי">
+          <img src="assets/header-desktop/ag.svg" width="19.149" height="9.81995" alt="">
+        </button>
+        <span class="fa-dh__rule" aria-hidden="true"><img src="assets/header-desktop/divider.svg" width="42" height="1" alt=""></span>
+        <a class="fa-dh__points" href="#points">
+          <span dir="rtl">ענת, ברשותך <b>2,000 נקודות</b> לרכישה באתר</span>
+          <img src="assets/header-desktop/coins.svg" width="32" height="32" alt="">
+        </a>
+      </div>
+      <a class="fa-dh__logo" href="pov-reels-v2.html" aria-label="FlyAll · לעמוד הבית">
+        <img src="assets/header-desktop/logo.svg" width="136.754" height="40.0105" alt="">
+      </a>
+      <div class="fa-dh__end">
+        <button class="fa-dh__menu" type="button" aria-label="תפריט" aria-expanded="false">
+          <span><img src="assets/header-desktop/menu.svg" width="31.5" height="22.9688" alt=""></span>
+        </button>
+      </div>
+    </div>
+    <div class="fa-dh__notch">
+      <div class="fa-dh__union"><img src="assets/header-desktop/notch.svg" width="78.8916" height="297.33" alt=""></div>
+      <button class="fa-dh__orb" type="button" aria-label="SOL"></button>
+    </div>
+  </div>
+
+
+</header>
+
+<main class="fl" id="app" aria-live="polite"></main>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><symbol id="plane" viewBox="0 0 24 24"><path d="M21 15.5v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0v5l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-6z"/></symbol></defs>
+</svg>
+
+<script>
+/* ================= data ================= */
+const RATE = 0.1;          /* 1 point per ₪10 in the card — demo only, the real formula is still open */
+const HAVE = 2000;         /* Anat's balance */
+const MONTHS = 7;          /* card months until the show */
+const BASE = 5700;         /* Céline Dion · Paris, per passenger, basic package */
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+const pts = (n, plus) => '<span class="pts' + (plus ? ' pts--plus' : '') + '">' + (plus ? '+' : '') + fmt(n) + ' נק׳<small>(₪' + fmt(n) + ')</small></span>';
+
+const PACKS = [
+  { id: 'base', name: 'בסיס',  zone: 'יציע צד',   desc: 'מקומות מסומנים ביציע העליון, צידי הבמה', up: 0,    color: '#7BC86C', z: 'side' },
+  { id: 'plus', name: 'פלוס',  zone: 'יציע ראשי', desc: 'קומה ראשונה מול הבמה, שדה ראייה מלא',    up: 1200, color: '#C46FC0', z: 'main' },
+  { id: 'vip',  name: 'VIP',   zone: 'פרקט',      desc: 'רחבת עמידה קדמית, 20 מטר מהבמה',         up: 2500, color: '#F2C230', z: 'floor' }
+];
+const HOTELS = [
+  { id: 'h1', name: 'Pullman Paris La Défense', stars: 4, score: '8.6', reviews: 1240, where: 'לה דפנס · 5 דק׳ הליכה מהארנה', up: 0,    img: 'assets/flow/room-1.jpg', perks: ['ארוחת בוקר כלולה'] },
+  { id: 'h2', name: 'Hilton Paris La Défense',  stars: 4, score: '8.4', reviews: 980,  where: 'לה דפנס · 8 דק׳ הליכה מהארנה', up: 350,  img: 'assets/flow/room-2.jpg', perks: ['ארוחת בוקר כלולה', 'בריכה מקורה'] },
+  { id: 'h3', name: 'Le Fouquet’s Paris',       stars: 5, score: '9.3', reviews: 612,  where: 'שאנז אליזה · 15 דק׳ במטרו',     up: 1400, img: 'assets/flow/room-3.jpg', perks: ['ארוחת בוקר כלולה', 'ספא'] }
+];
+const ROOMS = [
+  { id: 'r1', name: 'חדר סטנדרט',      size: '17 מ״ר · QUEEN',         guests: 2, up: 0,   img: 'assets/flow/room-1.jpg' },
+  { id: 'r2', name: 'חדר דלוקס',       size: '24 מ״ר · KING · נוף לעיר', guests: 2, up: 250, img: 'assets/flow/room-2.jpg' },
+  { id: 'r3', name: 'סוויטה ג׳וניור', size: '38 מ״ר · KING + ספה',     guests: 3, up: 900, img: 'assets/flow/room-3.jpg' }
+];
+const FLIGHTS = [
+  { id: 'f1', up: 0,   legs: [['LY 323', 'TLV', '13/05/27 · 08:45', 'CDG', '13/05/27 · 12:50', '5h 05m'], ['LY 324', 'CDG', '15/05/27 · 16:00', 'TLV', '15/05/27 · 21:15', '4h 15m']] },
+  { id: 'f2', up: 180, legs: [['LY 325', 'TLV', '13/05/27 · 16:10', 'CDG', '13/05/27 · 20:15', '5h 05m'], ['LY 328', 'CDG', '16/05/27 · 11:30', 'TLV', '16/05/27 · 16:45', '4h 15m']] }
+];
+const STEPS = ['חבילה', 'מלון', 'חדר', 'טיסה', 'סיכום ותשלום'];
+/* as in Figma: after the flight, step 5 asks who the booking is for, then "מעבר להזמנה" opens the checkout
+   (its own three steps: פרטי הזמנה · תשלום · אישור) */
+const NEXT = ['המשך למלון', 'המשך לחדר', 'המשך לטיסה', 'מעבר להזמנה', 'אישור ותשלום', 'חזרה ללובי'];
+const LAST = 5;   /* 0–4 the five steps, 5 the confirmation */
+const REQ = ['fn', 'ln', 'mail', 'tel'];
+const detailsOk = () => REQ.every(k => (S.f[k] || '').trim());
+
+/* nothing is pre-picked: each step's button wakes only once its choice is made */
+const S = { step: 0, pax: 1, pack: null, hotel: null, rooms: { r1: 0, r2: 0, r3: 0 }, flight: null, usePts: true, pay: 'dep', terms: false,
+  forWho: 'me', news: true, detailsDone: false, f: { fn: 'ענת', ln: 'ישראלי', mail: 'anatisraeli@gmail.com', tel: '052-0000000', efn: 'Anat', eln: 'Israeli' } };
+const find = (arr, id) => arr.find(x => x.id === id);
+const roomCount = () => Object.values(S.rooms).reduce((a, b) => a + b, 0);
+const roomCap = () => ROOMS.reduce((a, r) => a + r.guests * S.rooms[r.id], 0);
+const up = (arr, id) => (find(arr, id) || { up: 0 }).up;
+const total = () => S.pax * (BASE + up(PACKS, S.pack) + up(FLIGHTS, S.flight))
+  + up(HOTELS, S.hotel) + ROOMS.reduce((a, r) => a + r.up * S.rooms[r.id], 0);
+const BACK_TO = ['', 'חזרה לבחירת חבילה', 'חזרה לבחירת מלון', 'חזרה לבחירת חדר', 'חזרה לבחירת טיסה'];
+
+/* ================= the ring — one node for the whole flow, so its numbers roll from the last value ================= */
+const RC = 2 * Math.PI * 40;
+const RING = el('aside', 'rg',
+    '<div class="rg__ring"><svg viewBox="0 0 92 92" aria-hidden="true"><defs><linearGradient id="rgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B5ECE"/><stop offset=".5" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient></defs>'
+  +   '<circle class="bg" cx="46" cy="46" r="40"/><circle class="fg" cx="46" cy="46" r="40" stroke-dasharray="' + RC + '" stroke-dashoffset="' + RC + '"/></svg>'
+  +   '<p class="rg__n"><b>' + fmt(HAVE) + '</b><small>מתוך <span class="v-tot" data-v="0">0</span></small></p></div>'
+  + '<div class="rg__tx"><p class="rg__t">ענת, הדרך לחלום כבר התחילה</p>'
+  +   '<p class="rg__s" aria-live="polite">נשאר לך לצבור עוד <b class="v-left" data-v="0">0</b> נקודות להגשמת החלום כולו</p>'
+  +   '</div><button class="rg__calc" type="button" aria-label="מחשבון נקודות" title="מחשבון נקודות"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M8 7h8M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/></svg></button>');
+RING.setAttribute('aria-label', 'הדרך לחלום');
+
+/* ================= the ring's calculator — the lobby's popup, made for this dream =================
+   no "when" here: the show is known, so the months are fixed; the answer is measured against this booking's total */
+const CALC = (() => {
+  const X_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  const scrim = el('div', 'cc-scrim');
+  const MIN = 1000, MAX = 20000;
+  /* the lobby's calculator, the same design; here the months are known (the show), and the answer is measured against this booking */
+  const cc = el('div', 'cc cc--cal',
+      '<button class="cc__x" type="button" aria-label="סגירה">' + X_IC + '</button>'
+    + '<div class="cc__top"><span class="fa-card" aria-hidden="true"><b>FlyAll</b><i></i><span>•••• 2026</span></span><h4 class="cc__h">כמה נקודות <b>תצברו עד ההופעה?</b></h4></div>'
+    + '<div class="cal__row"><p>ההוצאה החודשית שלי בכרטיס</p><b class="cal__amt"></b></div>'
+    + '<input class="cal__range" type="range" min="' + MIN + '" max="' + MAX + '" step="500" aria-label="הוצאה חודשית בכרטיס">'
+    + '<div class="cal__ends"><span>₪' + fmt(MIN) + '</span><span>₪' + fmt(MAX) + '</span></div>'
+    + '<div class="cal__res" aria-live="polite">'
+    +   '<p class="cal__lbl">עד ההופעה תצברו · ' + MONTHS + ' חודשים</p>'
+    +   '<p class="cal__big"><b class="cal__year"></b><small>נק׳</small></p>'
+    +   '<p class="cal__eq">1 נק׳ = ₪1</p>'
+    +   '<p class="cal__tot"><span>ביחד עם ה־' + fmt(HAVE) + ' שכבר יש לך</span><b class="cal__all"></b></p>'
+    +   '<p class="cc__end"></p></div>'
+    + '<a class="cc__go" href="#">חזרה להזמנה</a>');
+  cc.setAttribute('role', 'dialog'); cc.setAttribute('aria-modal', 'true'); cc.setAttribute('aria-label', 'מחשבון נקודות');
+  document.body.append(scrim, cc);
+  const q = c => cc.querySelector(c);
+  let spend = 0, wasOk = false;
+  /* our light green confetti, from the green line, each time the spend comes to cover the booking */
+  const greenConfetti = from => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const r = from.getBoundingClientRect(), box = el('div', 'confetti');
+    box.style.zIndex = 400;
+    box.style.left = (r.left + r.width / 2) + 'px'; box.style.top = (r.top + r.height / 2) + 'px';
+    const C = ['#14A160', '#3CCB7F', '#7EE2A8', '#B8F2CF', '#D9F7E6'];
+    for (let i = 0; i < 30; i++) {
+      const c = el('i');
+      c.style.background = C[i % C.length];
+      if (i % 3 === 0) c.style.borderRadius = '50%';
+      box.appendChild(c);
+      const a = Math.random() * Math.PI * 2, d = 50 + Math.random() * 90, x = Math.cos(a) * d, y = Math.sin(a) * d - 30;
+      c.animate([
+        { transform: 'translate(0,0) rotate(0) scale(1)', opacity: 1 },
+        { transform: 'translate(' + x + 'px,' + y + 'px) rotate(' + (Math.random() * 360) + 'deg) scale(1)', opacity: .9, offset: .45 },
+        { transform: 'translate(' + (x * 1.15) + 'px,' + (y + 60) + 'px) rotate(' + (Math.random() * 540) + 'deg) scale(.6)', opacity: 0 }
+      ], { duration: 1500 + Math.random() * 900, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+    }
+    document.body.appendChild(box);
+    setTimeout(() => box.remove(), 2600);
+  };
+  const roll = (node, to) => {
+    const from = node._v || 0, t0 = performance.now();
+    cancelAnimationFrame(node._raf);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { node._v = to; node.textContent = fmt(to); return; }
+    const step = now => {
+      const k = Math.min(1, (now - t0) / 350);
+      node._v = from + (to - from) * (1 - Math.pow(1 - k, 3)); node.textContent = fmt(node._v);
+      if (k < 1) node._raf = requestAnimationFrame(step);
+    };
+    node._raf = requestAnimationFrame(step);
+  };
+  const range = q('.cal__range');
+  const draw = () => {
+    const earn = spend * MONTHS * RATE, tot = HAVE + earn, t = total(), left = Math.max(0, t - tot);
+    q('.cal__amt').textContent = '₪' + fmt(spend);
+    range.value = spend;
+    range.style.setProperty('--p', ((spend - MIN) / (MAX - MIN) * 100).toFixed(1) + '%');
+    roll(q('.cal__year'), earn);
+    q('.cal__all').textContent = fmt(tot) + ' נק׳';
+    const end = q('.cc__end');
+    if (!left && !wasOk) setTimeout(() => greenConfetti(end), document.body.classList.contains('cl--open') ? 0 : 420);   /* on opening, after the sheet lands */
+    wasOk = !left;
+    end.classList.toggle('ok', !left);
+    end.innerHTML = left
+      ? 'ההזמנה: <b>' + fmt(t) + ' נק׳</b> · נשאר להשלים <b>' + fmt(left) + ' נק׳</b>, בנקודות או בכסף'
+      : 'ההוצאה החודשית הזו מכסה את כל ההזמנה (' + fmt(t) + ' נק׳). טסים בחינם!';
+  };
+  const setSpend = v => { spend = Math.max(MIN, Math.min(MAX, v)); draw(); };
+  range.oninput = () => setSpend(+range.value);
+  const close = () => document.body.classList.remove('cl--open');
+  q('.cc__x').onclick = close; scrim.onclick = close;
+  q('.cc__go').addEventListener('click', e => { e.preventDefault(); close(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  /* it opens on the spend that would cover this booking, rounded to ₪500 */
+  return { open: () => { wasOk = false; setSpend(Math.ceil(Math.max(0, total() - HAVE) / (MONTHS * RATE) / 500) * 500); document.body.classList.add('cl--open'); } };
+})();
+RING.querySelector('.rg__calc').onclick = CALC.open;
+function countTo(node, to) {
+  const from = +node.dataset.v || 0;
+  node.dataset.v = to;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || from === to) { node.textContent = fmt(to); return; }
+  const t0 = performance.now(), DUR = 650;
+  const step = now => {
+    const p = Math.min(1, (now - t0) / DUR), k = 1 - Math.pow(1 - p, 3);
+    node.textContent = fmt(from + (to - from) * k);
+    if (p < 1 && +node.dataset.v === to) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function drawRing() {
+  const t = total();
+  RING.querySelector('.fg').style.strokeDashoffset = String(RC * (1 - Math.min(1, HAVE / t)));
+  countTo(RING.querySelector('.v-tot'), t);
+  countTo(RING.querySelector('.v-left'), Math.max(0, t - HAVE));
+}
+
+/* ================= the side column: event + summary ================= */
+const IC = {
+  pin: '<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  cal: '<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+  back: '<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>',
+  check: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  lock: '<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>',
+  pen: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',
+  info: '<svg viewBox="0 0 24 24" style="stroke:var(--ds-gray)"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'
+};
+const days = Math.round((new Date(2027, 4, 14) - new Date(2026, 9, 11)) / 864e5);
+function sideHTML() {
+  const done = S.step;
+  const pk = find(PACKS, S.pack), ho = find(HOTELS, S.hotel), fl = find(FLIGHTS, S.flight);
+  const rows = [['נוסעים', S.pax]];
+  if (pk) rows.push(['חבילה', pk.name + ' · ' + pk.zone]);
+  if (ho) rows.push(['מלון', ho.name]);
+  if (roomCount()) rows.push(['חדרים', ROOMS.filter(r => S.rooms[r.id]).map(r => S.rooms[r.id] + ' × ' + r.name).join(', ') + ' · 2 לילות']);
+  if (fl) rows.push(['טיסה', fl.legs.map(l => l[0]).join(' / ')]);
+  const t = total(), dep = Math.round(t * 0.2);
+  return '<article class="card ev"><div class="ev__img"><img class="ev__logo" src="assets/logos/celine-dion.png" alt="Céline Dion"></div>'
+    + '<div class="ev__body"><p class="ev__kick">הופעות · מאי 2027</p><h2 class="ev__t">סלין דיון · פריז</h2>'
+    + '<div class="ev__cd"><b>' + days + '</b><span>ימים עד ההופעה</span></div>'
+    + '<ul class="ev__meta"><li>' + IC.pin + 'La Défense Arena · פריז</li><li>' + IC.cal + 'יום שישי, 14.5.2027 · 21:00</li></ul></div></article>'
+    + '<article class="card sum"><h3>סיכום</h3><dl>' + rows.map(([a, b]) => '<dt>' + a + '</dt><dd>' + b + '</dd>').join('') + '</dl>'
+    + '<div class="sum__tot"><span>סה״כ</span><span><b>' + fmt(t) + ' נק׳</b><small>(₪' + fmt(t) + ')</small></span></div>'
+    + '<p class="sum__dep">היום משלמים רק <b>מקדמה של 20%: ' + fmt(dep) + ' נק׳</b>, והיתרה עד 14.3.2027</p></article>'
+    + '<details class="card acc"><summary>מה כלול בחבילה</summary><ul><li>כרטיס להופעה לפי החבילה</li><li>2 לילות במלון</li><li>טיסות הלוך־חזור ישירות</li><li>כבודה 23 ק״ג + טרולי</li></ul></details>'
+    + '<details class="card acc"><summary>תנאי שינוי וביטול</summary><p>ביטול ללא עלות עד 30 יום לפני המועד. לאחר מכן המקדמה אינה מוחזרת, והנקודות שנצברו נשארות שלך.</p></details>';
+}
+
+/* ================= the five steps ================= */
+const radio = (checked, id, inner, cls) => '<div class="opt ' + (cls || '') + '" role="radio" tabindex="0" aria-checked="' + checked + '" data-pick="' + id + '">' + inner + '</div>';
+function arena(z) {
+  /* Figma only has the map for category 3 (the side blocks, in green); the other packages tint the same picture for now */
+  return '<div class="arena" data-z="' + (z || '') + '"><img src="assets/flow/stage-map.png" alt="מפת האולם · La Défense Arena"></div>';
+}
+/* step 5, part 1 — who is it for. Open until it's filled, then folded to one line */
+function whoHTML() {
+  if (S.detailsDone) {
+    return '<div class="card whodone"><span class="whodone__ic">' + IC.check + '</span><div class="whodone__tx"><b>' + (S.forWho === 'me' ? 'ההזמנה עבורי' : 'ההזמנה עבור אדם אחר') + '</b>'
+      + '<span>' + S.f.fn + ' ' + S.f.ln + ' · ' + S.f.mail + ' · ' + S.f.tel + (S.pax > 1 ? ' · ' + S.pax + ' נוסעים' : '') + '</span></div>'
+      + '<button class="whodone__ed" type="button" data-edit>' + IC.pen + 'עריכה</button></div>';
+  }
+    const v = k => (S.f[k] || '').replace(/"/g, '&quot;');
+    const inp = (k, ph, dir) => '<input data-f="' + k + '" value="' + v(k) + '" placeholder="' + ph + '" autocomplete="off"' + (dir ? ' style="direction:' + dir + ';text-align:right"' : '') + '>';
+    const others = Array.from({ length: S.pax - 1 }, (_, i) => {
+      const n = i + 2;
+      return '<details class="pxs"' + (n === 2 ? ' open' : '') + '><summary>נוסע ' + n + ' · מבוגר</summary><div class="fields">'
+        + '<div class="two">' + inp('fn' + n, 'שם פרטי', 'rtl') + inp('ln' + n, 'שם משפחה', 'rtl') + '</div>'
+        + '<div class="two">' + inp('efn' + n, 'שם פרטי באנגלית') + inp('eln' + n, 'שם משפחה באנגלית') + '</div></div></details>';
+    }).join('');
+    return '<div class="card"><h2>עבור מי ההזמנה?</h2><div class="forwho" role="radiogroup" aria-label="עבור מי ההזמנה">'
+      + ['me', 'other'].map(k => '<span class="forwho__o" role="radio" tabindex="0" data-pick="' + k + '" aria-checked="' + (S.forWho === k) + '"><span class="radio"></span>' + (k === 'me' ? 'ההזמנה עבורי' : 'ההזמנה עבור אדם אחר') + '</span>').join('')
+      + '</div>'
+      + '<div class="pxbox"><h3>פרטי הנוסעים</h3><h4>נוסע 1 · ' + (S.forWho === 'me' ? 'המזמין' : 'מבוגר') + '</h4><div class="fields">'
+      + '<div class="two">' + inp('fn', 'שם פרטי', 'rtl') + inp('ln', 'שם משפחה', 'rtl') + '</div>'
+      + inp('mail', 'אימייל') + inp('tel', 'טלפון נייד')
+      + '<div class="two">' + inp('efn', 'שם פרטי באנגלית') + inp('eln', 'שם משפחה באנגלית') + '</div></div>'
+      + '<p class="secure">' + IC.info + 'המידע ישמש למטרות המפורטות <a href="#">כאן</a></p></div>'
+      + others
+      + '<label class="terms"><input type="checkbox" data-news' + (S.news ? ' checked' : '') + '><span>שלחו לי מבצעים, הטבות והצעות משתלמות לחופשות. ניתן להסיר הרשמה בכל עת.</span></label>'
+      + '<button class="ds-btn ds-btn--secondary-grad who__go" type="button" data-details' + (detailsOk() ? '' : ' aria-disabled="true"') + '>המשך לתשלום</button></div>';
+}
+/* step 5, part 2 — the payment (as in the Figma checkout), revealed under the folded details */
+function payHTML() {
+    const t = total(), dep = Math.round(t * 0.2), fromPts = S.usePts ? Math.min(HAVE, S.pay === 'dep' ? dep : t) : 0;
+    return '<div class="card"><h2>נקודות FlyAll</h2><div class="toggle" style="margin-top:12px"><span>תשלום בנקודות <b>(' + fmt(HAVE) + ' נק׳)</b></span>'
+      + '<button class="sw" type="button" role="switch" aria-checked="' + S.usePts + '" data-pts aria-label="תשלום בנקודות"></button></div></div>'
+      + '<div class="card pay"><h2>איך תרצה לשלם?</h2><div style="margin-top:12px">'
+      + radio(S.pay === 'dep', 'dep', '<span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="reco">מומלץ</span></h4>'
+        + '<p>מקדמה היום: <b>' + fmt(dep) + ' נק׳</b> · יתרה עד 14.3.2027: <b>' + fmt(t - dep) + ' נק׳</b></p>'
+        + '<p class="pay__box">עד 14.3.2027 הנקודות שתצבור בכרטיס יקוזזו אוטומטית מהיתרה. מה שלא יכוסה בנקודות ישולם בכרטיס, ללא ריבית.</p></div>')
+      + radio(S.pay === 'full', 'full', '<span class="radio"></span><div class="opt__b"><h4>תשלום מלא עכשיו</h4><p><b>' + fmt(t) + ' נק׳</b> (₪' + fmt(t) + '), בנקודות ובכסף</p></div>')
+      + '</div></div>'
+      + '<div class="card"><h2>פרטי תשלום</h2><p class="sub">היום מחויב: <b>₪' + fmt((S.pay === 'dep' ? dep : t) - fromPts) + '</b>' + (fromPts ? ' + ' + fmt(fromPts) + ' נק׳' : '') + '</p>'
+      + '<div class="fields"><div><label for="cc">מספר כרטיס</label><input id="cc" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="off"></div>'
+      + '<div class="two"><div><label for="exp">תוקף</label><input id="exp" placeholder="MM/YY" autocomplete="off"></div><div><label for="cvv">CVV</label><input id="cvv" inputmode="numeric" placeholder="123" autocomplete="off"></div></div>'
+      + '<div><label for="nm">שם בעל הכרטיס</label><input id="nm" placeholder="ענת ישראלי" autocomplete="off" style="direction:rtl"></div></div>'
+      + '<p class="secure">' + IC.lock + 'קנייה מאובטחת ב־FlyAll · תקן PCI DSS</p>'
+      + '<label class="terms"><input type="checkbox" data-terms' + (S.terms ? ' checked' : '') + '><span>קראתי ואני מאשר/ת את <a href="#">תנאי השימוש</a> ואת <a href="#">מדיניות הביטול</a></span></label></div>';
+  }
+
+const STEP_UI = [
+  /* 1 · package */
+  () => '<div class="card pax"><div><h2>כמה נוסעים?</h2><p class="sub">המחיר לכל נוסע</p></div>'
+      + '<div class="stepper"><button type="button" data-pax="1" aria-label="נוסע נוסף">+</button><output>' + S.pax + '</output><button type="button" data-pax="-1" aria-label="פחות נוסעים"' + (S.pax <= 1 ? ' disabled' : '') + '>−</button></div></div>'
+      + '<div class="card"><h2>בחירת חבילה</h2><p class="sub">החבילה קובעת את המקום בהופעה. מתחייבים על ישיבה בזוגות, והכרטיס יישלח אליך 7 ימים לפני המועד.</p>'
+      + arena((find(PACKS, S.pack) || {}).z)
+      + PACKS.map(p => radio(S.pack === p.id, p.id,
+          '<span class="radio"></span><div class="opt__b"><h4><i class="dot" style="background:' + p.color + '"></i>' + p.name + ' · ' + p.zone + '</h4><p>' + p.desc + '</p>'
+        + '<div class="opt__f">' + (p.up ? pts(p.up, true) : '<span class="pill">כלול בחבילה</span>') + '<span class="per">לנוסע · סה״כ ' + fmt(BASE + p.up) + ' נק׳</span></div></div>')).join('')
+      + '</div>',
+  /* 2 · hotel */
+  () => '<div class="card"><h2>בחירת מלון</h2><p class="sub">2 לילות, 13–15.5.2027</p><div style="margin-top:14px">'
+      + HOTELS.map(h => radio(S.hotel === h.id, h.id,
+          '<div class="lodge__img" style="background-image:url(' + h.img + ')">' + (h.up ? '' : '<span class="pill">כלול בחבילה</span>') + '</div>'
+        + '<div class="opt__b"><h4>' + h.name + '</h4><p><span class="stars">' + '★'.repeat(h.stars) + '</span><span class="score">' + h.score + '</span>(' + fmt(h.reviews) + ')</p><p>' + h.where + '</p>'
+        + h.perks.map(x => '<span class="perk">' + x + '</span>').join('')
+        + '<div class="opt__f">' + (h.up ? pts(h.up, true) : pts(0, true)) + '<span class="per">לשהייה</span></div></div><span class="radio"></span>', 'lodge')).join('')
+      + '</div></div>',
+  /* 3 · room */
+  () => {
+    const h = find(HOTELS, S.hotel);
+    return '<div class="card"><h2>בחירת חדר · ' + h.name + '</h2><p class="sub">' + S.pax + (S.pax > 1 ? ' נוסעים' : ' נוסע') + ' · אפשר לשלב כמה חדרים</p><div style="margin-top:14px">'
+      + ROOMS.map(r => '<div class="opt room" aria-checked="' + (S.rooms[r.id] > 0) + '">'
+        + '<div class="lodge__img" style="background-image:url(' + r.img + ')"></div>'
+        + '<div class="opt__b" style="padding:14px 16px"><h4>' + r.name + '</h4><p>' + r.size + '</p><p>עד ' + r.guests + ' אורחים</p>'
+        + '<div class="opt__f">' + pts(r.up, true) + '<div class="stepper room__qty"><button type="button" data-room="' + r.id + '" data-d="1" aria-label="עוד חדר">+</button><output>' + S.rooms[r.id] + '</output>'
+        + '<button type="button" data-room="' + r.id + '" data-d="-1" aria-label="חדר אחד פחות"' + (S.rooms[r.id] ? '' : ' disabled') + '>−</button></div></div></div></div>').join('')
+      + (roomCount() && roomCap() < S.pax ? '<p class="warn">החדרים שבחרת מתאימים ל־' + roomCap() + ' אורחים. הוסיפו חדר כדי שיהיה מקום לכל ' + S.pax + ' הנוסעים.</p>' : '')
+      + '</div></div>';
+  },
+  /* 4 · flight preview */
+  () => '<div class="card"><h2>הטיסות שלך</h2><p class="sub">טיסות ישירות הלוך־חזור, כלולות בחבילה</p><div style="margin-top:14px">'
+      + FLIGHTS.map(f => radio(S.flight === f.id, f.id,
+          '<span class="radio"></span><div class="opt__b">' + (f.up ? pts(f.up, true) + '<span class="per">לנוסע · חזרה מאוחרת</span>' : '<span class="pill">כלול בחבילה</span>')
+        + f.legs.map(l => '<div class="air" style="margin-top:14px"><i>EL AL</i><span>' + l[0] + '</span></div>'
+          + '<div class="leg"><div class="leg__pt"><b>' + l[1] + '</b><small>' + l[2] + '</small></div><div class="leg__mid">ישירה<i></i>' + l[5] + '</div><div class="leg__pt"><b>' + l[3] + '</b><small>' + l[4] + '</small></div></div>').join('')
+        + '<details class="bag"><summary>פירוט כבודה<span>›</span></summary><p>תיק יד 8 ק״ג, טרולי 8 ק״ג ומזוודה 23 ק״ג לכל נוסע.</p></details></div>', 'flight')).join('')
+      + '</div></div>',
+  /* 5 · summary and payment — one step: who it's for, then the payment under it */
+  () => whoHTML() + (S.detailsDone ? '<div class="paywrap">' + payHTML() + '</div>' : ''),
+  /* 6 · confirmed */
+  () => {
+    const t = total(), dep = Math.round(t * 0.2);
+    return '<div class="card booked">'
+      + '<svg class="booked__sky" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="bkG" gradientUnits="userSpaceOnUse" x1="380" y1="0" x2="20" y2="0"><stop offset="0" stop-color="#1B5ECE"/><stop offset=".5" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient></defs>'
+      + '<path class="booked__arc" d="M380 104 C 300 0, 100 0, 20 104"/></svg>'
+      + '<span class="booked__plane" aria-hidden="true"><svg><use href="#plane"/></svg></span>'
+      + '<span class="booked__ic">' + IC.check + '</span><h2>ענת, החלום שמור לך!</h2>'
+      + '<p class="sub">הזמנה מס׳ FA-270514 · אישור נשלח ל־' + (S.f.mail || 'המייל שלך') + '</p>'
+      + '<ul class="booked__list"><li><span>' + (S.pay === 'dep' ? 'מקדמה של ' + fmt(dep) + ' נק׳' : fmt(t) + ' נק׳, התשלום המלא') + '</span><b>שולם היום</b></li>'
+      + (S.pay === 'dep' ? '<li><span>היתרה של ' + fmt(t - dep) + ' נק׳, מהנקודות שתצבור בכרטיס ובכסף</span><b>עד 14.3.2027</b></li>' : '')
+      + '<li><span>הכרטיסים להופעה יישלחו אליך</span><b>7 ימים לפני</b></li></ul></div>';
+  }
+];
+const canGo = () => [
+  () => !!S.pack, () => !!S.hotel, () => roomCount() > 0 && roomCap() >= S.pax, () => !!S.flight, () => S.detailsDone && S.terms, () => true
+][S.step]();
+
+/* ================= the confirmation's little celebration ================= */
+/* a plane loops over the card, the tick pops, and a soft burst of brand-coloured confetti follows */
+function celebrate() {
+  const card = app.querySelector('.booked');
+  if (!card || matchMedia('(prefers-reduced-motion: reduce)').matches) { if (card) card.classList.add('still'); return; }
+  const path = card.querySelector('.booked__arc'), plane = card.querySelector('.booked__plane'), sky = card.querySelector('.booked__sky');
+  const L = path.getTotalLength();
+  path.style.strokeDasharray = L + ' ' + L; path.style.strokeDashoffset = L;
+  const t0 = performance.now() + 250, DUR = 1500;
+  const step = now => {
+    const p = Math.max(0, Math.min(1, (now - t0) / DUR)), k = 1 - Math.pow(1 - p, 3);
+    const a = path.getPointAtLength(L * k), b = path.getPointAtLength(Math.min(L, L * k + 1));
+    const r = sky.getBoundingClientRect(), c = card.getBoundingClientRect(), sx = r.width / 400, sy = r.height / 120;
+    const ang = Math.atan2((b.y - a.y) * sy, (b.x - a.x) * sx) * 180 / Math.PI + 90;
+    plane.style.transform = 'translate(' + (r.left - c.left + a.x * sx - 14) + 'px,' + (r.top - c.top + a.y * sy - 14) + 'px) rotate(' + ang + 'deg)';
+    plane.style.opacity = p <= 0 ? '0' : p > .92 ? String((1 - p) / .08) : '1';
+    path.style.strokeDashoffset = String(L * (1 - k));
+    if (p < 1) return requestAnimationFrame(step);
+    card.classList.add('landed');
+    burst(card.querySelector('.booked__ic'));
+  };
+  requestAnimationFrame(step);
+}
+function burst(from) {
+  const r = from.getBoundingClientRect(), box = el('div', 'confetti');
+  box.style.left = (r.left + r.width / 2) + 'px'; box.style.top = (r.top + r.height / 2) + 'px';
+  const C = ['#1B5ECE', '#824AEA', '#F63DE4', '#FFC94D', '#7EE2A8', '#B9A6EE'];
+  for (let i = 0; i < 34; i++) {
+    const c = el('i');
+    c.style.background = C[i % C.length];
+    if (i % 3 === 0) c.style.borderRadius = '50%';
+    box.appendChild(c);
+    const a = -Math.PI / 2 + (Math.random() - .5) * Math.PI * 1.4, d = 60 + Math.random() * 90, x = Math.cos(a) * d, y = Math.sin(a) * d;
+    c.animate([
+      { transform: 'translate(0,0) rotate(0) scale(.6)', opacity: 1 },
+      { transform: 'translate(' + x + 'px,' + y + 'px) rotate(' + (Math.random() * 360) + 'deg) scale(1)', opacity: 1, offset: .4 },
+      { transform: 'translate(' + (x * 1.1) + 'px,' + (y + 90) + 'px) rotate(' + (Math.random() * 600) + 'deg) scale(.7)', opacity: 0 }
+    ], { duration: 1700 + Math.random() * 900, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+  }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 2800);
+}
+
+/* ================= render ================= */
+const app = document.getElementById('app');
+function render(scroll) {
+  const t = total();
+  app.innerHTML = '';
+  const steps = el('nav', 'st');
+  steps.setAttribute('aria-label', 'שלבי ההזמנה');
+  /* the booking steps, or — once in the checkout — the checkout's own three */
+  const list = STEPS, cur = S.step;
+  steps.innerHTML = '<div class="st__row">' + list.map((n, i) => (i ? '<i class="st__ln' + (i <= cur ? ' done' : '') + '"></i>' : '')
+    + '<span class="st__i' + (i < cur ? ' done' : i === cur ? ' on' : '') + '" data-go="' + i + '"' + (i === cur ? ' aria-current="step"' : '') + '><b>' + (i < cur ? IC.check : i + 1) + '</b><span>' + n + '</span></span>').join('') + '</div>';
+  /* the way home, as on the category page: a small pill, top right */
+  app.appendChild(el('p', 'homerow', '<a class="lead__home" href="pov-reels-v2.html">'
+    + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+    + 'חזרה לעמוד הראשי</a>'));
+  app.appendChild(steps);
+  const cta = S.step === LAST ? '<a class="ds-btn ds-btn--secondary-grad act__back" href="pov-reels-v2.html">' + NEXT[S.step] + '</a>'
+    : '<a class="ds-btn ds-btn--primary" href="#" data-next' + (canGo() ? '' : ' aria-disabled="true"') + '>' + NEXT[S.step] + '</a>';
+  const grid = el('div', 'grid');
+  const side = grid.appendChild(el('aside', 'side', sideHTML()));
+  side.prepend(RING);
+  const main = el('section', 'main');
+  if (S.step && S.step < LAST) main.appendChild(el('p', 'backrow', '<a class="back" href="#" data-back>' + IC.back + BACK_TO[S.step] + '</a>'));
+  /* the first step leads back out of the booking, to the experience it came from */
+  main.appendChild(el('div', 'panel', STEP_UI[S.step]()));
+  /* the step's button, in the bar stuck to the foot of the screen */
+  main.appendChild(el('div', 'act', cta));
+  grid.appendChild(main);
+  app.appendChild(grid);
+  requestAnimationFrame(drawRing);
+  if (scroll) window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  if (S.step === LAST) celebrate();
+  /* mobile, from the second step on: the photo card goes, and the ring sticks under the stepper */
+  document.body.classList.toggle('past1', S.step > 0);
+  const stH = () => document.documentElement.style.setProperty('--st-h', steps.getBoundingClientRect().height + 'px');
+  stH(); requestAnimationFrame(stH);
+}
+function go(i) {
+  S.step = Math.max(0, Math.min(LAST, i));
+  history.replaceState(null, '', '#' + (S.step + 1));
+  render(true);
+}
+app.addEventListener('click', e => {
+  const t = e.target;
+  const pick = t.closest('[data-pick]');
+  if (pick) {
+    const id = pick.dataset.pick;
+    if (S.step === 0) S.pack = id; else if (S.step === 1) S.hotel = id; else if (S.step === 3) S.flight = id;
+    else if (S.step === 4 && (id === 'dep' || id === 'full')) S.pay = id;
+    else if (S.step === 4) {
+      if (id !== S.forWho) Object.assign(S.f, id === 'other'
+        ? { fn: '', ln: '', efn: '', eln: '' }
+        : { fn: 'ענת', ln: 'ישראלי', efn: 'Anat', eln: 'Israeli' });
+      S.forWho = id;
+    }
+    return render();
+  }
+  if (t.closest('[data-pax]')) { S.pax = Math.max(1, Math.min(6, S.pax + +t.closest('[data-pax]').dataset.pax)); return render(); }
+  if (t.closest('[data-room]')) { const b = t.closest('[data-room]'); S.rooms[b.dataset.room] = Math.max(0, Math.min(4, S.rooms[b.dataset.room] + +b.dataset.d)); return render(); }
+  if (t.closest('[data-pts]')) { S.usePts = !S.usePts; return render(); }
+  /* the details fold, and the payment opens under them — same step, no new page */
+  if (t.closest('[data-details]')) {
+    if (!detailsOk()) return;
+    S.detailsDone = true; render();
+    const pw = app.querySelector('.paywrap');
+    if (pw) pw.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    return;
+  }
+  if (t.closest('[data-edit]')) { S.detailsDone = false; S.terms = false; return render(); }
+  if (t.closest('[data-next]')) { e.preventDefault(); if (canGo() && S.step < LAST) go(S.step + 1); return; }
+  if (t.closest('[data-back]')) { e.preventDefault(); go(S.step - 1); return; }
+  if (t.closest('[data-out]') && /pov-(reels|category|all)/.test(document.referrer)) { e.preventDefault(); history.back(); return; }
+  const st = t.closest('.st__i.done');
+  if (st) go(+st.dataset.go);
+});
+app.addEventListener('change', e => {
+  if (e.target.matches('[data-terms]')) { S.terms = e.target.checked; render(); }
+  if (e.target.matches('[data-news]')) S.news = e.target.checked;
+});
+/* typed details survive re-renders; the button wakes as soon as the required ones are in */
+app.addEventListener('input', e => {
+  if (!e.target.matches('[data-f]')) return;
+  S.f[e.target.dataset.f] = e.target.value;
+  const b = app.querySelector('[data-details]');
+  if (b) detailsOk() ? b.removeAttribute('aria-disabled') : b.setAttribute('aria-disabled', 'true');
+});
+app.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-pick]')) { e.preventDefault(); e.target.click(); }
+});
+S.step = Math.max(0, Math.min(LAST, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+if (S.step > 0) S.pack = 'base';
+if (S.step > 1) S.hotel = 'h1';
+if (S.step > 2) S.rooms.r1 = 1;
+if (S.step > 3) S.flight = 'f1';
+render();
+
+</script>
+</body>
+</html>
