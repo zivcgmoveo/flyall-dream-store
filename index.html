@@ -1873,6 +1873,21 @@ body.is-guest .cal__mark,body.is-guest .cal__tot{display:none}
   .reel__copy,[data-points="enough"] .reel__copy{bottom:124px}
   .reel__detail,[data-points="enough"] .reel__detail{padding-bottom:128px}
 }
+
+/* 17 · mobile: the same space before the calculator as after it */
+@media (max-width:1023px){
+  .ask{padding-bottom:20px}
+  .lcl{padding:20px 14px 20px}
+  .perks{padding-top:20px}
+}
+
+/* 5 · mobile: the dates one under another, not a sideways scroll — the range on the right, the nights on the left */
+@media (max-width:1023px){
+  .xd-row{flex-direction:column;flex-wrap:nowrap;gap:8px;margin:14px 0 0;padding:0;overflow:visible}
+  .xd-row .xd-t{width:100%;flex-direction:row;justify-content:space-between;padding:13px 16px}
+  .xd-row .xd-t b{font-size:17px}
+  .xd-row .xd-t small{margin:0;font-size:13px}
+}
 </style>
 </head>
 <body data-opt="D">
@@ -3097,12 +3112,12 @@ function buildCalc(){
 const CARD_RATE = 0.01;
 const MY_SPEND = 6500;   /* demo: Anat's real monthly spend on the card (from the card data) */
 function calcPopup(){
-  const MIN = 1000, MAX = 30000;
+  const MIN = 1000, MAX = 50000;
   const scrim = el('div', 'cc-scrim');
   const cc = el('div', 'cc cc--cal',
       '<button class="cc__x" type="button" aria-label="סגירה">' + X_IC + '</button>'
     + '<div class="cc__top">' + FA_CARD + '<h4 class="cc__h">כמה נקודות <b>תצברו בשנה?</b></h4></div>'
-    + '<div class="cal__row"><p>ההוצאה החודשית שלי בכרטיס</p><b class="cal__amt"></b></div>'
+    + '<div class="cal__row"><p>ההוצאה הממוצעת החודשית שלי</p><b class="cal__amt"></b></div>'
     + '<div class="cal__track"><input class="cal__range" type="range" min="' + MIN + '" max="' + MAX + '" step="500" aria-label="הוצאה חודשית בכרטיס">'
     +   '<button class="cal__mark" type="button" aria-label="חזרה להוצאה הנוכחית שלי" style="--m:' + ((MY_SPEND - MIN) / (MAX - MIN) * 100).toFixed(1) + '%"></button></div>'
     + '<div class="cal__ends"><span>₪' + nfmt(MIN) + '</span><span>₪' + nfmt(MAX) + '</span></div>'
@@ -3111,7 +3126,7 @@ function calcPopup(){
     +   '<p class="cal__big"><b class="cal__year"></b><small>נק׳</small></p>'
     +   '<p class="cal__eq"></p>'
     +   '<p class="cal__tot"><span class="cal__with"></span><b class="cal__all"></b></p></div>'
-    + '<a class="cc__go" href="#cats">לבחירת החלום</a>');
+    + '<a class="cc__go" href="pov-all-v2.html">לבחירת החלום</a>');
   cc.setAttribute('role', 'dialog'); cc.setAttribute('aria-modal', 'true'); cc.setAttribute('aria-label', 'מחשבון נקודות');
   document.body.append(scrim, cc);
   const q = c => cc.querySelector(c), range = q('.cal__range');

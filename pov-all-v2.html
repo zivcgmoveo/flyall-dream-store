@@ -1649,6 +1649,14 @@ body:not(.is-guest):not(.reel-open) .who.who--pts{display:flex;bottom:58px}
   .reel__copy,[data-points="enough"] .reel__copy{bottom:124px}
   .reel__detail,[data-points="enough"] .reel__detail{padding-bottom:128px}
 }
+
+/* 5 · mobile: the dates one under another, not a sideways scroll — the range on the right, the nights on the left */
+@media (max-width:1023px){
+  .xd-row{flex-direction:column;flex-wrap:nowrap;gap:8px;margin:14px 0 0;padding:0;overflow:visible}
+  .xd-row .xd-t{width:100%;flex-direction:row;justify-content:space-between;padding:13px 16px}
+  .xd-row .xd-t b{font-size:17px}
+  .xd-row .xd-t small{margin:0;font-size:13px}
+}
 </style>
 </head>
 <body data-opt="D">
@@ -1891,8 +1899,8 @@ function buildArc(){
     me.querySelector('.lme__n').textContent = Math.round(Math.min(1, have / price) * 100) + '%';
     me.querySelector('.lme__have').textContent = have.toLocaleString('en-US');
     me.querySelector('.lme__left').innerHTML = left
-      ? 'עוד <em>' + left.toLocaleString('en-US') + ' נק׳</em> לחוויה הזולה ביותר'
-      : '<em>מספיק</em> כדי לרכוש את החוויה הזולה ביותר בנקודות';
+      ? 'עוד <em>' + left.toLocaleString('en-US') + ' נק׳</em> לחוויה המשתלמת ביותר'
+      : '<em>מספיק</em> כדי לרכוש את החוויה המשתלמת ביותר בנקודות';
     /* enough: the same card, and on first sight a little of our green confetti from the ring */
     if (!left && !me._cheered) { me._cheered = true; setTimeout(() => lmeConfetti(me.querySelector('.lme__ring')), 900); }
     if (left) me._cheered = false;
