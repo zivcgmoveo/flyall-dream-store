@@ -1081,6 +1081,9 @@ body.is-guest .sum__dep{display:none}
 .pay .opt__b p b{color:var(--ink)}
 .pay__box{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--ds-light-blue-1);font:400 13px/1.45 var(--ds-font);color:#24406E}
 /* guest: the deposit is shown, but locked — what the FlyAll card would let them do */
+/* the deposit's light-blue note runs the option's full width, under the radio too */
+.opt.opt--wide{flex-wrap:wrap}
+.opt--wide > .pay__box{flex:1 0 100%;margin:0}
 .opt.opt--off{cursor:default;background:#F7F8FA;border-style:dashed;flex-direction:column;gap:12px}
 .opt--off .opt__b{width:100%}
 .opt--off .opt__b h4{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
@@ -1747,14 +1750,14 @@ function payHTML() {
         + '<p class="pay__box">עם כרטיס FlyAll משלמים היום רק 20%, ואת היתרה הנקודות שצוברים בכרטיס מכסות עד מועד החיוב. <a href="#join">הצטרפות לכרטיס</a></p></div>'
       : radio(S.pay === 'dep', 'dep', '<span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="reco">מומלץ</span></h4>'
         + '<p>מקדמה היום: <b>' + fmt(dep) + ' נק׳</b> · יתרה עד 14.3.2027: <b>' + fmt(t - dep) + ' נק׳</b></p>'
-        + '<p class="pay__box">עד 14.3.2027 הנקודות שתצבור בכרטיס יקוזזו אוטומטית מהיתרה. מה שלא יכוסה בנקודות ישולם בכרטיס, ללא ריבית.</p></div>');
+        + '</div><p class="pay__box">עד 14.3.2027 הנקודות שתצבור בכרטיס יקוזזו אוטומטית מהיתרה. מה שלא יכוסה בנקודות ישולם בכרטיס, ללא ריבית.</p>', 'opt--wide');
     return (g ? '' : '<div class="card"><h2>נקודות FlyAll</h2><div class="toggle" style="margin-top:12px"><span>תשלום בנקודות <b>(' + fmt(HAVE) + ' נק׳)</b></span>'
       + '<button class="sw" type="button" role="switch" aria-checked="' + S.usePts + '" data-pts aria-label="תשלום בנקודות"></button></div></div>')
       + '<div class="card pay"><h2>איך תרצה לשלם?</h2><div style="margin-top:12px">'
       + (g ? '' : depOpt)
       + radio(S.pay === 'full', 'full', '<span class="radio"></span><div class="opt__b"><h4>תשלום מלא עכשיו</h4>'
         + (g ? '<p><b>₪' + fmt(t) + '</b> בכרטיס אשראי</p>' : '<p><b>' + fmt(t) + ' נק׳</b> (₪' + fmt(t) + '), בנקודות ובכסף</p>')
-        + (S.pay === 'full' ? (g ? '<details class="inst inst--fold"' + (S.instOpen ? ' open' : '') + '><summary class="inst__h" data-instfold>חלוקה לתשלומים<span>' + (S.inst === 1 ? 'תשלום אחד' : S.inst + ' תשלומים') + '</span></summary>' : '<div class="inst"><p class="inst__h">חלוקה לתשלומים</p>') + '<div class="inst__row">'
+        + (S.pay === 'full' ? (g ? '<details class="inst inst--fold"' + (S.instOpen ? ' open' : '') + '><summary class="inst__h" data-instfold>חלוקה לתשלומים<span aria-hidden="true"></span></summary>' : '<div class="inst"><p class="inst__h">חלוקה לתשלומים</p>') + '<div class="inst__row">'
           + [1, 3, 6, 12].map(n => '<button type="button" class="inst__o" data-inst="' + n + '" aria-pressed="' + (S.inst === n) + '"><b>' + (n === 1 ? 'תשלום אחד' : n + ' תשלומים') + '</b><small>' + (n === 1 ? '₪' + fmt(t) : '₪' + fmt(Math.ceil(t / n)) + ' לחודש') + '</small></button>').join('')
           + '</div><p class="inst__note">ללא ריבית וללא הצמדה</p>' + (g ? '</details>' : '</div>') : '')
         + '</div>')
