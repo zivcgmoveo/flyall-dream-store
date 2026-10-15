@@ -899,6 +899,8 @@ body.is-guest .fa-join{display:inline-flex;align-items:center;height:30px;paddin
 body.is-guest .fa-dh__join{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:22px;
   background:var(--ds-gradient);color:#fff;font:700 16px/1 var(--ds-font);text-decoration:none;white-space:nowrap;direction:rtl}
 body.is-guest .rg{display:none!important}
+/* a guest pays in full — no deposit line in the summary */
+body.is-guest .sum__dep{display:none}
 
 @media (prefers-reduced-motion:reduce){ .rg__ring .fg,.rg__ring svg{transition:none} .rg:hover .rg__ring svg{transform:rotate(-90deg)} }
 .ev__logo{z-index:1}
