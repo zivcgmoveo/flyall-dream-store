@@ -1080,6 +1080,15 @@ body.is-guest .sum__dep{display:none}
 .sw[aria-checked="true"]::after{inset-inline-start:21px}
 .pay .opt__b p b{color:var(--ink)}
 .pay__box{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--ds-light-blue-1);font:400 13px/1.45 var(--ds-font);color:#24406E}
+/* guest: the deposit is shown, but locked — what the FlyAll card would let them do */
+.opt.opt--off{cursor:default;background:#F7F8FA;border-style:dashed}
+.opt--off .radio{opacity:.35}
+.opt--off h4,.opt--off .opt__b > p:not(.pay__box){color:#9AA0AB}
+.opt--off .opt__b > p b{color:inherit}
+.lock-tag{display:inline-flex;align-items:center;gap:4px;margin-inline-start:6px;height:20px;padding:0 8px;border-radius:10px;background:#EEF0F4;color:#5B6170;font:700 11px/20px var(--ds-font);vertical-align:2px}
+.lock-tag svg{width:11px;height:11px}
+.opt--off .pay__box{background:#fff;color:#3A3F4B}
+.opt--off .pay__box a{color:var(--ds-blue);font-weight:700;text-decoration:none;white-space:nowrap}
 .reco{display:inline-flex;margin-inline-start:6px;height:20px;padding:0 8px;border-radius:10px;background:var(--ds-gradient);color:#fff;font:700 11px/20px var(--ds-font);vertical-align:2px}
 .fields{display:grid;gap:10px;margin-top:14px}
 .fields .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -1428,6 +1437,11 @@ const STEPS = ['חבילה', 'מלון', 'חדר', 'טיסה', 'סיכום ות�
 const NEXT = ['המשך למלון', 'המשך לחדר', 'המשך לטיסה', 'מעבר להזמנה', 'אישור ותשלום', 'חזרה לעמוד הראשי'];
 const LAST = 5;   /* 0–4 the five steps, 5 the confirmation */
 const REQ = ['fn', 'ln', 'mail', 'tel'];
+const isGuest = () => document.body.classList.contains('is-guest');
+const ANAT = { fn: 'ענת', ln: 'ישראלי', mail: 'anatisraeli@gmail.com', tel: '052-0000000', efn: 'Anat', eln: 'Israeli' };
+/* a guest's details aren't known — one tap on a field fills a demo guest, so the demo can go on */
+const GUEST = { fn: 'דניאל', ln: 'לוי', mail: 'daniel.levi@gmail.com', tel: '054-1234567', efn: 'Daniel', eln: 'Levi' };
+const EMPTY = { fn: '', ln: '', mail: '', tel: '', efn: '', eln: '' };
 const detailsOk = () => REQ.every(k => (S.f[k] || '').trim());
 
 /* nothing is pre-picked: each step's button wakes only once its choice is made */
@@ -1702,14 +1716,22 @@ function whoHTML() {
 }
 /* step 5, part 2 — the payment (as in the Figma checkout), revealed under the folded details */
 function payHTML() {
-    const t = total(), dep = Math.round(t * 0.2), fromPts = S.usePts ? Math.min(HAVE, S.pay === 'dep' ? dep : t) : 0;
-    return '<div class="card"><h2>נקודות FlyAll</h2><div class="toggle" style="margin-top:12px"><span>תשלום בנקודות <b>(' + fmt(HAVE) + ' נק׳)</b></span>'
-      + '<button class="sw" type="button" role="switch" aria-checked="' + S.usePts + '" data-pts aria-label="תשלום בנקודות"></button></div></div>'
-      + '<div class="card pay"><h2>איך תרצה לשלם?</h2><div style="margin-top:12px">'
-      + radio(S.pay === 'dep', 'dep', '<span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="reco">מומלץ</span></h4>'
+    const t = total(), dep = Math.round(t * 0.2), g = isGuest(), fromPts = !g && S.usePts ? Math.min(HAVE, S.pay === 'dep' ? dep : t) : 0;
+    const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+    /* a guest pays in full; the deposit stays in sight, locked, as what the card would open */
+    const depOpt = g
+      ? '<div class="opt opt--off" aria-disabled="true"><span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="lock-tag">' + LOCK + 'למחזיקי כרטיס FlyAll</span></h4>'
+        + '<p>מקדמה היום: <b>₪' + fmt(dep) + '</b> · יתרה עד 14.3.2027: <b>₪' + fmt(t - dep) + '</b></p>'
+        + '<p class="pay__box">עם כרטיס FlyAll משלמים היום רק 20%, ואת היתרה הנקודות שצוברים בכרטיס מכסות עד מועד החיוב. <a href="#join">הצטרפות לכרטיס</a></p></div></div>'
+      : radio(S.pay === 'dep', 'dep', '<span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="reco">מומלץ</span></h4>'
         + '<p>מקדמה היום: <b>' + fmt(dep) + ' נק׳</b> · יתרה עד 14.3.2027: <b>' + fmt(t - dep) + ' נק׳</b></p>'
-        + '<p class="pay__box">עד 14.3.2027 הנקודות שתצבור בכרטיס יקוזזו אוטומטית מהיתרה. מה שלא יכוסה בנקודות ישולם בכרטיס, ללא ריבית.</p></div>')
-      + radio(S.pay === 'full', 'full', '<span class="radio"></span><div class="opt__b"><h4>תשלום מלא עכשיו</h4><p><b>' + fmt(t) + ' נק׳</b> (₪' + fmt(t) + '), בנקודות ובכסף</p>'
+        + '<p class="pay__box">עד 14.3.2027 הנקודות שתצבור בכרטיס יקוזזו אוטומטית מהיתרה. מה שלא יכוסה בנקודות ישולם בכרטיס, ללא ריבית.</p></div>');
+    return (g ? '' : '<div class="card"><h2>נקודות FlyAll</h2><div class="toggle" style="margin-top:12px"><span>תשלום בנקודות <b>(' + fmt(HAVE) + ' נק׳)</b></span>'
+      + '<button class="sw" type="button" role="switch" aria-checked="' + S.usePts + '" data-pts aria-label="תשלום בנקודות"></button></div></div>')
+      + '<div class="card pay"><h2>איך תרצה לשלם?</h2><div style="margin-top:12px">'
+      + depOpt
+      + radio(S.pay === 'full', 'full', '<span class="radio"></span><div class="opt__b"><h4>תשלום מלא עכשיו</h4>'
+        + (g ? '<p><b>₪' + fmt(t) + '</b> בכרטיס אשראי</p>' : '<p><b>' + fmt(t) + ' נק׳</b> (₪' + fmt(t) + '), בנקודות ובכסף</p>')
         + (S.pay === 'full' ? '<div class="inst"><p class="inst__h">חלוקה לתשלומים</p><div class="inst__row">'
           + [1, 3, 6, 12].map(n => '<button type="button" class="inst__o" data-inst="' + n + '" aria-pressed="' + (S.inst === n) + '"><b>' + (n === 1 ? 'תשלום אחד' : n + ' תשלומים') + '</b><small>' + (n === 1 ? '₪' + fmt(t) : '₪' + fmt(Math.ceil(t / n)) + ' לחודש') + '</small></button>').join('')
           + '</div><p class="inst__note">ללא ריבית וללא הצמדה</p></div>' : '')
@@ -1718,7 +1740,7 @@ function payHTML() {
       + '<div class="card"><h2>פרטי תשלום</h2><p class="sub">היום מחויב: <b>₪' + fmt((S.pay === 'dep' ? dep : t) - fromPts) + '</b>' + (fromPts ? ' + ' + fmt(fromPts) + ' נק׳' : '') + '</p>'
       + '<div class="fields"><div><label for="cc">מספר כרטיס</label><input id="cc" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="off"></div>'
       + '<div class="two"><div><label for="exp">תוקף</label><input id="exp" placeholder="MM/YY" autocomplete="off"></div><div><label for="cvv">CVV</label><input id="cvv" inputmode="numeric" placeholder="123" autocomplete="off"></div></div>'
-      + '<div><label for="nm">שם בעל הכרטיס</label><input id="nm" placeholder="ענת ישראלי" autocomplete="off" style="direction:rtl"></div></div>'
+      + '<div><label for="nm">שם בעל הכרטיס</label><input id="nm" placeholder="' + (g ? 'דניאל לוי' : 'ענת ישראלי') + '" autocomplete="off" style="direction:rtl"></div></div>'
       + '<p class="secure">' + IC.lock + 'קנייה מאובטחת ב־FlyAll · תקן PCI DSS</p>'
       + '<label class="terms"><input type="checkbox" data-terms' + (S.terms ? ' checked' : '') + '><span>קראתי ואני מאשר/ת את <a href="#">תנאי השימוש</a> ואת <a href="#">מדיניות הביטול</a></span></label></div>';
   }
@@ -1770,7 +1792,7 @@ const STEP_UI = [
       + '<svg class="booked__sky" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="bkG" gradientUnits="userSpaceOnUse" x1="380" y1="0" x2="20" y2="0"><stop offset="0" stop-color="#1B5ECE"/><stop offset=".5" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient></defs>'
       + '<path class="booked__arc" d="M380 104 C 300 0, 100 0, 20 104"/></svg>'
       + '<span class="booked__plane" aria-hidden="true"><svg><use href="#plane"/></svg></span>'
-      + '<span class="booked__ic">' + IC.check + '</span><h2>ענת, החלום שמור לך!</h2>'
+      + '<span class="booked__ic">' + IC.check + '</span><h2>' + (isGuest() ? (S.f.fn || 'דניאל') : 'ענת') + ', החלום שמור לך!</h2>'
       + '<p class="sub">הזמנה מס׳ FA-270514 · אישור נשלח ל־' + (S.f.mail || 'המייל שלך') + '</p>'
       + '<ul class="booked__list"><li><span>' + (S.pay === 'dep' ? 'מקדמה של ' + fmt(dep) + ' נק׳' : fmt(t) + ' נק׳, התשלום המלא') + '</span><b>שולם היום</b></li>'
       + (S.pay === 'dep' ? '<li><span>היתרה של ' + fmt(t - dep) + ' נק׳, מהנקודות שתצבור בכרטיס ובכסף</span><b>עד 14.3.2027</b></li>' : '')
@@ -1878,7 +1900,7 @@ app.addEventListener('click', e => {
     else if (S.step === 4) {
       if (id !== S.forWho) Object.assign(S.f, id === 'other'
         ? { fn: '', ln: '', efn: '', eln: '' }
-        : { fn: 'ענת', ln: 'ישראלי', efn: 'Anat', eln: 'Israeli' });
+        : isGuest() ? { fn: '', ln: '', efn: '', eln: '' } : { fn: 'ענת', ln: 'ישראלי', efn: 'Anat', eln: 'Israeli' });
       S.forWho = id;
     }
     return render();
@@ -1917,6 +1939,13 @@ app.addEventListener('input', e => {
   const b = app.querySelector('[data-details]');
   if (b) detailsOk() ? b.removeAttribute('aria-disabled') : b.setAttribute('aria-disabled', 'true');
 });
+app.addEventListener('pointerdown', e => {
+  const f = e.target.closest('[data-f]');
+  if (!f || !isGuest() || S.f.fn || S.f.mail) return;
+  e.preventDefault();
+  Object.assign(S.f, S.forWho === 'other' ? Object.assign({}, GUEST, { fn: 'נועה', ln: 'כהן', efn: 'Noa', eln: 'Cohen' }) : GUEST);
+  render();
+});
 app.addEventListener('keydown', e => {
   if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-pick]')) { e.preventDefault(); e.target.click(); }
 });
@@ -1939,9 +1968,17 @@ render();
   bar.setAttribute('aria-label','מצב תצוגה');
   function set(m){
     mode = m;
+    const was = document.body.classList.contains('is-guest');
     document.body.classList.toggle('is-guest', m === 'guest');
     bar.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
     try { localStorage.setItem(KEY, m); } catch(e){}
+    /* a guest: no details known, no points, full payment only — a member: Anat, as before */
+    if (was !== (m === 'guest')) {
+      Object.assign(S.f, m === 'guest' ? EMPTY : ANAT);
+      S.forWho = 'me'; S.detailsDone = false; S.terms = false;
+      S.pay = m === 'guest' ? 'full' : 'dep';
+      render();
+    }
   }
   bar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.m); });
   document.body.appendChild(bar);
