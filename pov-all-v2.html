@@ -1658,6 +1658,19 @@ body:not(.is-guest):not(.reel-open) .who.who--pts{display:flex;bottom:58px}
   .xd-row .xd-t b{font-size:17px}
   .xd-row .xd-t small{margin:0;font-size:13px}
 }
+
+/* ===== demo · BNPL / no BNPL — a dream too close for a deposit goes straight to its dates ===== */
+.who.who--bnpl{display:none}
+body.reel-open .who.who--bnpl{display:flex;z-index:1100;top:66px;bottom:auto}
+body.is-guest.reel-open .who.who--bnpl{top:26px}
+@media (min-width:1024px){
+  body.reel-open .who--bnpl{top:72px;left:92px}
+  body.is-guest.reel-open .who--bnpl{top:32px}
+}
+html[data-bnpl="off"] .xp__deal > :not(.xd-in){display:none}
+html[data-bnpl="off"] .xp__deal .xd-in{display:block;animation:none}
+html[data-bnpl="off"] .xp__deal .xd-back{display:none}
+html[data-bnpl="off"] .xp__deal .xd-h{margin-top:0}
 </style>
 </head>
 <body data-opt="D">
@@ -2977,6 +2990,24 @@ setTimeout(start, 120);
   pbar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setPts(b.dataset.p); });
   document.body.appendChild(pbar);
   setPts(pm);
+  /* BNPL / no BNPL: without it there's no deposit box — the experience opens on its dates */
+  const BKEY = 'flyall-bnpl';
+  let bm = 'on';
+  try { bm = localStorage.getItem(BKEY) || 'on'; } catch(e){}
+  const bbar = el('div','who who--bnpl',
+    '<button type="button" data-b="on">BNPL</button>' +
+    '<button type="button" data-b="off">ללא BNPL</button>');
+  bbar.setAttribute('role','group');
+  bbar.setAttribute('aria-label','מצב תשלום');
+  function setBnpl(m){
+    bm = m;
+    if (m === 'off') document.documentElement.dataset.bnpl = 'off'; else delete document.documentElement.dataset.bnpl;
+    bbar.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.b === m));
+    try { localStorage.setItem(BKEY, m); } catch(e){}
+  }
+  bbar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setBnpl(b.dataset.b); });
+  document.body.appendChild(bbar);
+  setBnpl(bm);
 })();
 </script>
 </body>
