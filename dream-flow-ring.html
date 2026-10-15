@@ -1089,6 +1089,9 @@ body.is-guest .sum__dep{display:none}
 .lock-tag svg{width:11px;height:11px}
 .opt--off .pay__box{background:#fff;color:#3A3F4B}
 .opt--off .pay__box a{color:var(--ds-blue);font-weight:700;text-decoration:none;white-space:nowrap}
+/* what's charged today, under the payment title — larger than a sub line */
+.sub.due{margin-top:8px;font:400 17px/1.35 var(--ds-font);color:var(--ink)}
+.sub.due b{font:700 19px/1 var(--ds-font-btn);color:var(--ds-blue)}
 .reco{display:inline-flex;margin-inline-start:6px;height:20px;padding:0 8px;border-radius:10px;background:var(--ds-gradient);color:#fff;font:700 11px/20px var(--ds-font);vertical-align:2px}
 .fields{display:grid;gap:10px;margin-top:14px}
 .fields .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -1737,7 +1740,7 @@ function payHTML() {
           + '</div><p class="inst__note">ללא ריבית וללא הצמדה</p></div>' : '')
         + '</div>')
       + '</div></div>'
-      + '<div class="card"><h2>פרטי תשלום</h2><p class="sub">היום מחויב: <b>₪' + fmt((S.pay === 'dep' ? dep : t) - fromPts) + '</b>' + (fromPts ? ' + ' + fmt(fromPts) + ' נק׳' : '') + '</p>'
+      + '<div class="card"><h2>פרטי תשלום</h2><p class="sub due">היום מחויב: <b>₪' + fmt((S.pay === 'dep' ? dep : t) - fromPts) + '</b>' + (fromPts ? ' + ' + fmt(fromPts) + ' נק׳' : '') + '</p>'
       + '<div class="fields"><div><label for="cc">מספר כרטיס</label><input id="cc" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="off"></div>'
       + '<div class="two"><div><label for="exp">תוקף</label><input id="exp" placeholder="MM/YY" autocomplete="off"></div><div><label for="cvv">CVV</label><input id="cvv" inputmode="numeric" placeholder="123" autocomplete="off"></div></div>'
       + '<div><label for="nm">שם בעל הכרטיס</label><input id="nm" placeholder="' + (g ? 'דניאל לוי' : 'ענת ישראלי') + '" autocomplete="off" style="direction:rtl"></div></div>'
