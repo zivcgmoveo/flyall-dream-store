@@ -883,6 +883,23 @@ body.gx--open .gx{transform:none;visibility:visible}
 }
 @media (prefers-reduced-motion:reduce){ .gx,.gx-scrim{transition:none} }
 
+/* ===== demo · guest / signed-in switch (a presentation tool, not the product) ===== */
+.who{position:fixed;left:12px;bottom:70px;z-index:900;display:flex;padding:3px;border-radius:20px;
+  background:rgba(255,255,255,.92);box-shadow:0 2px 12px rgba(4,15,33,.18);backdrop-filter:blur(8px);
+  font:600 12px/1 var(--ds-font);direction:rtl}
+.who button{border:0;background:none;padding:7px 12px;border-radius:17px;color:var(--ds-gray);font:inherit;cursor:pointer}
+.who button[aria-pressed="true"]{background:var(--ds-blue);color:#fff}
+body.cl--open .who,body.gx--open .who{display:none}
+/* guest: no balance of their own — the header invites to the card, and the personal ring steps aside */
+.fa-join,.fa-dh__join{display:none}
+body.is-guest .fa-avatar,body.is-guest .fa-points,
+body.is-guest .fa-dh__avatar,body.is-guest .fa-dh__rule,body.is-guest .fa-dh__points{display:none}
+body.is-guest .fa-join{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:15px;
+  background:var(--ds-gradient);color:#fff;font:700 12px/1 var(--ds-font);text-decoration:none;white-space:nowrap;direction:rtl}
+body.is-guest .fa-dh__join{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:22px;
+  background:var(--ds-gradient);color:#fff;font:700 16px/1 var(--ds-font);text-decoration:none;white-space:nowrap;direction:rtl}
+body.is-guest .rg{display:none!important}
+
 @media (prefers-reduced-motion:reduce){ .rg__ring .fg,.rg__ring svg{transition:none} .rg:hover .rg__ring svg{transform:rotate(-90deg)} }
 .ev__logo{z-index:1}
 /* mobile: the event card (with the bar) comes first, the summary after the step */
@@ -1289,6 +1306,7 @@ body.gx--open .gx{transform:none;visibility:visible}
     <div class="fa-header__left">
       <button class="fa-avatar" type="button" aria-label="החשבון שלי"><span class="fa-avatar__txt">AG</span></button>
 
+      <a class="fa-join" href="#join">הצטרף ל-FlyAll</a>
       <a class="fa-points" href="#points">
         <span class="fa-sr">יתרת הנקודות שלי:</span>
         <span class="fa-points__value">2,000</span>
@@ -1343,6 +1361,7 @@ body.gx--open .gx{transform:none;visibility:visible}
           <img src="assets/header-desktop/ag.svg" width="19.149" height="9.81995" alt="">
         </button>
         <span class="fa-dh__rule" aria-hidden="true"><img src="assets/header-desktop/divider.svg" width="42" height="1" alt=""></span>
+        <a class="fa-dh__join" href="#join">הצטרפות לכרטיס FlyAll</a>
         <a class="fa-dh__points" href="#points">
           <span dir="rtl">ענת, ברשותך <b>2,000 נקודות</b> לרכישה באתר</span>
           <img src="assets/header-desktop/coins.svg" width="32" height="32" alt="">
@@ -1527,7 +1546,7 @@ const GROUP = (() => {
   document.body.append(scrim, gx);
   let n = MIN, sent = false;
   /* the demo's guest / signed-in switch, as the lobby left it */
-  const guest = () => { try { return localStorage.getItem('flyall-who') === 'guest'; } catch (e) { return false; } };
+  const guest = () => document.body.classList.contains('is-guest');
   const form = (fail) => {
     const g = guest();
     gx.classList.remove('gx--done');
@@ -1905,6 +1924,27 @@ if (S.step > 1) S.hotel = 'h1';
 if (S.step > 2) S.rooms.r1 = 1;
 if (S.step > 3) S.flight = 'f1';
 render();
+
+/* ================= demo · guest / signed-in switch — shared with the other pages ================= */
+(function(){
+  const KEY = 'flyall-who';
+  let mode = 'user';
+  try { mode = localStorage.getItem(KEY) || 'user'; } catch(e){}
+  const bar = el('div','who',
+    '<button type="button" data-m="guest">אורח</button>' +
+    '<button type="button" data-m="user">משתמש מזוהה</button>');
+  bar.setAttribute('role','group');
+  bar.setAttribute('aria-label','מצב תצוגה');
+  function set(m){
+    mode = m;
+    document.body.classList.toggle('is-guest', m === 'guest');
+    bar.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+    try { localStorage.setItem(KEY, m); } catch(e){}
+  }
+  bar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.m); });
+  document.body.appendChild(bar);
+  set(mode);
+})();
 
 </script>
 </body>
