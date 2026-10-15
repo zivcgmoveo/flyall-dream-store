@@ -1717,7 +1717,7 @@ function arena(z) {
 function whoHTML() {
   if (S.detailsDone) {
     return '<div class="card whodone"><span class="whodone__ic">' + IC.check + '</span><div class="whodone__tx"><b>' + (S.forWho === 'me' ? 'ההזמנה עבורי' : 'ההזמנה עבור אדם אחר') + '</b>'
-      + '<span>' + S.f.fn + ' ' + S.f.ln + ' · ' + S.f.mail + ' · ' + S.f.tel + (S.pax > 1 ? ' · ' + S.pax + ' נוסעים' : '') + '</span></div>'
+      + '<span>' + S.f.fn + ' ' + S.f.ln + '</span></div>'   /* just the name — the rest is under "עריכה" */
       + '<button class="whodone__ed" type="button" data-edit>' + IC.pen + 'עריכה</button></div>';
   }
     const v = k => (S.f[k] || '').replace(/"/g, '&quot;');
