@@ -921,6 +921,8 @@ body.cl--open{overflow:hidden}
 .sum__tot small{font:400 13px/1 var(--ds-font-btn);color:var(--ds-gray);margin-inline-start:4px}
 .sum__dep{margin:10px 0 0;padding:9px 12px;border-radius:12px;background:var(--soft);font:400 13px/1.35 var(--ds-font);color:#3A3F4B}
 .sum__dep b{color:var(--ds-purple)}
+.sum__now{display:block;margin-bottom:3px;font-size:15px;line-height:1.35;color:var(--ink)}
+.sum__now b{font-weight:700}
 .sum__dep small{display:block;margin-top:6px;font-size:12px;color:#5B6170}
 .acc{padding:0}
 .acc summary{list-style:none;padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
@@ -1512,7 +1514,7 @@ function sideHTML() {
     + '<ul class="ev__meta"><li>' + IC.pin + 'La Défense Arena · פריז</li><li>' + IC.cal + 'יום שישי, 14.5.2027 · 21:00</li></ul></div></article>'
     + '<article class="card sum"><h3>סיכום</h3><dl>' + rows.map(([a, b]) => '<dt>' + a + '</dt><dd>' + b + '</dd>').join('') + '</dl>'
     + '<div class="sum__tot"><span>סה״כ</span><span><b>' + fmt(t) + ' נק׳</b><small>(₪' + fmt(t) + ')</small></span></div>'
-    + '<p class="sum__dep">היום משלמים רק <b>מקדמה של 20%: ' + fmt(dep) + ' נק׳</b>, והיתרה עד 14.3.2027<small>סכום היתרה (80%) ייקבע לפי שער ההמרה ביום החיוב, ולכן הוא עשוי להשתנות. נעדכן אותך ב־SMS לפני החיוב.</small></p></article>'
+    + '<p class="sum__dep"><span class="sum__now">היום משלמים רק <b>מקדמה של 20%: ' + fmt(dep) + ' נק׳</b></span>את היתרה משלמים עד 14.3.2027<small>סכום היתרה (80%) ייקבע לפי שער ההמרה ביום החיוב, ולכן הוא עשוי להשתנות. נעדכן אותך ב־SMS לפני החיוב.</small></p></article>'
     + (S.step ? '' : '<details class="card acc"><summary>מה כלול בחבילה</summary><ul><li>כרטיס להופעה לפי החבילה</li><li>2 לילות במלון</li><li>טיסות הלוך־חזור ישירות</li><li>כבודה 23 ק״ג + טרולי</li></ul></details>'
     + '<details class="card acc"><summary>תנאי שינוי וביטול</summary><p>ביטול ללא עלות עד 30 יום לפני המועד. לאחר מכן המקדמה אינה מוחזרת, והנקודות שנצברו נשארות שלך.</p></details>');
 }
