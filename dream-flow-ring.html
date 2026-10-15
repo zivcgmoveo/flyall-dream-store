@@ -1353,7 +1353,7 @@ const FLIGHTS = [
 const STEPS = ['חבילה', 'מלון', 'חדר', 'טיסה', 'סיכום ותשלום'];
 /* as in Figma: after the flight, step 5 asks who the booking is for, then "מעבר להזמנה" opens the checkout
    (its own three steps: פרטי הזמנה · תשלום · אישור) */
-const NEXT = ['המשך למלון', 'המשך לחדר', 'המשך לטיסה', 'מעבר להזמנה', 'אישור ותשלום', 'חזרה ללובי'];
+const NEXT = ['המשך למלון', 'המשך לחדר', 'המשך לטיסה', 'מעבר להזמנה', 'אישור ותשלום', 'חזרה לעמוד הראשי'];
 const LAST = 5;   /* 0–4 the five steps, 5 the confirmation */
 const REQ = ['fn', 'ln', 'mail', 'tel'];
 const detailsOk = () => REQ.every(k => (S.f[k] || '').trim());
@@ -1682,7 +1682,8 @@ function render(scroll) {
   steps.innerHTML = '<div class="st__row">' + list.map((n, i) => (i ? '<i class="st__ln' + (i <= cur ? ' done' : '') + '"></i>' : '')
     + '<span class="st__i' + (i < cur ? ' done' : i === cur ? ' on' : '') + '" data-go="' + i + '"' + (i === cur ? ' aria-current="step"' : '') + '><b>' + (i < cur ? IC.check : i + 1) + '</b><span>' + n + '</span></span>').join('') + '</div>';
   /* the way home, as on the category page: a small pill, top right */
-  app.appendChild(el('p', 'homerow', '<a class="lead__home" href="pov-reels-v2.html">'
+  /* not on the confirmation — its own button at the bottom leads home */
+  if (S.step !== LAST) app.appendChild(el('p', 'homerow', '<a class="lead__home" href="pov-reels-v2.html">'
     + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
     + 'חזרה לעמוד הראשי</a>'));
   app.appendChild(steps);
