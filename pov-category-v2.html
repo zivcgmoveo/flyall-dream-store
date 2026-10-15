@@ -1620,6 +1620,7 @@ html[data-points="enough"] body:not(.is-guest) .xp__enough{display:flex}
 .lme__tx small{display:block;margin-top:4px;font:400 14px/1.35 var(--ds-font);color:#5B6170}
 .lme__tx em{font-style:normal;font-weight:700;font-family:var(--ds-font-btn);color:var(--ds-black)}
 .lme__tx em.ok{color:#14A160}
+.lme__tx small.lme__pp{margin-top:2px;font-size:12px;color:var(--ds-gray)}
 .lme.done .lme__ring .fg{stroke:#3CCB7F}
 .lme.done .lme__n{color:#14A160}
 @media (prefers-reduced-motion:reduce){ .lme__ring .fg{transition:none} }
@@ -1659,6 +1660,8 @@ body:not(.is-guest):not(.reel-open) .who.who--pts{display:flex;bottom:58px}
   .xd-row .xd-t b{font-size:17px}
   .xd-row .xd-t small{margin:0;font-size:13px}
 }
+/* the category's title on one line on a phone */
+@media (max-width:1023px){ .arc .lead h2{white-space:nowrap;font-size:min(72px,16.5vw);line-height:1} }
 </style>
 </head>
 <body data-opt="D">
@@ -1885,7 +1888,7 @@ function buildArc(){
     '<span class="lme__ring" aria-hidden="true"><svg viewBox="0 0 92 92"><defs><linearGradient id="lmeG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B5ECE"/><stop offset=".5" stop-color="#824AEA"/><stop offset="1" stop-color="#F63DE4"/></linearGradient></defs>' +
       '<circle class="bg" cx="46" cy="46" r="40"/><circle class="fg" cx="46" cy="46" r="40" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '"/></svg>' +
       '<b class="lme__n"></b></span>' +
-    '<span class="lme__tx"><b>יש לך כרגע <span class="lme__have"></span> נקודות</b><small class="lme__left"></small></span>');
+    '<span class="lme__tx"><b>יש לך כרגע <span class="lme__have"></span> נקודות</b><small class="lme__left"></small><small class="lme__pp">לאדם בחדר זוגי</small></span>');
   const dream = cheap;   /* always the cheapest experience on the page */
   me._paint = () => {
     const have = document.documentElement.dataset.points === 'enough' ? ENOUGH : BALANCE, price = num(dream.pts), left = Math.max(0, price - have);
