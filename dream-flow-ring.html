@@ -1081,12 +1081,23 @@ body.is-guest .sum__dep{display:none}
 .pay .opt__b p b{color:var(--ink)}
 .pay__box{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--ds-light-blue-1);font:400 13px/1.45 var(--ds-font);color:#24406E}
 /* guest: the deposit is shown, but locked — what the FlyAll card would let them do */
-.opt.opt--off{cursor:default;background:#F7F8FA;border-style:dashed}
+.opt.opt--off{cursor:default;background:#F7F8FA;border-style:dashed;flex-direction:column;gap:12px}
+.opt--off .opt__b{width:100%}
+.opt--off .opt__b h4{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.opt--off .opt__b h4 .lock-tag{margin:0}
+.opt--off .pay__box{width:100%;margin:0;box-sizing:border-box}
+/* a guest's instalments fold away under the full payment */
+.inst--fold > summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0;cursor:pointer}
+.inst--fold > summary::-webkit-details-marker{display:none}
+.inst--fold > summary span{display:inline-flex;align-items:center;gap:6px;font:400 14px/1.2 var(--ds-font);color:var(--ds-blue)}
+.inst--fold > summary span::after{content:"";width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.inst--fold[open] > summary span::after{transform:rotate(-135deg) translateY(-1px)}
+.inst--fold[open] > summary{margin-bottom:10px}
 .opt--off .radio{opacity:.35}
 .opt--off h4,.opt--off .opt__b > p:not(.pay__box){color:#9AA0AB}
 .opt--off .opt__b > p b{color:inherit}
-.lock-tag{display:inline-flex;align-items:center;gap:4px;margin-inline-start:6px;height:20px;padding:0 8px;border-radius:10px;background:#EEF0F4;color:#5B6170;font:700 11px/20px var(--ds-font);vertical-align:2px}
-.lock-tag svg{width:11px;height:11px}
+.lock-tag{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:12px;background:#EEF0F4;color:#5B6170;font:700 13px/24px var(--ds-font);vertical-align:2px}
+.lock-tag svg{width:13px;height:13px}
 .opt--off .pay__box{background:#fff;color:#3A3F4B}
 .opt--off .pay__box a{color:var(--ds-blue);font-weight:700;text-decoration:none;white-space:nowrap}
 /* what's charged today, under the payment title — larger than a sub line */
@@ -1267,6 +1278,15 @@ body.is-guest .sum__dep{display:none}
 
 /* the points and their unit always on one line */
 .pts{white-space:nowrap}
+
+/* ===== mobile · nothing under 12px ===== */
+@media (max-width:1023px){
+  .rg__n small,.rg__pp,.score,.air i,.inst__o small,.fa-avatar__txt{font-size:12px}
+  .reco{height:22px;font-size:12px;line-height:22px}
+  .score{height:22px}
+  body.past1 .rg__ring{width:74px;height:74px}
+  body.past1 .rg__n small,body.past1 .rg__pp{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -1723,22 +1743,22 @@ function payHTML() {
     const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
     /* a guest pays in full; the deposit stays in sight, locked, as what the card would open */
     const depOpt = g
-      ? '<div class="opt opt--off" aria-disabled="true"><span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="lock-tag">' + LOCK + 'למחזיקי כרטיס FlyAll</span></h4>'
-        + '<p>מקדמה היום: <b>₪' + fmt(dep) + '</b> · יתרה עד 14.3.2027: <b>₪' + fmt(t - dep) + '</b></p>'
-        + '<p class="pay__box">עם כרטיס FlyAll משלמים היום רק 20%, ואת היתרה הנקודות שצוברים בכרטיס מכסות עד מועד החיוב. <a href="#join">הצטרפות לכרטיס</a></p></div></div>'
+      ? '<div class="opt opt--off" aria-disabled="true"><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="lock-tag">' + LOCK + 'למחזיקי כרטיס FlyAll</span></h4></div>'
+        + '<p class="pay__box">עם כרטיס FlyAll משלמים היום רק 20%, ואת היתרה הנקודות שצוברים בכרטיס מכסות עד מועד החיוב. <a href="#join">הצטרפות לכרטיס</a></p></div>'
       : radio(S.pay === 'dep', 'dep', '<span class="radio"></span><div class="opt__b"><h4>20% עכשיו, השאר לפני האירוע<span class="reco">מומלץ</span></h4>'
         + '<p>מקדמה היום: <b>' + fmt(dep) + ' נק׳</b> · יתרה עד 14.3.2027: <b>' + fmt(t - dep) + ' נק׳</b></p>'
         + '<p class="pay__box">עד 14.3.2027 הנקודות שתצבור בכרטיס יקוזזו אוטומטית מהיתרה. מה שלא יכוסה בנקודות ישולם בכרטיס, ללא ריבית.</p></div>');
     return (g ? '' : '<div class="card"><h2>נקודות FlyAll</h2><div class="toggle" style="margin-top:12px"><span>תשלום בנקודות <b>(' + fmt(HAVE) + ' נק׳)</b></span>'
       + '<button class="sw" type="button" role="switch" aria-checked="' + S.usePts + '" data-pts aria-label="תשלום בנקודות"></button></div></div>')
       + '<div class="card pay"><h2>איך תרצה לשלם?</h2><div style="margin-top:12px">'
-      + depOpt
+      + (g ? '' : depOpt)
       + radio(S.pay === 'full', 'full', '<span class="radio"></span><div class="opt__b"><h4>תשלום מלא עכשיו</h4>'
         + (g ? '<p><b>₪' + fmt(t) + '</b> בכרטיס אשראי</p>' : '<p><b>' + fmt(t) + ' נק׳</b> (₪' + fmt(t) + '), בנקודות ובכסף</p>')
-        + (S.pay === 'full' ? '<div class="inst"><p class="inst__h">חלוקה לתשלומים</p><div class="inst__row">'
+        + (S.pay === 'full' ? (g ? '<details class="inst inst--fold"' + (S.instOpen ? ' open' : '') + '><summary class="inst__h" data-instfold>חלוקה לתשלומים<span>' + (S.inst === 1 ? 'תשלום אחד' : S.inst + ' תשלומים') + '</span></summary>' : '<div class="inst"><p class="inst__h">חלוקה לתשלומים</p>') + '<div class="inst__row">'
           + [1, 3, 6, 12].map(n => '<button type="button" class="inst__o" data-inst="' + n + '" aria-pressed="' + (S.inst === n) + '"><b>' + (n === 1 ? 'תשלום אחד' : n + ' תשלומים') + '</b><small>' + (n === 1 ? '₪' + fmt(t) : '₪' + fmt(Math.ceil(t / n)) + ' לחודש') + '</small></button>').join('')
-          + '</div><p class="inst__note">ללא ריבית וללא הצמדה</p></div>' : '')
+          + '</div><p class="inst__note">ללא ריבית וללא הצמדה</p>' + (g ? '</details>' : '</div>') : '')
         + '</div>')
+      + (g ? depOpt : '')
       + '</div></div>'
       + '<div class="card"><h2>פרטי תשלום</h2><p class="sub due">היום מחויב: <b>₪' + fmt((S.pay === 'dep' ? dep : t) - fromPts) + '</b>' + (fromPts ? ' + ' + fmt(fromPts) + ' נק׳' : '') + '</p>'
       + '<div class="fields"><div><label for="cc">מספר כרטיס</label><input id="cc" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="off"></div>'
@@ -1894,6 +1914,7 @@ function go(i) {
 }
 app.addEventListener('click', e => {
   const t = e.target;
+  if (t.closest('[data-instfold]')) { e.preventDefault(); S.instOpen = !S.instOpen; return render(); }
   if (t.closest('[data-inst]')) { S.inst = +t.closest('[data-inst]').dataset.inst; return render(); }   /* before the option it sits in */
   const pick = t.closest('[data-pick]');
   if (pick) {
