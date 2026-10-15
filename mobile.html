@@ -5,24 +5,56 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dream Store · תצוגת מובייל</title>
 <style>
-/* the v2 site inside a phone, as large as the window allows — for reviewing mobile on a desktop without the inspector */
+/* the v2 site inside a phone, as large as the window allows — or, at a tap, the full desktop page.
+   one iframe for both: switching only resizes it, so the page and where you are in it stay put */
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overflow:hidden}
-body{display:grid;place-items:center;
+body{display:grid;place-items:center;font-family:system-ui,sans-serif;
   background:radial-gradient(50% 40% at 85% 0%,#FBEAF8,transparent 70%),radial-gradient(45% 40% at 10% 100%,#E8F0FF,transparent 70%),#F4F5FA}
 .phone{position:fixed;left:50%;top:50%;width:414px;height:868px;padding:12px;border-radius:56px;background:#0B0C14;transform-origin:center;transform:translate(-50%,-50%);
   box-shadow:0 30px 70px rgba(24,22,64,.28),inset 0 0 0 2px #2A2C38}
 .phone iframe{display:block;width:390px;height:844px;border:0;border-radius:44px;background:#fff}
+/* desktop: no phone, the page fills the window */
+body.is-desk .phone{inset:0;left:0;top:0;width:auto;height:auto;padding:0;border-radius:0;background:#fff;box-shadow:none;transform:none!important}
+body.is-desk .phone iframe{width:100%;height:100%;border-radius:0}
+
+/* the switch — top corner beside the phone; over the desktop page it sits low on the right, clear of the header and the demo toggles */
+.view{position:fixed;z-index:10;top:20px;right:20px;display:flex;padding:4px;border-radius:22px;
+  background:rgba(255,255,255,.94);box-shadow:0 4px 18px rgba(4,15,33,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.view button{display:flex;align-items:center;gap:6px;border:0;background:none;padding:8px 14px;border-radius:18px;cursor:pointer;
+  font:600 13px/1 system-ui,sans-serif;color:#5B6170}
+.view button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.view button[aria-pressed="true"]{background:#1B5ECE;color:#fff}
+.view button:focus-visible{outline:2px solid #1B5ECE;outline-offset:2px}
+body.is-desk .view{top:auto;bottom:84px;right:20px}   /* above the booking flow's bottom bar */
 </style>
 </head>
 <body>
-<div class="phone"><iframe title="Dream Store במובייל" src="pov-reels-v2.html"></iframe></div>
+<div class="phone"><iframe title="Dream Store" src="pov-reels-v2.html"></iframe></div>
+<div class="view" role="group" aria-label="תצוגה">
+  <button type="button" data-v="mobile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>מובייל</button>
+  <button type="button" data-v="desktop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg>דסקטופ</button>
+</div>
 <script>
-  /* a real 390×844 screen inside; the whole phone scales to fill the window's height */
-  const phone = document.querySelector('.phone');
-  /* centred on the window, and scaled so all of it — frame included — fits with a margin */
-  const fit = () => { phone.style.transform = 'translate(-50%,-50%) scale(' + Math.min((innerHeight - 40) / 868, (innerWidth - 40) / 414) + ')'; };
-  addEventListener('resize', fit); fit();
+  const phone = document.querySelector('.phone'), view = document.querySelector('.view');
+  const KEY = 'flyall-view';
+  /* a real 390×844 screen inside; centred on the window, and scaled so all of it — frame included — fits with a margin */
+  const fit = () => {
+    phone.style.transform = document.body.classList.contains('is-desk') ? ''
+      : 'translate(-50%,-50%) scale(' + Math.min((innerHeight - 40) / 868, (innerWidth - 40) / 414) + ')';
+  };
+  const set = v => {
+    document.body.classList.toggle('is-desk', v === 'desktop');
+    view.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v));
+    document.title = 'Dream Store · ' + (v === 'desktop' ? 'תצוגת דסקטופ' : 'תצוגת מובייל');
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+    fit();
+  };
+  view.addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.v); });
+  addEventListener('resize', fit);
+  let v = new URLSearchParams(location.search).get('view');
+  if (!v) { try { v = localStorage.getItem(KEY); } catch (e) {} }
+  set(v === 'desktop' ? 'desktop' : 'mobile');
 </script>
 </body>
 </html>
