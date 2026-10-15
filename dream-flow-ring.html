@@ -837,6 +837,52 @@ body.cl--open .cc{transform:none;visibility:visible}
 }
 body.cl--open{overflow:hidden}
 
+/* ===== more than 6 passengers — a drawer that hands the group to a person ===== */
+.gx-scrim{position:fixed;inset:0;z-index:300;background:rgba(4,15,33,.4);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.gx{position:fixed;inset-inline:0;bottom:0;z-index:301;max-height:92vh;overflow-y:auto;padding:12px 22px 26px;border-radius:24px 24px 0 0;background:#fff;color:var(--ds-black);
+  box-shadow:0 -18px 44px rgba(4,15,33,.18);transform:translateY(calc(100% + 60px));visibility:hidden;transition:transform .45s cubic-bezier(.2,.8,.2,1),visibility .45s}
+.gx::before{content:"";display:block;width:40px;height:4px;margin:0 auto 18px;border-radius:2px;background:#E1E3EA}
+body.gx--open{overflow:hidden}
+body.gx--open .gx-scrim{opacity:1;visibility:visible}
+body.gx--open .gx{transform:none;visibility:visible}
+.gx .cc__x{z-index:2}
+.gx__h{margin:0;padding-inline-end:42px;font:300 26px/1.15 'Ploni',var(--ds-font-btn)}
+.gx__h b{font-weight:700;background:var(--ds-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gx__p{margin:12px 0 0;font:400 15px/1.45 var(--ds-font);color:#3A3F4B}
+.gx__p .nw{white-space:nowrap}
+.gx__p bdi{font-family:var(--ds-font-btn);font-weight:700;color:var(--ds-black)}
+.gx .fields{margin-top:18px}
+.gx .fields input{direction:rtl}
+.gx .fields input[type=tel]{direction:ltr}
+.gx .fields input.bad{border-color:#E5484D}
+.gx__err{display:block;margin-top:5px;font:400 12px/1.2 var(--ds-font);color:#D1343A}
+.gx__n{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px;padding:0 6px 0 14px;border-radius:8px;border:1px solid var(--ds-light-blue-2)}
+.gx__n span{font:400 15px/1 var(--ds-font);color:var(--ds-black)}
+.gx__n .stepper{display:flex;align-items:center;gap:14px}
+.gx__note{margin:16px 0 0;padding:10px 12px;border-radius:12px;background:var(--soft,#F4F2FE);font:400 13px/1.4 var(--ds-font);color:#3A3F4B}
+.gx__note b{color:var(--ds-black)}
+.gx__go{display:flex;align-items:center;justify-content:center;width:100%;height:50px;margin-top:20px;border:0;border-radius:25px;cursor:pointer;color:#fff;font:700 17px/1 var(--ds-font-btn);background:var(--ds-gradient)}
+.gx__go[aria-busy="true"]{opacity:.7;cursor:progress}
+.gx__no{display:block;width:100%;margin-top:6px;padding:12px 0;border:0;background:none;cursor:pointer;font:700 15px/1 var(--ds-font-btn);color:var(--ds-blue)}
+/* sent */
+.gx__ok{display:grid;place-items:center;width:56px;height:56px;margin:4px auto 14px;border-radius:50%;color:#fff;background:var(--ds-gradient)}
+.gx__ok svg{width:26px;height:26px}
+.gx--done .gx__h,.gx--done .gx__p{text-align:center;padding-inline-end:0}
+.gx__sum{margin:18px 0 0;padding:4px 16px;border-radius:16px;background:var(--ds-light-blue-1,#F0F8FF)}
+.gx__sum p{display:flex;justify-content:space-between;gap:10px;margin:0;padding:12px 0;font:400 14px/1.3 var(--ds-font);color:#5B6170}
+.gx__sum p + p{border-top:1px solid rgba(27,94,206,.12)}
+.gx__sum p b{font:700 15px/1.3 var(--ds-font);color:var(--ds-black);text-align:left}
+/* failed */
+.gx__fail{margin:16px 0 0;padding:10px 12px;border-radius:12px;background:#FDECEC;font:400 14px/1.4 var(--ds-font);color:#B4232A}
+@media (min-width:1024px){
+  .gx{inset:auto;left:50%;top:50%;bottom:auto;width:520px;max-height:none;padding:34px 36px 30px;border-radius:24px;opacity:0;visibility:hidden;
+    transform:translate(-50%,-46%);transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s,visibility .3s}
+  .gx::before{display:none}
+  body.gx--open .gx{transform:translate(-50%,-50%);opacity:1;visibility:visible}
+  .gx__h{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){ .gx,.gx-scrim{transition:none} }
+
 @media (prefers-reduced-motion:reduce){ .rg__ring .fg,.rg__ring svg{transition:none} .rg:hover .rg__ring svg{transform:rotate(-90deg)} }
 .ev__logo{z-index:1}
 /* mobile: the event card (with the bar) comes first, the summary after the step */
@@ -1469,6 +1515,87 @@ const CALC = (() => {
   return { open: () => { wasOk = false; setSpend(Math.ceil(Math.max(0, total() - HAVE) / (MONTHS * RATE) / 500) * 500); document.body.classList.add('cl--open'); } };
 })();
 RING.querySelector('.rg__calc').onclick = CALC.open;
+
+/* ================= more than 6 passengers — the "+" after 6 opens a drawer, and a person takes the group from there ================= */
+const GROUP = (() => {
+  const X_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  const OK_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const MIN = 7, MAX = 40;
+  const scrim = el('div', 'gx-scrim');
+  const gx = el('div', 'gx');
+  gx.setAttribute('role', 'dialog'); gx.setAttribute('aria-modal', 'true'); gx.setAttribute('aria-label', 'טסים יותר מ־6?');
+  document.body.append(scrim, gx);
+  let n = MIN, sent = false;
+  /* the demo's guest / signed-in switch, as the lobby left it */
+  const guest = () => { try { return localStorage.getItem('flyall-who') === 'guest'; } catch (e) { return false; } };
+  const form = (fail) => {
+    const g = guest();
+    gx.classList.remove('gx--done');
+    gx.innerHTML = '<button class="cc__x" type="button" data-gx-x aria-label="סגירה">' + X_IC + '</button>'
+      + '<h4 class="gx__h">טסים <b>יותר מ־6?</b></h4>'
+      + '<p class="gx__p">אונליין אפשר להזמין עד 6 נוסעים. לקבוצה גדולה יותר נשמח לעזור: '
+      + (g ? 'השאירו שם וטלפון, ונציג שלנו יחזור אליכם עם זמינות ומחיר לכל הנוסעים.'
+           : 'נציג שלנו יחזור אליך בהקדם למספר <span class="nw"><bdi dir="ltr">05X-XXXX338</bdi>,</span> עם זמינות ומחיר לכל הנוסעים.') + '</p>'
+      + '<div class="fields">'
+      + (g ? '<div><label for="gx-name">שם מלא*</label><input id="gx-name" type="text" autocomplete="name"></div>'
+           + '<div><label for="gx-tel">מספר נייד*</label><input id="gx-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000"></div>' : '')
+      + '<div><label id="gx-n-l">כמה נוסעים?*</label><div class="gx__n" role="group" aria-labelledby="gx-n-l"><span>נוסעים</span>'
+      + '<div class="stepper"><button type="button" data-gx-n="1" aria-label="נוסע נוסף">+</button><output>' + n + '</output>'
+      + '<button type="button" data-gx-n="-1" aria-label="פחות נוסעים"' + (n <= MIN ? ' disabled' : '') + '>−</button></div></div></div>'
+      + '</div>'
+      + '<p class="gx__note"><b>שים לב:</b> המקומות והמחיר הסופי ישוריינו רק לאחר אישור הנציג.</p>'
+      + (fail ? '<p class="gx__fail" role="alert">לא הצלחנו לשלוח את הבקשה. נסו שוב בעוד רגע.</p>' : '')
+      + '<button class="gx__go" type="button" data-gx-send>' + (fail ? 'נסו שוב' : 'חזרו אליי') + '</button>'
+      + '<button class="gx__no" type="button" data-gx-x>ביטול</button>';
+  };
+  const done = () => {
+    gx.classList.add('gx--done');
+    gx.innerHTML = '<button class="cc__x" type="button" data-gx-x aria-label="סגירה">' + X_IC + '</button>'
+      + '<span class="gx__ok">' + OK_IC + '</span>'
+      + '<h4 class="gx__h"><b>בקשתך התקבלה</b></h4>'
+      + '<p class="gx__p">נציג שלנו יחזור אליך בהקדם עם זמינות ומחיר</p>'
+      + '<div class="gx__sum"><p>החוויה<b>סלין דיון · פריז</b></p><p>המועד<b>14.5.2027</b></p><p>מספר הנוסעים<b>' + n + '</b></p></div>'
+      + '<button class="gx__go" type="button" data-gx-x>סגירה</button>';
+  };
+  const bad = (inp, msg) => {
+    inp.classList.add('bad'); inp.setAttribute('aria-invalid', 'true');
+    inp.insertAdjacentHTML('afterend', '<small class="gx__err">' + msg + '</small>');
+  };
+  const send = () => {
+    gx.querySelectorAll('.gx__err').forEach(x => x.remove());
+    gx.querySelectorAll('.bad').forEach(x => { x.classList.remove('bad'); x.removeAttribute('aria-invalid'); });
+    if (guest()) {
+      const nm = gx.querySelector('#gx-name'), tel = gx.querySelector('#gx-tel');
+      let ok = true;
+      if (nm.value.trim().split(/\s+/).length < 2) { bad(nm, 'נא למלא שם פרטי ושם משפחה'); ok = false; }
+      if (!/^05\d-?\d{7}$/.test(tel.value.replace(/\s/g, ''))) { bad(tel, 'נא למלא מספר נייד תקין'); ok = false; }
+      if (!ok) return gx.querySelector('.bad').focus();
+    }
+    const b = gx.querySelector('[data-gx-send]');
+    b.setAttribute('aria-busy', 'true'); b.textContent = 'שולחים…';
+    /* a demo: it "sends" unless the browser is offline */
+    setTimeout(() => { if (navigator.onLine === false) form(true); else { sent = true; done(); } }, 700);
+  };
+  const close = () => document.body.classList.remove('gx--open');
+  scrim.onclick = close;
+  gx.addEventListener('click', e => {
+    const t = e.target;
+    if (t.closest('[data-gx-x]')) return close();   /* cancel leaves the booking at 6 */
+    if (t.closest('[data-gx-send]')) return send();
+    const st = t.closest('[data-gx-n]');
+    if (st) {
+      n = Math.max(MIN, Math.min(MAX, n + +st.dataset.gxN));
+      gx.querySelector('.gx__n output').textContent = n;
+      gx.querySelector('[data-gx-n="-1"]').disabled = n <= MIN;
+    }
+  });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('gx--open')) close(); });
+  return { open: () => {
+    if (!sent) { n = MIN; form(false); } else done();
+    document.body.classList.add('gx--open');
+    setTimeout(() => (gx.querySelector('input') || gx.querySelector('.gx__go')).focus({ preventScroll: true }), 450);
+  } };
+})();
 function countTo(node, to) {
   const from = +node.dataset.v || 0;
   node.dataset.v = to;
@@ -1735,6 +1862,8 @@ app.addEventListener('click', e => {
     }
     return render();
   }
+  /* past 6 the booking isn't online any more — a drawer hands the group to a person */
+  if (t.closest('[data-pax="1"]') && S.pax >= 6) return GROUP.open();
   if (t.closest('[data-pax]')) { S.pax = Math.max(1, Math.min(6, S.pax + +t.closest('[data-pax]').dataset.pax)); return render(); }
   if (t.closest('[data-room]')) { const b = t.closest('[data-room]'); S.rooms[b.dataset.room] = Math.max(0, Math.min(4, S.rooms[b.dataset.room] + +b.dataset.d)); return render(); }
   if (t.closest('[data-pts]')) { S.usePts = !S.usePts; return render(); }
